@@ -1,4 +1,4 @@
-package es.tfg.asp.principal;
+package es.tfg.asp;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
