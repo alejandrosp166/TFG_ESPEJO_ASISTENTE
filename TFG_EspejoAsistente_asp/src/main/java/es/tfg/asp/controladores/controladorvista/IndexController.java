@@ -7,9 +7,5 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 @Controller
-public class IndexController implements Initializable {
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
-    }
+public class IndexController {
 }
