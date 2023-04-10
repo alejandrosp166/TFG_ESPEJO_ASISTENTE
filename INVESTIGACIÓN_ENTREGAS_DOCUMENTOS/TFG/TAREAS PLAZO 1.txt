@@ -1,0 +1,5 @@
+Objetivos, requisitos del sistema (funcionales, no funcionales y de interfaz) y descripción de algunos de los 
+casos de uso más importantes.
+
+Como mínimo, la app deberá tener autenticación, algún rol de administración para la configuración y 
+la lógica de negocio correspondiente.
