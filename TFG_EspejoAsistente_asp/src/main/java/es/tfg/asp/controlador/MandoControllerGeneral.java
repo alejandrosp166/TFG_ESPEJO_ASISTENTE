@@ -1,4 +1,4 @@
-package es.tfg.asp.controladores.controladorvista;
+package es.tfg.asp.controlador;
 
 import net.java.games.input.Component;
 import net.java.games.input.ControllerEnvironment;
@@ -6,6 +6,9 @@ import net.java.games.input.Event;
 import net.java.games.input.EventQueue;
 import org.springframework.stereotype.Controller;
 
+/**
+ * Esta clase permite moverse al usuario por la interfaz
+ */
 @Controller
 public class MandoControllerGeneral implements Runnable{
     net.java.games.input.Controller ps4Input;

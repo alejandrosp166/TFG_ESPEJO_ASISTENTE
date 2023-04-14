@@ -25,9 +25,9 @@ public class AppEspejoAsistente extends Application {
 		applicationContext = SpringApplication.run(getClass());
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/vistas/index.fxml"));
 		loader.setControllerFactory(applicationContext::getBean);
-		Scene scene = new Scene(loader.load(), 800, 800, false, SceneAntialiasing.BALANCED);
+		Scene scene = new Scene(loader.load(), 600, 600, false, SceneAntialiasing.BALANCED);
 		stage.setScene(scene);
-		stage.setFullScreen(true);
+		//stage.setFullScreen(true);
 		stage.show();
 	}
 }
