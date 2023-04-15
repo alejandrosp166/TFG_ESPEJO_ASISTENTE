@@ -10,7 +10,7 @@ import org.springframework.stereotype.Controller;
  * Esta clase permite moverse al usuario por la interfaz
  */
 @Controller
-public class MandoControllerGeneral implements Runnable{
+public class MandoControllerGeneral implements Runnable {
     net.java.games.input.Controller ps4Input;
     int posicionPuntero;
     private net.java.games.input.Controller[] controllers;
@@ -20,17 +20,18 @@ public class MandoControllerGeneral implements Runnable{
         // Analizamos los dispositivos conectados y los guardamos en una lista
         controllers = ControllerEnvironment.getDefaultEnvironment().getControllers();
         ps4Input = null;
-        posicionPuntero = 0;
+        posicionPuntero = 1;
         // Recorremos esta lista
-        for (net.java.games.input.Controller controller: controllers) {
+        for (net.java.games.input.Controller controller : controllers) {
             // Si encontramos el mando de PS4 inicializamos el controller
-            if(controller.getName().replace(" ", "").equalsIgnoreCase("wirelessController")) {
+            if (controller.getName().replace(" ", "").equalsIgnoreCase("wirelessController")) {
                 ps4Input = controller;
                 inputEncontrado = true;
                 break;
             }
         }
     }
+
     // Start Botón 9 // r1 Botón 5 // l1 botón 4 // panel Botón 13 // share Botón 8 // ps Botón 12
     @Override
     public void run() {

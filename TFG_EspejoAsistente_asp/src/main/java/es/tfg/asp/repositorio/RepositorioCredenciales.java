@@ -10,6 +10,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RepositorioCredenciales
         extends JpaRepository<CredencialesUsuario, Integer> {
+    /**
     @Query("SELECT c FROM Credenciales c WHERE e.id_usuario = :idUsuario")
     CredencialesUsuario buscarCredencialesPorIdUsuario(@Param("idUsuario") int idUsuario);
+    */
 }
