@@ -11,16 +11,18 @@ import org.springframework.stereotype.Controller;
  */
 @Controller
 public class MandoControllerGeneral implements Runnable {
-    net.java.games.input.Controller ps4Input;
-    int posicionPuntero;
-    private net.java.games.input.Controller[] controllers;
-    private boolean inputEncontrado;
+    private net.java.games.input.Controller ps4Input;
+    private int posicionPuntero;
 
     public MandoControllerGeneral() {
-        // Analizamos los dispositivos conectados y los guardamos en una lista
-        controllers = ControllerEnvironment.getDefaultEnvironment().getControllers();
-        ps4Input = null;
         posicionPuntero = 1;
+    }
+
+    private boolean hayInput() {
+        // Analizamos los dispositivos conectados y los guardamos en una lista
+        net.java.games.input.Controller[] controllers = ControllerEnvironment.getDefaultEnvironment().getControllers();
+        ps4Input = null;
+        boolean inputEncontrado = false;
         // Recorremos esta lista
         for (net.java.games.input.Controller controller : controllers) {
             // Si encontramos el mando de PS4 inicializamos el controller
@@ -30,29 +32,32 @@ public class MandoControllerGeneral implements Runnable {
                 break;
             }
         }
+        return inputEncontrado;
     }
 
     // Start Botón 9 // r1 Botón 5 // l1 botón 4 // panel Botón 13 // share Botón 8 // ps Botón 12
     @Override
     public void run() {
-        while (true) {
-            if (inputEncontrado) {
-                ps4Input.poll();
-                EventQueue queue = ps4Input.getEventQueue();
-                Event event = new Event();
-                while (queue.getNextEvent(event)) {
-                    Component component = event.getComponent();
-                    if (component.getName().equals("Botón 5") && event.getValue() == 1.0f) {
-                        posicionPuntero++;
-                        System.out.println(posicionPuntero);
-                    } else if (component.getName().equals("Botón 4") && event.getValue() == 1.0f) {
-                        posicionPuntero--;
-                        System.out.println(posicionPuntero);
-                    }
+        while (hayInput()) {
+            ps4Input.poll();
+            EventQueue queue = ps4Input.getEventQueue();
+            Event event = new Event();
+            while (queue.getNextEvent(event)) {
+                Component component = event.getComponent();
+                if (component.getName().equals("Botón 5") && event.getValue() == 1.0f) {
+                    posicionPuntero++;
+                    System.out.println(posicionPuntero);
+                } else if (component.getName().equals("Botón 4") && event.getValue() == 1.0f) {
+                    posicionPuntero--;
+                    System.out.println(posicionPuntero);
                 }
-            } else {
-                System.out.println("No hay input");
             }
         }
+        System.out.println("No hay input!");
+        posicionPuntero = 1;
+    }
+
+    public int getPosicionPuntero() {
+        return posicionPuntero;
     }
 }

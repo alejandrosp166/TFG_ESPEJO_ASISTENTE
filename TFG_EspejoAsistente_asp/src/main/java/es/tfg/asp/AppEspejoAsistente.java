@@ -15,7 +15,6 @@ public class AppEspejoAsistente extends Application {
 
 	public static ConfigurableApplicationContext applicationContext;
 	public static Parent rootNode;
-
 	public static void main(String[] args) {
 		launch(args);
 	}

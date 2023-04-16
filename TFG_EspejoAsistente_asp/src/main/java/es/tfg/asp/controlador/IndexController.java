@@ -1,7 +1,8 @@
 package es.tfg.asp.controlador;
 
-import es.tfg.asp.servicio.iservice.ServiceCredenciales;
 import es.tfg.asp.servicio.iservice.ServiceUsuario;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -17,7 +18,7 @@ import java.util.ResourceBundle;
  * Clase controlador Index
  */
 @Controller
-public class IndexController implements Initializable {
+public class IndexController implements Initializable, Runnable {
     @FXML
     private TextField fieldUsuario;
     @Autowired
@@ -34,6 +35,33 @@ public class IndexController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Thread hiloMando = new Thread(mandoControllerGeneral);
         hiloMando.start();
+        this.run();
+    }
+
+    @Override
+    public void run() {
+        Task<Void> task = new Task<>() {
+            @Override
+            protected Void call() throws Exception {
+                while (true) {
+                    switch (mandoControllerGeneral.getPosicionPuntero()) {
+                        case 1:
+                            Platform.runLater(() -> fieldUsuario.setText("skzjdfhs"));
+                            break;
+                        case 2:
+                            Platform.runLater(() -> fieldUsuario.setText("adeu"));
+                            break;
+                        case 3:
+                            Platform.runLater(() -> fieldUsuario.setText("hola"));
+                            break;
+                    }
+                    Thread.sleep(100);
+                }
+            }
+        };
+        Thread hiloCambioInterfaz = new Thread(task);
+        hiloCambioInterfaz.setDaemon(true);
+        hiloCambioInterfaz.start();
     }
 
     /**

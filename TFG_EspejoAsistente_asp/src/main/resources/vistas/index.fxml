@@ -43,7 +43,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <TextField prefHeight="98.0" prefWidth="623.0" promptText="USUARIO" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="3">
+            <TextField fx:id="fieldUsuario" prefHeight="98.0" prefWidth="623.0" promptText="USUARIO" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="3">
                <font>
                   <Font name="Courier New" size="40.0" />
                </font>
