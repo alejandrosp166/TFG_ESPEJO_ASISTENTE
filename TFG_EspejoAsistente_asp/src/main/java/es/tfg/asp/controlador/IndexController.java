@@ -25,6 +25,7 @@ public class IndexController implements Initializable, Runnable {
     private MandoControllerGeneral mandoControllerGeneral;
     @Autowired
     private ServiceUsuario serviceUsuario;
+
     /**
      * El método initialize en JavaFX se utiliza para inicializar un controlador de vista después de que se hayan establecido todos los objetos de la vista.
      * Este método se ejecuta automáticamente después de cargar la vista en la aplicación y se puede usar para inicializar cualquier objeto o configuración
@@ -65,7 +66,6 @@ public class IndexController implements Initializable, Runnable {
     }
 
     /**
-     *
      * @param e
      */
     public void iniciarSesion(ActionEvent e) {
@@ -86,7 +86,6 @@ public class IndexController implements Initializable, Runnable {
     }
 
     /**
-     *
      * @param e
      */
     public void iniciarSesionFaceId(ActionEvent e) {
