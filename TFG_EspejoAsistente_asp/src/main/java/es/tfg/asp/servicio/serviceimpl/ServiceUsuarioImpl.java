@@ -20,11 +20,12 @@ public class ServiceUsuarioImpl implements ServiceUsuario {
     @Override
     public boolean validarUsuario(String username, String pass) {
         boolean acceso = false;
+        // Obtenemos el usuario por su username
         Usuario usuario = repositorioUsuario.buscarPorUsername(username);
         // Comprobamos que el usuario existe
         if (Objects.nonNull(usuario)) {
             // Obtenemos las credenciales de ese usuario
-            CredencialesUsuario credenciales = serviceCredenciales.obtenerCredencialesPorIdUsuario(usuario.getIdUsuario());
+            CredencialesUsuario credenciales = serviceCredenciales.obtenerCredencialesPorIdUsuario(usuario);
             // Comprobamos si existen credenciales para ese usuario y si coinciden con las credenciales pasadas por parámetro
             if (Objects.nonNull(credenciales) && credenciales.getPassword().equals(pass)) {
                 acceso = true;

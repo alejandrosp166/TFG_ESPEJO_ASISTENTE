@@ -48,7 +48,7 @@
                   <Font name="Courier New" size="40.0" />
                </font>
             </TextField>
-            <PasswordField prefHeight="98.0" prefWidth="2355.0" promptText="CONTRASEÑA" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="5">
+            <PasswordField fx:id="fieldPassword" prefHeight="98.0" prefWidth="2355.0" promptText="CONTRASEÑA" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="5">
                <font>
                   <Font name="Courier New" size="40.0" />
                </font>

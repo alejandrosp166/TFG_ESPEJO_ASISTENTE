@@ -21,6 +21,8 @@ import java.util.ResourceBundle;
 public class IndexController implements Initializable, Runnable {
     @FXML
     private TextField fieldUsuario;
+    @FXML
+    private TextField fieldPassword;
     @Autowired
     private MandoControllerGeneral mandoControllerGeneral;
     @Autowired
@@ -69,10 +71,10 @@ public class IndexController implements Initializable, Runnable {
      * @param e
      */
     public void iniciarSesion(ActionEvent e) {
-        if (serviceUsuario.validarUsuario("asd", "asda")) {
-            // Se mete en la aplicación
+        if (serviceUsuario.validarUsuario(fieldUsuario.getText(), fieldPassword.getText())) {
+            System.out.println("Entro");
         } else {
-            // Credenciales incorrectas (VALIDACIONES DE DATOS EN SERVICE Y DEVUELVE UN MENSAJE)
+            System.out.println("No entro");
         }
     }
 
