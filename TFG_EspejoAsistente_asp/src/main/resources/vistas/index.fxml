@@ -3,7 +3,6 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -43,7 +42,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <TextField fx:id="fieldUsuario" prefHeight="98.0" prefWidth="623.0" promptText="USUARIO" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="3">
+            <TextField fx:id="fieldUsuario" prefHeight="61.0" prefWidth="1119.0" promptText="USUARIO" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="3">
                <font>
                   <Font name="Courier New" size="40.0" />
                </font>
@@ -53,22 +52,21 @@
                   <Font name="Courier New" size="40.0" />
                </font>
             </PasswordField>
-            <Button fx:id="idIniciarsesion" mnemonicParsing="false" onAction="#iniciarSesion" prefHeight="89.0" prefWidth="1176.0" text="INICIAR SESIÓN" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="7">
+            <Button fx:id="btnIniciarSesion" mnemonicParsing="false" onAction="#iniciarSesion" prefHeight="89.0" prefWidth="1176.0" text="INICIAR SESIÓN" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="7">
                <font>
                   <Font name="Courier New Bold" size="40.0" />
                </font>
             </Button>
-            <Button fx:id="idRegistro" mnemonicParsing="false" prefHeight="99.0" prefWidth="1119.0" text="REGISTRARSE" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="12">
+            <Button fx:id="btnRegistro" mnemonicParsing="false" onAction="#registrarse" prefHeight="99.0" prefWidth="1119.0" text="REGISTRARSE" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="12">
                <font>
                   <Font name="Courier New Bold" size="40.0" />
                </font>
             </Button>
-            <Button fx:id="idIniciarsesionfaceid" mnemonicParsing="false" prefHeight="77.0" prefWidth="1123.0" text="INICIAR SESIÓN CON FACE ID" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="9">
+            <Button fx:id="btnIniciarSesionFaceId" mnemonicParsing="false" prefHeight="77.0" prefWidth="1123.0" text="INICIAR SESIÓN CON FACE ID" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="9">
                <font>
                   <Font name="Courier New Bold" size="40.0" />
                </font>
             </Button>
-            <ImageView fitHeight="150.0" fitWidth="1118.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="1" />
          </children>
       </GridPane>
    </children>

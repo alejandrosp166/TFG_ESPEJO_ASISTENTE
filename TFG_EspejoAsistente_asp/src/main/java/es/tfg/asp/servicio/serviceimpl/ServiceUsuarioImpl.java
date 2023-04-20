@@ -33,4 +33,9 @@ public class ServiceUsuarioImpl implements ServiceUsuario {
         }
         return acceso;
     }
+
+    @Override
+    public boolean validarUsuarioFaceId() {
+        return false;
+    }
 }

@@ -12,20 +12,21 @@ import org.springframework.context.ConfigurableApplicationContext;
 
 @SpringBootApplication
 public class AppEspejoAsistente extends Application {
-	public static ConfigurableApplicationContext applicationContext;
-	public static Parent rootNode;
-	public static void main(String[] args) {
-		launch(args);
-	}
+    public static ConfigurableApplicationContext applicationContext;
+    public static Parent rootNode;
 
-	@Override
-	public void start(Stage stage) throws Exception {
-		applicationContext = SpringApplication.run(getClass());
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/vistas/index.fxml"));
-		loader.setControllerFactory(applicationContext::getBean);
-		Scene scene = new Scene(loader.load(), 600, 600, false, SceneAntialiasing.BALANCED);
-		stage.setScene(scene);
-		//stage.setFullScreen(true);
-		stage.show();
-	}
+    public static void main(String[] args) {
+        launch(args);
+    }
+
+    @Override
+    public void start(Stage stage) throws Exception {
+        applicationContext = SpringApplication.run(getClass());
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/vistas/index.fxml"));
+        loader.setControllerFactory(applicationContext::getBean);
+        Scene scene = new Scene(loader.load(), 600, 600, false, SceneAntialiasing.BALANCED);
+        stage.setScene(scene);
+        //stage.setFullScreen(true);
+        stage.show();
+    }
 }
