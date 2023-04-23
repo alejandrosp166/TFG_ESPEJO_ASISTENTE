@@ -13,7 +13,7 @@ import org.springframework.stereotype.Controller;
 public class MandoControllerGeneral implements Runnable {
     private net.java.games.input.Controller ps4Input;
     private int posicionPuntero;
-
+    private boolean confirmarPulsado;
     public MandoControllerGeneral() {
         posicionPuntero = 1;
     }
@@ -50,11 +50,21 @@ public class MandoControllerGeneral implements Runnable {
                 } else if (component.getName().equals("Botón 4") && event.getValue() == 1.0f) {
                     posicionPuntero--;
                     System.out.println(posicionPuntero);
+                } else if(component.getName().equals("Botón 1") && event.getValue() == 1.0f) {
+                    confirmarPulsado = true;
                 }
             }
         }
         System.out.println("No hay input!");
         posicionPuntero = 1;
+    }
+
+    public boolean isConfirmarPulsado() {
+        return confirmarPulsado;
+    }
+
+    public void setConfirmarPulsado(boolean confirmarPulsado) {
+        this.confirmarPulsado = confirmarPulsado;
     }
 
     public int getPosicionPuntero() {

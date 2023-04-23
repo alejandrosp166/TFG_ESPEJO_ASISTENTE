@@ -8,7 +8,7 @@ import javafx.scene.image.ImageView;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class RegistroController implements Initializable, Runnable {
+public class RegistroWinController implements Initializable, Runnable {
     @FXML
     private ImageView imgConfirmFaceId;
     @Override

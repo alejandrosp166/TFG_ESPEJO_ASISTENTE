@@ -10,15 +10,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.SceneAntialiasing;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringApplication;
-import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Controller;
 
 
@@ -30,7 +27,7 @@ import java.util.ResourceBundle;
  * Clase controlador Index
  */
 @Controller
-public class IndexController implements Initializable, Runnable {
+public class IndexWinController implements Initializable, Runnable {
     @FXML
     private TextField fieldUsuario;
     @FXML
@@ -45,6 +42,51 @@ public class IndexController implements Initializable, Runnable {
     private MandoControllerGeneral mandoControllerGeneral;
     @Autowired
     private ServiceUsuario serviceUsuario;
+
+    /**
+     * Valida el usuario según los datos que haya en el login
+     *
+     * @param e
+     */
+    public void iniciarSesion(ActionEvent e) {
+        // Guardamos los datos del usuario
+        String username = fieldUsuario.getText();
+        String password = fieldPassword.getText();
+        // Validamos los datos del usuario
+        if (serviceUsuario.validarUsuario(username, password)) {
+            System.out.println("Entro");
+        } else {
+            System.out.println("No entro");
+        }
+    }
+
+    /**
+     * Accede a la página de registro
+     *
+     * @param e
+     */
+    public void registrarse(ActionEvent e) {
+        cambiarVentana(e, getClass(), "/vistas/registro.fxml");
+    }
+
+    private void cambiarVentana(ActionEvent e, Class<?> c, String resource) {
+        try {
+            Parent root = FXMLLoader.load(c.getResource(resource));
+            Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    /**
+     * @param e
+     */
+    public void iniciarSesionFaceId(ActionEvent e) {
+
+    }
 
     /**
      * El método initialize en JavaFX se utiliza para inicializar un controlador de vista después de que se hayan establecido todos los objetos de la vista.
@@ -79,14 +121,26 @@ public class IndexController implements Initializable, Runnable {
                         case 3 -> Platform.runLater(() -> {
                             btnIniciarSesion.setBorder(borde);
                             btnIniciarSesion.requestFocus();
+                            if (mandoControllerGeneral.isConfirmarPulsado()) {
+                                mandoControllerGeneral.setConfirmarPulsado(false);
+                                btnIniciarSesion.fire();
+                            }
                         });
                         case 4 -> Platform.runLater(() -> {
                             btnIniciarSesionFaceId.setBorder(borde);
                             btnIniciarSesionFaceId.requestFocus();
+                            if (mandoControllerGeneral.isConfirmarPulsado()) {
+                                mandoControllerGeneral.setConfirmarPulsado(false);
+                                btnIniciarSesionFaceId.fire();
+                            }
                         });
                         case 5 -> Platform.runLater(() -> {
                             btnRegistro.setBorder(borde);
                             btnRegistro.requestFocus();
+                            if (mandoControllerGeneral.isConfirmarPulsado()) {
+                                mandoControllerGeneral.setConfirmarPulsado(false);
+                                btnRegistro.fire();
+                            }
                         });
                     }
                     Thread.sleep(100);
@@ -105,42 +159,5 @@ public class IndexController implements Initializable, Runnable {
         Thread hiloCambioInterfaz = new Thread(task);
         hiloCambioInterfaz.setDaemon(true);
         hiloCambioInterfaz.start();
-    }
-
-    /**
-     * Valida el usuario según los datos que haya en el login
-     *
-     * @param e
-     */
-    public void iniciarSesion(ActionEvent e) {
-        // Guardamos los datos del usuario
-        String username = fieldUsuario.getText();
-        String password = fieldPassword.getText();
-        // Validamos los datos del usuario
-        if (serviceUsuario.validarUsuario(username, password)) {
-            System.out.println("Entro");
-        } else {
-            System.out.println("No entro");
-        }
-    }
-
-    /**
-     * @param e
-     */
-    public void iniciarSesionFaceId(ActionEvent e) {
-
-    }
-
-    /**
-     * Accede a la página de registro
-     *
-     * @param e
-     */
-    public void registrarse(ActionEvent e) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/vistas/registro.fxml"));
-        Stage stage = (Stage) ((Node)e.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
     }
 }
