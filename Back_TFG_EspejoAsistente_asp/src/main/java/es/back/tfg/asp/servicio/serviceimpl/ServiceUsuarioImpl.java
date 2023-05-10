@@ -1,50 +1,44 @@
 package es.back.tfg.asp.servicio.serviceimpl;
 
-import es.back.tfg.asp.modelo.dto.DTOUsuario;
-import es.back.tfg.asp.modelo.entidades.CredencialesUsuario;
-import es.back.tfg.asp.modelo.entidades.Usuario;
+import es.back.tfg.asp.modelo.converters.ConverterUsuario;
+import es.back.tfg.asp.modelo.dto.in.DTOUsuarioIn;
+import es.back.tfg.asp.modelo.dto.out.DTOUsuarioOut;
 import es.back.tfg.asp.repositorio.RepositorioUsuario;
-import es.back.tfg.asp.servicio.iservice.ServiceCredenciales;
 import es.back.tfg.asp.servicio.iservice.ServiceUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Objects;
+import java.util.List;
 
 @Service
 public class ServiceUsuarioImpl implements ServiceUsuario {
     @Autowired
     private RepositorioUsuario repositorioUsuario;
     @Autowired
-    private ServiceCredenciales serviceCredenciales;
+    private ConverterUsuario converterUsuario;
 
     @Override
-    public DTOUsuario registrarUsuario(DTOUsuario usuario) {
+    public List<DTOUsuarioOut> obtenerUsuarios() {
         return null;
     }
 
     @Override
-    public boolean validarUsuario(String username, String pass) {
-        /*
-        FALTAN HACER VALIDACIONES DE LOS DATOS QUE INTRODUCE EL USUARIO PARA VALIDAR TODAS LAS EXCEPCIONES
-         */
-        boolean acceso = false;
-        // Obtenemos el usuario por su username
-        Usuario usuario = repositorioUsuario.buscarPorUsername(username);
-        // Comprobamos que el usuario existe
-        if (Objects.nonNull(usuario)) {
-            // Obtenemos las credenciales de ese usuario
-            CredencialesUsuario credenciales = serviceCredenciales.obtenerCredencialesPorIdUsuario(usuario);
-            // Comprobamos si existen credenciales para ese usuario y si coinciden con las credenciales pasadas por parámetro
-            if (Objects.nonNull(credenciales) && credenciales.getPassword().equals(pass)) {
-                acceso = true;
-            }
-        }
-        return acceso;
+    public DTOUsuarioOut obtenerUsuarioPorId(String uuid) {
+        return null;
     }
 
     @Override
-    public boolean validarUsuarioFaceId() {
-        return false;
+    public DTOUsuarioOut guardarUsuario(DTOUsuarioIn dtoUsuarioIn) {
+        return null;
+    }
+
+    @Override
+    public DTOUsuarioOut actualizarUsuario(DTOUsuarioIn dtoUsuarioIn, String uuid) {
+        return null;
+    }
+
+    @Override
+    public void eliminarUsuario(String uuid) {
+
     }
 }

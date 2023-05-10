@@ -10,8 +10,10 @@ public class Usuario {
     @Id
     @Column(name = "id_usuario")
     private int idUsuario;
-    @Column(name = "username")
     private String username;
+    private String nombre;
+    private String apellidos;
+    private String email;
     @Column(name = "es_admin")
     private boolean esAdmin;
     @OneToOne(mappedBy = "idUsuario")
