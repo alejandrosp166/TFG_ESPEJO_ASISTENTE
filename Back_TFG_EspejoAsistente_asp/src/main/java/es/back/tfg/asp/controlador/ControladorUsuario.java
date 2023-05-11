@@ -15,10 +15,17 @@ import java.util.List;
 public class ControladorUsuario {
     @Autowired
     private ServiceUsuario serviceUsuario;
+
     @GetMapping
     public ResponseEntity<List<DTOUsuarioOut>> obtenerTodosLosUsuarios() {
         List<DTOUsuarioOut> listUsuarios = serviceUsuario.obtenerUsuarios();
         return ResponseEntity.status(HttpStatus.OK).body(listUsuarios);
+    }
+
+    @PostMapping
+    public ResponseEntity<DTOUsuarioOut> guardarUsuario(@RequestBody DTOUsuarioIn dtoUsuarioIn) {
+        DTOUsuarioOut dtoUsuarioOut = serviceUsuario.guardarUsuario(dtoUsuarioIn);
+        return ResponseEntity.status(HttpStatus.CREATED).body(dtoUsuarioOut);
     }
 
     @GetMapping("/{uuid}")
@@ -27,17 +34,12 @@ public class ControladorUsuario {
         return ResponseEntity.status(HttpStatus.OK).body(dtoUsuarioOut);
     }
 
-    @PostMapping
-    public ResponseEntity<DTOUsuarioOut> guardarUsuario(@PathVariable DTOUsuarioIn dtoUsuarioIn) {
-        DTOUsuarioOut dtoUsuarioOut = serviceUsuario.guardarUsuario(dtoUsuarioIn);
-        return ResponseEntity.status(HttpStatus.CREATED).body(dtoUsuarioOut);
-    }
-
     @PutMapping("/{uuid}")
     public ResponseEntity<DTOUsuarioOut> actualizarUsuario(@RequestBody DTOUsuarioIn dtoUsuarioIn, @PathVariable String uuid) {
         DTOUsuarioOut dtoUsuarioOut = serviceUsuario.actualizarUsuario(dtoUsuarioIn, uuid);
         return ResponseEntity.status(HttpStatus.OK).body(dtoUsuarioOut);
     }
+
     @DeleteMapping()
     public ResponseEntity<String> eliminarUsuario(String uuid) {
         serviceUsuario.eliminarUsuario(uuid);

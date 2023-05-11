@@ -10,6 +10,7 @@ public class Usuario {
     @Id
     @Column(name = "id_usuario")
     private int idUsuario;
+    private String uuid;
     private String username;
     private String nombre;
     private String apellidos;
