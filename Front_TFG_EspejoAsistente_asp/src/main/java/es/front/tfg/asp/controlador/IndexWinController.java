@@ -1,5 +1,6 @@
 package es.front.tfg.asp.controlador;
 
+import es.front.tfg.asp.servicio.iservice.IServiceEquipo;
 import es.front.tfg.asp.utils.Utiles;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
@@ -43,6 +44,8 @@ public class IndexWinController implements Initializable {
     // @Autowired
     // private ServiceUsuario serviceUsuario;
     @Autowired
+    private IServiceEquipo serviceEquipo;
+    @Autowired
     private Utiles utiles;
     private boolean cambioVentana;
     private Thread hiloCambioInterfaz;
@@ -82,8 +85,9 @@ public class IndexWinController implements Initializable {
     }
 
     public void registrarse(ActionEvent e) {
-        hiloCambioInterfaz.interrupt();
-        cambiarVentana(e, getClass(), "/vistas/registro.fxml");
+        serviceEquipo.obtenerEquipos();
+        // hiloCambioInterfaz.interrupt();
+        // cambiarVentana(e, getClass(), "/vistas/registro.fxml");
     }
 
     private void cambiarVentana(ActionEvent e, Class<?> c, String resource) {
