@@ -4,8 +4,6 @@ import lombok.Data;
 
 @Data
 public class DTOUsuarioIn {
-    private int idUsuario;
-    private String uuid;
     private String username;
     private String nombre;
     private String apellidos;

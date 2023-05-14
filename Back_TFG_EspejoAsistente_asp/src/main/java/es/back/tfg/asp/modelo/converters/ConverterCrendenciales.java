@@ -14,9 +14,9 @@ public class ConverterCrendenciales {
     private RepositorioUsuario repositorioUsuario;
     public CredencialesUsuario dtoInAEntidad(DTOCredencialesIn dtoCredencialesIn, Usuario u) {
         CredencialesUsuario credencialesUsuario = new CredencialesUsuario();
-        credencialesUsuario.setIdCredenciales(dtoCredencialesIn.getIdCredenciales());
         credencialesUsuario.setPassword(dtoCredencialesIn.getPassword());
-        credencialesUsuario.setIdUsuario(u);
+        // ESTO DE AQUÍ HAY QUE HACERLO DESPUÉS DE QUE EL USUARIO SE HAYA GUARDADO EN LA BASE DE DATOS
+        credencialesUsuario.setUuIdUsuario(u);
         return credencialesUsuario;
     }
 

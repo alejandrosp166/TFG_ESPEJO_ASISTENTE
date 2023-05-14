@@ -4,7 +4,6 @@ import lombok.Data;
 
 @Data
 public class DTOCredencialesIn {
-    private int idCredenciales;
     private String password;
     private int idUsuario;
 }

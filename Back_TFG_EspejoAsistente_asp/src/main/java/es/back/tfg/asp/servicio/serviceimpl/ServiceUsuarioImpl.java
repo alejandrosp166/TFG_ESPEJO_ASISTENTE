@@ -11,32 +11,34 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class ServiceUsuarioImpl implements ServiceUsuario {
     @Autowired
     private RepositorioUsuario repositorioUsuario;
     @Autowired
-    RepositorioCredenciales repositorioCredenciales;
+    private RepositorioCredenciales repositorioCredenciales;
     @Autowired
     private ConverterUsuario converterUsuario;
 
     @Override
     public List<DTOUsuarioOut> obtenerUsuarios() {
-        return  converterUsuario.listaEntidadesAListaDTO(repositorioUsuario.findAll());
+        return converterUsuario.listaEntidadesAListaDTO(repositorioUsuario.findAll());
     }
 
     @Override
     public DTOUsuarioOut obtenerUsuarioPorId(String uuid) {
-        Usuario usuario = repositorioUsuario.findUsuarioByUuid(uuid);
+        Usuario usuario = repositorioUsuario.findById(null).orElseThrow(() -> new RuntimeException("ERROR"));
         return converterUsuario.entidadADTOOut(usuario);
     }
 
     @Override
     public DTOUsuarioOut guardarUsuario(DTOUsuarioIn dtoUsuario) {
-        Usuario usuario = converterUsuario.dtoInAEntidad(dtoUsuario);
+        // Usuario usuario = converterUsuario.dtoInAEntidad(dtoUsuario);
+        Usuario usuario = new Usuario();
         repositorioUsuario.save(usuario);
-        repositorioCredenciales.save(usuario.getCredenciales());
+        // repositorioCredenciales.save(usuario.getCredenciales());
         return converterUsuario.entidadADTOOut(usuario);
     }
 
@@ -47,6 +49,6 @@ public class ServiceUsuarioImpl implements ServiceUsuario {
 
     @Override
     public void eliminarUsuario(String uuid) {
-        repositorioUsuario.deleteUsuarioByUuid(uuid);
+        repositorioUsuario.deleteById(null);
     }
 }

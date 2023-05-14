@@ -22,19 +22,25 @@ public class ConverterUsuario {
 
     public Usuario dtoInAEntidad(DTOUsuarioIn dtoUsuarioIn) {
         Usuario usuario = new Usuario();
-        usuario.setIdUsuario(dtoUsuarioIn.getIdUsuario());
         usuario.setNombre(dtoUsuarioIn.getNombre());
         usuario.setApellidos(dtoUsuarioIn.getApellidos());
         usuario.setEmail(dtoUsuarioIn.getEmail());
-        usuario.setUuid(dtoUsuarioIn.getUuid());
         usuario.setUsername(dtoUsuarioIn.getUsername());
-        usuario.setEsAdmin(dtoUsuarioIn.isEsAdmin());
-        usuario.setCredenciales(converterCrendenciales.dtoInAEntidad(dtoUsuarioIn.getDtoCredencialesIn(), usuario));
+        usuario.setAdmin(dtoUsuarioIn.isEsAdmin());
+        // ESTO HAY QUE HACERLO DESPUÉS DE QUE SE GUARDE EL USUARIO EN LA BASE DE DATOS
+        usuario.setCredencialesUsuario(converterCrendenciales.dtoInAEntidad(dtoUsuarioIn.getDtoCredencialesIn(), usuario));
         return usuario;
     }
 
     public DTOUsuarioOut entidadADTOOut(Usuario usuarioEntidad) {
-        return null;
+        DTOUsuarioOut dtoUsuarioOut = new DTOUsuarioOut();
+        // dtoUsuarioOut.setUuid(usuarioEntidad.getUuid());
+        dtoUsuarioOut.setNombre(usuarioEntidad.getUsername());
+        dtoUsuarioOut.setApellidos(usuarioEntidad.getApellidos());
+        dtoUsuarioOut.setEmail(usuarioEntidad.getEmail());
+        dtoUsuarioOut.setEsAdmin(usuarioEntidad.isAdmin());
+        // dtoUsuarioOut.setUuidCredenciales(usuarioEntidad.getCredenciales().getUuid());
+        return dtoUsuarioOut;
     }
 
     public List<DTOUsuarioOut> listaEntidadesAListaDTO(List<Usuario> usuarios) {
