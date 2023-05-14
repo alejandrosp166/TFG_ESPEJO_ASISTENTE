@@ -1,13 +1,17 @@
 package es.back.tfg.asp.modelo.entidades;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
+
+import java.util.UUID;
+
 
 @Entity
-@Data
-@EqualsAndHashCode(callSuper = true)
 @Table(name = "usuario")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 public class Usuario extends UuId {
     private String username;
     private String nombre;
@@ -15,6 +19,18 @@ public class Usuario extends UuId {
     private String email;
     @Column(name = "es_admin")
     private boolean admin;
-    @OneToOne(mappedBy = "uuIdUsuario")
+    @OneToOne(mappedBy = "usuario")
     private CredencialesUsuario credencialesUsuario;
+
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "uuid='" + super.uuid + '\'' +
+                ", username='" + username + '\'' +
+                ", nombre='" + nombre + '\'' +
+                ", apellidos='" + apellidos + '\'' +
+                ", email='" + email + '\'' +
+                ", admin=" + admin +
+                '}';
+    }
 }

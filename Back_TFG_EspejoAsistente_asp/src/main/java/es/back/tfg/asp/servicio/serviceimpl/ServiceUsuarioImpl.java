@@ -3,6 +3,7 @@ package es.back.tfg.asp.servicio.serviceimpl;
 import es.back.tfg.asp.modelo.converters.ConverterUsuario;
 import es.back.tfg.asp.modelo.dto.in.DTOUsuarioIn;
 import es.back.tfg.asp.modelo.dto.out.DTOUsuarioOut;
+import es.back.tfg.asp.modelo.entidades.CredencialesUsuario;
 import es.back.tfg.asp.modelo.entidades.Usuario;
 import es.back.tfg.asp.repositorio.RepositorioCredenciales;
 import es.back.tfg.asp.repositorio.RepositorioUsuario;
@@ -24,21 +25,22 @@ public class ServiceUsuarioImpl implements ServiceUsuario {
 
     @Override
     public List<DTOUsuarioOut> obtenerUsuarios() {
-        return converterUsuario.listaEntidadesAListaDTO(repositorioUsuario.findAll());
+        return converterUsuario.listaEntidadesAListaDTOOut(repositorioUsuario.findAll());
     }
 
     @Override
     public DTOUsuarioOut obtenerUsuarioPorId(String uuid) {
-        Usuario usuario = repositorioUsuario.findById(null).orElseThrow(() -> new RuntimeException("ERROR"));
+        Usuario usuario = repositorioUsuario.findById(UUID.fromString(uuid)).orElseThrow(() -> new RuntimeException("ERROR"));
         return converterUsuario.entidadADTOOut(usuario);
     }
 
     @Override
     public DTOUsuarioOut guardarUsuario(DTOUsuarioIn dtoUsuario) {
-        // Usuario usuario = converterUsuario.dtoInAEntidad(dtoUsuario);
-        Usuario usuario = new Usuario();
+        Usuario usuario = converterUsuario.dtoInAEntidad(dtoUsuario);
+        CredencialesUsuario credencialesUsuario = new CredencialesUsuario(dtoUsuario.getPassword(), usuario);
         repositorioUsuario.save(usuario);
-        // repositorioCredenciales.save(usuario.getCredenciales());
+        usuario.setCredencialesUsuario(credencialesUsuario);
+        repositorioCredenciales.save(credencialesUsuario);
         return converterUsuario.entidadADTOOut(usuario);
     }
 
@@ -49,6 +51,6 @@ public class ServiceUsuarioImpl implements ServiceUsuario {
 
     @Override
     public void eliminarUsuario(String uuid) {
-        repositorioUsuario.deleteById(null);
+        repositorioUsuario.deleteById(UUID.fromString(uuid));
     }
 }

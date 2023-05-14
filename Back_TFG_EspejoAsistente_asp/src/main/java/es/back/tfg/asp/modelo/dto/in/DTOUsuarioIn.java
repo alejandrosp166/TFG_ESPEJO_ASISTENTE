@@ -8,6 +8,6 @@ public class DTOUsuarioIn {
     private String nombre;
     private String apellidos;
     private String email;
-    private boolean esAdmin;
-    private DTOCredencialesIn dtoCredencialesIn;
+    private boolean admin;
+    private String password;
 }
