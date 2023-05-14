@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.SceneAntialiasing;
 import javafx.stage.Stage;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +23,10 @@ public class Utiles {
         try {
             FXMLLoader loader = new FXMLLoader(c.getResource(resource));
             loader.setControllerFactory(applicationContext::getBean);
-            Parent root = loader.load();
             Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
+            Scene scene = new Scene(loader.load(), 800, 800, false, SceneAntialiasing.BALANCED);
             stage.setScene(scene);
+            stage.setFullScreenExitHint("");
             // stage.setFullScreen(true);
             stage.show();
         } catch (IOException ex) {

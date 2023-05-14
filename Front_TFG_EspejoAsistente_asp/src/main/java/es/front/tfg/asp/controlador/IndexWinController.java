@@ -41,8 +41,6 @@ public class IndexWinController implements Initializable {
     private Button btnRegistro;
     @Autowired
     private MandoControllerGeneral mandoControllerGeneral;
-    // @Autowired
-    // private ServiceUsuario serviceUsuario;
     @Autowired
     private IServiceEquipo serviceEquipo;
     @Autowired
@@ -67,17 +65,9 @@ public class IndexWinController implements Initializable {
     }
 
     public void iniciarSesion(ActionEvent e) {
-        // Guardamos los datos del usuario
-        String username = fieldUsuario.getText();
-        String password = fieldPassword.getText();
-        // Validamos los datos del usuario
-        // serviceUsuario.validarUsuario(username, password)
-        if (true) {
-            hiloCambioInterfaz.interrupt();
-            cambiarVentana(e, getClass(), "/vistas/clima.fxml");
-        } else {
-            lblErrorUsername.setText("No Inicio Sesión");
-        }
+        // LLAMAR AL SERVICE DE LOGIN
+        hiloCambioInterfaz.interrupt();
+        cambiarVentana(e, getClass(), "/vistas/clima.fxml");
     }
 
     public void iniciarSesionFaceId(ActionEvent e) {
@@ -85,9 +75,9 @@ public class IndexWinController implements Initializable {
     }
 
     public void registrarse(ActionEvent e) {
-        serviceEquipo.obtenerEquipos();
-        // hiloCambioInterfaz.interrupt();
-        // cambiarVentana(e, getClass(), "/vistas/registro.fxml");
+        // serviceEquipo.obtenerEquipos();
+        hiloCambioInterfaz.interrupt();
+        cambiarVentana(e, getClass(), "/vistas/registro.fxml");
     }
 
     private void cambiarVentana(ActionEvent e, Class<?> c, String resource) {

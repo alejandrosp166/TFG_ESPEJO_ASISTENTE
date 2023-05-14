@@ -6,7 +6,7 @@ import es.back.tfg.asp.modelo.dto.out.DTOUsuarioOut;
 
 import java.util.List;
 
-public interface ServiceUsuario {
+public interface IServiceUsuario {
     void eliminarUsuario(String uuid);
     DTOUsuarioOut actualizarUsuario(DTOUsuarioIn dtoUsuario, String uuid);
     DTOUsuarioOut guardarUsuario(DTOUsuarioIn dtoUsuario);

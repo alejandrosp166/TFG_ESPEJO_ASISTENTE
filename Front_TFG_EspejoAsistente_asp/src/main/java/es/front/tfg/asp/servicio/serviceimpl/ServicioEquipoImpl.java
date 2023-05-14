@@ -1,18 +1,15 @@
 package es.front.tfg.asp.servicio.serviceimpl;
 
-import com.sun.net.httpserver.Headers;
 import es.front.tfg.asp.servicio.iservice.IServiceEquipo;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.util.EntityUtils;
+
+import org.apache.hc.client5.http.classic.HttpClient;
+import org.apache.hc.client5.http.classic.methods.HttpGet;
+import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
+import org.apache.hc.core5.http.HttpResponse;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 @Service
 public class ServicioEquipoImpl implements IServiceEquipo {
-
     @Override
     public void obtenerEquipos() {
         try {
@@ -23,8 +20,8 @@ public class ServicioEquipoImpl implements IServiceEquipo {
             request.setHeader("x-rapidapi-key", "" + apiKey);
             request.addHeader("content-type", "application/json");
             HttpResponse response = client.execute(request);
-            String responseBody = EntityUtils.toString(response.getEntity());
-            System.out.println(responseBody);
+            //String responseBody = EntityUtils.toString(response.getEntity());
+            //System.out.println(responseBody);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -7,7 +7,7 @@ import es.back.tfg.asp.modelo.entidades.CredencialesUsuario;
 import es.back.tfg.asp.modelo.entidades.Usuario;
 import es.back.tfg.asp.repositorio.RepositorioCredenciales;
 import es.back.tfg.asp.repositorio.RepositorioUsuario;
-import es.back.tfg.asp.servicio.iservice.ServiceUsuario;
+import es.back.tfg.asp.servicio.iservice.IServiceUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class ServiceUsuarioImpl implements ServiceUsuario {
+public class IServiceUsuarioImpl implements IServiceUsuario {
     @Autowired
     private RepositorioUsuario repositorioUsuario;
     @Autowired
@@ -37,16 +37,20 @@ public class ServiceUsuarioImpl implements ServiceUsuario {
     @Override
     public DTOUsuarioOut guardarUsuario(DTOUsuarioIn dtoUsuario) {
         Usuario usuario = converterUsuario.dtoInAEntidad(dtoUsuario);
-        CredencialesUsuario credencialesUsuario = new CredencialesUsuario(dtoUsuario.getPassword(), usuario);
         repositorioUsuario.save(usuario);
-        usuario.setCredencialesUsuario(credencialesUsuario);
-        repositorioCredenciales.save(credencialesUsuario);
         return converterUsuario.entidadADTOOut(usuario);
     }
 
     @Override
     public DTOUsuarioOut actualizarUsuario(DTOUsuarioIn dtoUsuario, String uuid) {
-        return null;
+        Usuario usuario = repositorioUsuario.findById(UUID.fromString(uuid)).orElseThrow(() -> new RuntimeException("ERROR"));
+        usuario.setUsername(dtoUsuario.getUsername());
+        usuario.setNombre(dtoUsuario.getNombre());
+        usuario.setApellidos(dtoUsuario.getApellidos());
+        usuario.setAdmin(dtoUsuario.isAdmin());
+        usuario.setEmail(dtoUsuario.getEmail());
+        repositorioUsuario.save(usuario);
+        return converterUsuario.entidadADTOOut(usuario);
     }
 
     @Override
