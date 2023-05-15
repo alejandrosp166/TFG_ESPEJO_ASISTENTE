@@ -7,16 +7,18 @@ import java.util.UUID;
 
 
 @Entity
-@Table(name = "usuario")
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@Table(name = "usuario")
 public class Usuario extends UuId {
     private String username;
     private String nombre;
     private String apellidos;
     private String email;
+    private String tokenSeguridad;
+    private String codigoVerificacionCambioContrasenna;
     @Column(name = "es_admin")
     private boolean admin;
     @OneToOne(mappedBy = "usuario")

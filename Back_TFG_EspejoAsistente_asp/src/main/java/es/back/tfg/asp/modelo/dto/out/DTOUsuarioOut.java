@@ -12,5 +12,7 @@ public class DTOUsuarioOut {
     private String apellidos;
     private String email;
     private boolean esAdmin;
+    private String tokenSeguridad;
+    private String codigoVerificacionCambioContrasenna;
     private UUID uuidCredenciales;
 }

@@ -30,6 +30,8 @@ public class ConverterUsuario {
         dtoUsuarioOut.setApellidos(usuarioEntidad.getApellidos());
         dtoUsuarioOut.setEmail(usuarioEntidad.getEmail());
         dtoUsuarioOut.setEsAdmin(usuarioEntidad.isAdmin());
+        dtoUsuarioOut.setTokenSeguridad(usuarioEntidad.getTokenSeguridad());
+        dtoUsuarioOut.setCodigoVerificacionCambioContrasenna(usuarioEntidad.getCodigoVerificacionCambioContrasenna());
         dtoUsuarioOut.setUuidCredenciales(usuarioEntidad.getCredencialesUsuario().getUuid());
         return dtoUsuarioOut;
     }

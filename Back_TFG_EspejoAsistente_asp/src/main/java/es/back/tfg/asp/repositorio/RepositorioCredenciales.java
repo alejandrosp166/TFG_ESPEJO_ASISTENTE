@@ -13,4 +13,6 @@ import java.util.UUID;
 @Repository
 public interface RepositorioCredenciales
         extends JpaRepository<CredencialesUsuario, UUID> {
+    @Query("SELECT c FROM CredencialesUsuario c WHERE uuid_usuario:=idUsuario")
+    public CredencialesUsuario findCredencialesByIdUsuario(@Param("idUsuario") String idUsuario);
 }

@@ -1,14 +1,16 @@
 package es.back.tfg.asp.modelo.entidades;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-@EqualsAndHashCode(callSuper = true)
 @Entity
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 @Table(name = "credenciales_usuario")
 public class CredencialesUsuario extends UuId{
     @Column(name = "password")
@@ -16,11 +18,6 @@ public class CredencialesUsuario extends UuId{
     @OneToOne
     @JoinColumn(name = "uuid_usuario")
     private Usuario usuario;
-
-    public CredencialesUsuario(String password, Usuario usuario) {
-        this.password = password;
-        this.usuario = usuario;
-    }
 
     @Override
     public String toString() {
