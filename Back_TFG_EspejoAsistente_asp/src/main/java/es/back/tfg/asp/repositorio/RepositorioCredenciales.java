@@ -7,12 +7,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
 import java.util.UUID;
 
 @Repository
 public interface RepositorioCredenciales
         extends JpaRepository<CredencialesUsuario, UUID> {
-    @Query("SELECT c FROM CredencialesUsuario c WHERE uuid_usuario:=idUsuario")
-    public CredencialesUsuario findCredencialesByIdUsuario(@Param("idUsuario") String idUsuario);
+    @Query("SELECT c FROM CredencialesUsuario c WHERE c.usuario=:usuario")
+    public CredencialesUsuario findCredencialesByIdUsuario(@Param("usuario") Usuario usuario);
 }

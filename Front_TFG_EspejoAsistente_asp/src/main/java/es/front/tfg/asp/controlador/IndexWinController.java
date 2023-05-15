@@ -26,19 +26,11 @@ public class IndexWinController implements Initializable {
     //@FXML
     //private ImageView imgLogoPrincipal;
     @FXML
-    private Label lblErrorUsername;
+    private Label lblErrorUsername, lblErrorPassword;
     @FXML
-    private Label lblErrorPassword;
+    private TextField fieldUsuario, fieldPassword;
     @FXML
-    private TextField fieldUsuario;
-    @FXML
-    private TextField fieldPassword;
-    @FXML
-    private Button btnIniciarSesion;
-    @FXML
-    private Button btnIniciarSesionFaceId;
-    @FXML
-    private Button btnRegistro;
+    private Button btnIniciarSesion, btnIniciarSesionFaceId, btnRegistro, btnOlvidarContrasenna;
     @Autowired
     private MandoControllerGeneral mandoControllerGeneral;
     @Autowired
@@ -66,23 +58,25 @@ public class IndexWinController implements Initializable {
 
     public void iniciarSesion(ActionEvent e) {
         // LLAMAR AL SERVICE DE LOGIN
-        hiloCambioInterfaz.interrupt();
         cambiarVentana(e, getClass(), "/vistas/clima.fxml");
     }
 
-    public void iniciarSesionFaceId(ActionEvent e) {
-
+    public void registrarse(ActionEvent e) {
+        cambiarVentana(e, getClass(), "/vistas/registro.fxml");
     }
 
-    public void registrarse(ActionEvent e) {
-        // serviceEquipo.obtenerEquipos();
-        hiloCambioInterfaz.interrupt();
-        cambiarVentana(e, getClass(), "/vistas/registro.fxml");
+    public void olvidarContrasenna(ActionEvent e) {
+        cambiarVentana(e, getClass(), "/vistas/enviar-mail.fxml");
     }
 
     private void cambiarVentana(ActionEvent e, Class<?> c, String resource) {
         cambioVentana = true;
+        hiloCambioInterfaz.interrupt();
         utiles.cambiarVentanaAplicacion(e, c, resource);
+    }
+
+    public void iniciarSesionFaceId(ActionEvent e) {
+
     }
 
     private void taskCambioInterfaz() {
@@ -104,6 +98,14 @@ public class IndexWinController implements Initializable {
                             // Añadir que abra el "TECLADO"
                         });
                         case 3 -> Platform.runLater(() -> {
+                            btnOlvidarContrasenna.setBorder(borde);
+                            btnOlvidarContrasenna.requestFocus();
+                            if (mandoControllerGeneral.isConfirmarPulsado()) {
+                                mandoControllerGeneral.setConfirmarPulsado(false);
+                                btnOlvidarContrasenna.fire();
+                            }
+                        });
+                        case 4 -> Platform.runLater(() -> {
                             btnIniciarSesion.setBorder(borde);
                             btnIniciarSesion.requestFocus();
                             if (mandoControllerGeneral.isConfirmarPulsado()) {
@@ -111,7 +113,7 @@ public class IndexWinController implements Initializable {
                                 btnIniciarSesion.fire();
                             }
                         });
-                        case 4 -> Platform.runLater(() -> {
+                        case 5 -> Platform.runLater(() -> {
                             btnIniciarSesionFaceId.setBorder(borde);
                             btnIniciarSesionFaceId.requestFocus();
                             if (mandoControllerGeneral.isConfirmarPulsado()) {
@@ -119,7 +121,7 @@ public class IndexWinController implements Initializable {
                                 btnIniciarSesionFaceId.fire();
                             }
                         });
-                        case 5 -> Platform.runLater(() -> {
+                        case 6 -> Platform.runLater(() -> {
                             btnRegistro.setBorder(borde);
                             btnRegistro.requestFocus();
                             if (mandoControllerGeneral.isConfirmarPulsado()) {
@@ -138,6 +140,7 @@ public class IndexWinController implements Initializable {
                 fieldUsuario.setBorder(borde);
                 fieldPassword.setBorder(borde);
                 btnRegistro.setBorder(borde);
+                btnOlvidarContrasenna.setBorder(borde);
                 btnIniciarSesion.setBorder(borde);
                 btnIniciarSesionFaceId.setBorder(borde);
             }

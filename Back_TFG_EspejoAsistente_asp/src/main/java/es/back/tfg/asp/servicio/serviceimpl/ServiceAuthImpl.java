@@ -15,7 +15,6 @@ import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMailMessage;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
@@ -54,8 +53,9 @@ public class ServiceAuthImpl implements IServiceAuth {
     @Override
     public void enviarEmailCambioPassword(DTOEnvioCorreoIn dtoEnvioCorreoIn) {
         String emailUsuario = dtoEnvioCorreoIn.getEmailPara();
+        String usernameUsuario = dtoEnvioCorreoIn.getUsername();
         // Buscamos al usuario por el email
-        Usuario usuario = repositorioUsuario.findUsuarioByUsername(emailUsuario);
+        Usuario usuario = repositorioUsuario.findUsuarioByUsername(usernameUsuario);
         // Comprobamos que exista y que el email no sea nulo
         if (Objects.nonNull(usuario) && Objects.nonNull(emailUsuario) && !emailUsuario.isEmpty()) {
             MimeMessage mensaje = javaMailSender.createMimeMessage();
@@ -68,7 +68,7 @@ public class ServiceAuthImpl implements IServiceAuth {
                 usuario.setCodigoVerificacionCambioContrasenna(codigoVerificacion);
                 usuario.setTokenSeguridad(UUID.randomUUID().toString().replace("-", ""));
                 // Sustituimos las variables en la plantilla
-                model.put("userName", dtoEnvioCorreoIn.getUsername());
+                model.put("userName", usernameUsuario);
                 model.put("url", emailUsuario);
                 model.put("codVerificacion", codigoVerificacion);
                 context.setVariables(model);
@@ -91,7 +91,7 @@ public class ServiceAuthImpl implements IServiceAuth {
         String tokenSeguridad = dtoCambioPasswordIn.getTokenSeguridad();
         Usuario usuario = repositorioUsuario.findUsuarioByTokenSeguridad(tokenSeguridad);
         if (Objects.nonNull(usuario) && Objects.nonNull(tokenSeguridad) && !tokenSeguridad.isEmpty()) {
-            CredencialesUsuario credencialesUsuario = repositorioCredenciales.findCredencialesByIdUsuario(usuario.getUuid().toString());
+            CredencialesUsuario credencialesUsuario = repositorioCredenciales.findCredencialesByIdUsuario(usuario);
             credencialesUsuario.setPassword(dtoCambioPasswordIn.getNuevaPassword());
             usuario.setTokenSeguridad(null);
             repositorioUsuario.save(usuario);

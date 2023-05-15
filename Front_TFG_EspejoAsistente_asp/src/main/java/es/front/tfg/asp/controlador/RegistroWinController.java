@@ -2,6 +2,7 @@ package es.front.tfg.asp.controlador;
 
 import es.front.tfg.asp.dtos.DTOUsuario;
 import es.front.tfg.asp.servicio.iservice.IServiceAuth;
+import es.front.tfg.asp.utils.Utiles;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
@@ -11,7 +12,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -51,20 +51,24 @@ public class RegistroWinController implements Initializable {
     @Autowired
     private MandoControllerGeneral mandoControllerGeneral;
     @Autowired
-    private IServiceAuth serviceUsuario;
-    private boolean cambiarVentana;
+    private IServiceAuth serviceAuth;
+    @Autowired
+    private Utiles utiles;
+    private boolean cambioVentana;
     private Thread hiloCambioInterfaz;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        cambiarVentana = false;
+        mandoControllerGeneral.setPosicionPuntero(1);
+        mandoControllerGeneral.setConfirmarPulsado(false);
+        cambioVentana = false;
         // imgConfirmFaceId.setImage(new Image("img/tickVerde.png"));
         taskCambioInterfaz();
     }
 
     public void completarRegistro(ActionEvent e) {
         DTOUsuario dtoUsuario = cargarUsuarioDatosVista();
-        serviceUsuario.registrarUsuario(dtoUsuario);
+        serviceAuth.registrarUsuario(dtoUsuario);
     }
 
     private DTOUsuario cargarUsuarioDatosVista() {
@@ -79,8 +83,10 @@ public class RegistroWinController implements Initializable {
         return new DTOUsuario(username, nombre, apellidos, email, admin, password);
     }
 
-    private void interrumpirHilo() {
+    private void cambiarVentana(ActionEvent e, Class<?> c, String resource) {
+        cambioVentana = true;
         hiloCambioInterfaz.interrupt();
+        utiles.cambiarVentanaAplicacion(e, c, resource);
     }
 
     private void taskCambioInterfaz() {
@@ -88,7 +94,7 @@ public class RegistroWinController implements Initializable {
             @Override
             protected Void call() throws Exception {
                 Border borde = new Border(new BorderStroke(Color.BLUE, BorderStrokeStyle.SOLID, new CornerRadii(20), new BorderWidths(3)));
-                while (!cambiarVentana) {
+                while (!cambioVentana) {
                     eliminarBordes();
                     switch (mandoControllerGeneral.getPosicionPuntero()) {
                         case 1 -> Platform.runLater(() -> {
