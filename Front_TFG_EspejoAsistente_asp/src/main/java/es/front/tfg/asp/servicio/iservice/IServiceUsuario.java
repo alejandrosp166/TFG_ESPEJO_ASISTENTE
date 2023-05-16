@@ -1,5 +1,7 @@
 package es.front.tfg.asp.servicio.iservice;
 
-public interface IServiceUsuario {
+import es.front.tfg.asp.dtos.DTOUsuario;
 
+public interface IServiceUsuario {
+    public DTOUsuario obtenerUsuarioPorCodigoVerificacion(String codigo);
 }

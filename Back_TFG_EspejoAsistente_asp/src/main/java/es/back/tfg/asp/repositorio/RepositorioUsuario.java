@@ -17,6 +17,9 @@ public interface RepositorioUsuario
     @Query("SELECT u FROM Usuario u WHERE u.email=:email")
     Usuario finfUsuarioByEmail(@Param("email") String email);
 
+    @Query("SELECT u FROM Usuario u WHERE u.codigoVerificacionCambioContrasenna=:codigoVerificacion")
+    Usuario findUsuarioByCodigoVerificacion(@Param("codigoVerificacion") String codigoVerificacion);
+
     @Query("SELECT u FROM Usuario u WHERE u.tokenSeguridad=:tokenSeguridad")
     Usuario findUsuarioByTokenSeguridad(@Param("tokenSeguridad") String tokenSeguridad);
 }

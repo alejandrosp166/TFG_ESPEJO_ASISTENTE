@@ -34,6 +34,12 @@ public class ControladorUsuario {
         return ResponseEntity.status(HttpStatus.OK).body(dtoUsuarioOut);
     }
 
+    @GetMapping("/obtener-por-codigo-verificacion/{codigo}")
+    public ResponseEntity<DTOUsuarioOut> obtenerUsuarioPorCodigoVerificacion(@PathVariable String codigo) {
+        DTOUsuarioOut dtoUsuarioOut = IServiceUsuario.obtenerUsuarioPorCodigoVerificacion(codigo);
+        return ResponseEntity.status(HttpStatus.OK).body(dtoUsuarioOut);
+    }
+
     @PutMapping("/{uuid}")
     public ResponseEntity<DTOUsuarioOut> actualizarUsuario(@RequestBody DTOUsuarioIn dtoUsuarioIn, @PathVariable String uuid) {
         DTOUsuarioOut dtoUsuarioOut = IServiceUsuario.actualizarUsuario(dtoUsuarioIn, uuid);

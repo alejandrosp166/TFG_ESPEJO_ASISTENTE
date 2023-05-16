@@ -35,6 +35,12 @@ public class IServiceUsuarioImpl implements IServiceUsuario {
     }
 
     @Override
+    public DTOUsuarioOut obtenerUsuarioPorCodigoVerificacion(String codigo) {
+        Usuario usuario = repositorioUsuario.findUsuarioByCodigoVerificacion(codigo);
+        return converterUsuario.entidadADTOOut(usuario);
+    }
+
+    @Override
     public DTOUsuarioOut guardarUsuario(DTOUsuarioIn dtoUsuario) {
         Usuario usuario = converterUsuario.dtoInAEntidad(dtoUsuario);
         repositorioUsuario.save(usuario);

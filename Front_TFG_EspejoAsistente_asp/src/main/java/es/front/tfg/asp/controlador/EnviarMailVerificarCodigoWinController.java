@@ -1,7 +1,9 @@
 package es.front.tfg.asp.controlador;
 
 import es.front.tfg.asp.dtos.DTOEnvioCorreo;
+import es.front.tfg.asp.dtos.DTOUsuario;
 import es.front.tfg.asp.servicio.iservice.IServiceAuth;
+import es.front.tfg.asp.servicio.iservice.IServiceUsuario;
 import es.front.tfg.asp.utils.Utiles;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
@@ -16,10 +18,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 @Controller
-public class CodigoVerificacionWinController implements Initializable {
+public class EnviarMailVerificarCodigoWinController implements Initializable {
     @FXML
     private TextField fieldCodigo, fieldEmail;
     @FXML
@@ -30,6 +33,8 @@ public class CodigoVerificacionWinController implements Initializable {
     private Utiles utiles;
     @Autowired
     private IServiceAuth serviceAuth;
+    @Autowired
+    private IServiceUsuario serviceUsuario;
     private boolean cambioVentana;
     private Thread hiloCambioInterfaz;
 
@@ -44,12 +49,17 @@ public class CodigoVerificacionWinController implements Initializable {
     public void enviarMail(ActionEvent e) {
         // llamar al servicio para enviar el mail
         serviceAuth.enviarMailRecuperacion(new DTOEnvioCorreo(fieldEmail.getText(), "nombre"));
-        // AVISAR CUANDO SE HAGA
+        // AVISAR CUANDO SE HAGA AL USUARIO
     }
 
     public void verificarCodigo(ActionEvent e) {
-        // llama el servicio para verificar el código y cambia a la ventana de cambiar-pass
-        cambiarVentana(e, getClass(), "/vistas/cambiar-pass.fxml");
+        // AQUÍ CUANDO TENGO EL USUARIO TENGO QUE RECUPERAR TAMBIÉN EL TOKEN
+        DTOUsuario usuario = serviceUsuario.obtenerUsuarioPorCodigoVerificacion(fieldCodigo.getText());
+        if(Objects.nonNull(usuario)) {
+            cambiarVentana(e, getClass(), "/vistas/cambiar-pass.fxml");
+        } else {
+            // AVISAR AL USUARIO DE QUE NO EXISTE ESE CÓDIGO
+        }
     }
 
     private void cambiarVentana(ActionEvent e, Class<?> c, String resource) {
