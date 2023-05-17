@@ -28,12 +28,12 @@ public class ControladorAuth {
     @PostMapping("/enviar-mail-recuperacion")
     public ResponseEntity<String> enviarMailRecuperacion(@RequestBody DTOEnvioCorreoIn dtoEnvioCorreoIn) {
         serviceAuth.enviarEmailCambioPassword(dtoEnvioCorreoIn);
-        return ResponseEntity.status(HttpStatus.OK).body("Correo enviado con éxito");
+        return ResponseEntity.status(HttpStatus.CREATED).body("Correo enviado con éxito");
     }
 
     @PostMapping("/cambiar-password")
     public ResponseEntity<String> cambiarContrasennaUsuario(@RequestBody DTOCambioPasswordIn dtoCambioPasswordIn) {
         serviceAuth.cambiarPassword(dtoCambioPasswordIn);
-        return ResponseEntity.status(HttpStatus.OK).body("Contraseña cambiada con éxito");
+        return ResponseEntity.status(HttpStatus.CREATED).body("Contraseña cambiada con éxito");
     }
 }

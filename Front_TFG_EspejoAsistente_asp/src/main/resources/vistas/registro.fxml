@@ -84,7 +84,7 @@
                </font>
             </Button>
             <ComboBox fx:id="cmbLocalizacion" prefHeight="54.0" prefWidth="300.0" style="-fx-background-radius: 20;" GridPane.columnIndex="4" GridPane.rowIndex="19" />
-            <ComboBox fx:id="cmbEquipoFav" prefHeight="65.0" prefWidth="272.0" style="-fx-background-radius: 20;" GridPane.columnIndex="6" GridPane.rowIndex="19" />
+            <ComboBox fx:id="cmbEquipoFav" prefHeight="49.0" prefWidth="298.0" style="-fx-background-radius: 20;" GridPane.columnIndex="6" GridPane.rowIndex="19" />
             <Label prefHeight="105.0" prefWidth="346.0" text="REGISTRO" textFill="WHITE" GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.rowIndex="3">
                <font>
                   <Font name="System Bold" size="72.0" />
@@ -110,6 +110,7 @@
                   <Font name="Courier New" size="24.0" />
                </font>
             </TextField>
+            <Button fx:id="btnVolver" mnemonicParsing="false" onAction="#volver" prefHeight="47.0" prefWidth="102.0" text="Button" GridPane.columnIndex="9" GridPane.rowIndex="22" />
             </children>
         </GridPane>
     </children>

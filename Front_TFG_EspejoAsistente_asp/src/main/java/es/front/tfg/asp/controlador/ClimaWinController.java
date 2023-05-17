@@ -15,17 +15,17 @@ import java.util.ResourceBundle;
 
 public class ClimaWinController implements Initializable, Runnable {
     @FXML
-    private Label lblHora;
-    @FXML
-    private Label lblDiaMesAnio;
+    private Label lblHora, lblDiaMesAnio;
     @Autowired
     private MandoControllerGeneral mandoControllerGeneral;
-    private boolean cambiarVentana;
+    private boolean cambioVentana;
     private Thread hiloCambioInterfaz;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        cambiarVentana = false;
+        mandoControllerGeneral.setPosicionPuntero(1);
+        mandoControllerGeneral.setConfirmarPulsado(false);
+        cambioVentana = false;
         this.run();
     }
 
@@ -34,7 +34,7 @@ public class ClimaWinController implements Initializable, Runnable {
         Task<Void> task = new Task<>() {
             @Override
             protected Void call() throws Exception {
-                while (!cambiarVentana) {
+                while (!cambioVentana) {
                     Platform.runLater(() -> {
                         LocalDateTime tiempo = LocalDateTime.now();
                         lblHora.setText(obtenerHoraActual(tiempo));

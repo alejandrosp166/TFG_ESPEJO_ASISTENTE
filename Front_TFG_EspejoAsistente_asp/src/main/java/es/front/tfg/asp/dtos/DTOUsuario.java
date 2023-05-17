@@ -12,4 +12,6 @@ public class DTOUsuario {
     private String email;
     private boolean admin;
     private String password;
+    private String tokenSeguridad;
+    private String codigoVerificacionCambioContrasenna;
 }

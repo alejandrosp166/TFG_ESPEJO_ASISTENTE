@@ -3,6 +3,8 @@ package es.front.tfg.asp.controlador;
 import es.front.tfg.asp.dtos.DTOCambioPassword;
 import es.front.tfg.asp.dtos.DTOUsuario;
 import es.front.tfg.asp.servicio.iservice.IServiceAuth;
+import es.front.tfg.asp.servicio.iservice.IServiceUsuario;
+import es.front.tfg.asp.utils.Utiles;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
@@ -26,7 +28,12 @@ public class CambiarPassWinController implements Initializable {
     private Button btnCambiarContrasenna;
     @Autowired
     private MandoControllerGeneral mandoControllerGeneral;
+    @Autowired
     private IServiceAuth serviceAuth;
+    @Autowired
+    private IServiceUsuario serviceUsuario;
+    @Autowired
+    private Utiles utiles;
     private boolean cambioVentana;
     private Thread hiloCambioInterfaz;
 
@@ -41,10 +48,17 @@ public class CambiarPassWinController implements Initializable {
     public void cambiarContrasenna(ActionEvent e) {
         String nuevaPass = fieldPassword1.getText();
         if (nuevaPass.equals(fieldPassword2.getText())) {
-            serviceAuth.cambiarContrasenna(new DTOCambioPassword("token", nuevaPass));
+            serviceAuth.cambiarContrasenna(new DTOCambioPassword(utiles.obtenerTokenSeguridad(), nuevaPass));
+            cambiarVentana(e, getClass(), "/vistas/index.fxml");
         } else {
             // Las contraseñas no son iguales
         }
+    }
+
+    private void cambiarVentana(ActionEvent e, Class<?> c, String resource) {
+        cambioVentana = true;
+        hiloCambioInterfaz.interrupt();
+        utiles.cambiarVentanaAplicacion(e, c, resource);
     }
 
     private void taskCambioInterfaz() {

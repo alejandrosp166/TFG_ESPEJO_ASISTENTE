@@ -29,25 +29,13 @@ public class RegistroWinController implements Initializable {
     @FXML
     private ImageView imgConfirmFaceId;
     @FXML
-    private TextField fieldUsuario;
-    @FXML
-    private TextField fieldNombre;
-    @FXML
-    private TextField fieldApellidos;
-    @FXML
-    private TextField fieldEmail;
+    private TextField fieldUsuario, fieldPassword, fieldNombre, fieldApellidos, fieldEmail;
     @FXML
     private CheckBox checkEsAdmin;
     @FXML
-    private TextField fieldPassword;
+    private Button btnRegistroRostro, btnCompletarRegistro, btnVolver;
     @FXML
-    private Button btnRegistroRostro;
-    @FXML
-    private Button btnCompletarRegistro;
-    @FXML
-    private ComboBox cmbLocalizacion;
-    @FXML
-    private ComboBox cmbEquipoFav;
+    private ComboBox cmbLocalizacion, cmbEquipoFav;
     @Autowired
     private MandoControllerGeneral mandoControllerGeneral;
     @Autowired
@@ -66,6 +54,10 @@ public class RegistroWinController implements Initializable {
         taskCambioInterfaz();
     }
 
+    public void volver(ActionEvent e) {
+        cambiarVentana(e, getClass(), "/vistas/index.fxml");
+    }
+
     public void completarRegistro(ActionEvent e) {
         DTOUsuario dtoUsuario = cargarUsuarioDatosVista();
         serviceAuth.registrarUsuario(dtoUsuario);
@@ -80,7 +72,7 @@ public class RegistroWinController implements Initializable {
         boolean admin = checkEsAdmin.isSelected();
         // String ciudad = cmbLocalizacion.getValue().toString();
         // String equipo = cmbEquipoFav.getValue().toString();
-        return new DTOUsuario(username, nombre, apellidos, email, admin, password);
+        return new DTOUsuario(username, nombre, apellidos, email, admin, password, null, null);
     }
 
     private void cambiarVentana(ActionEvent e, Class<?> c, String resource) {
@@ -141,6 +133,10 @@ public class RegistroWinController implements Initializable {
                                 btnCompletarRegistro.fire();
                             }
                         });
+                    }
+                    if (mandoControllerGeneral.isCancelarPulsado()) {
+                        mandoControllerGeneral.setCancelarPulsado(false);
+                        btnVolver.fire();
                     }
                     Thread.sleep(100);
                 }

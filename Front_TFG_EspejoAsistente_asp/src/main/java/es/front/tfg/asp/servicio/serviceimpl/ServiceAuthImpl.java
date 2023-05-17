@@ -1,6 +1,5 @@
 package es.front.tfg.asp.servicio.serviceimpl;
 
-import com.google.gson.Gson;
 import es.front.tfg.asp.dtos.DTOCambioPassword;
 import es.front.tfg.asp.dtos.DTOEnvioCorreo;
 import es.front.tfg.asp.dtos.DTOUsuario;
@@ -10,7 +9,6 @@ import es.front.tfg.asp.utils.PeticionesHTTP;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 
 @Service
 public class ServiceAuthImpl implements IServiceAuth {
@@ -19,16 +17,16 @@ public class ServiceAuthImpl implements IServiceAuth {
     private PeticionesHTTP peticionesHTTP;
     @Override
     public void registrarUsuario(DTOUsuario dtoUsuario) {
-        peticionesHTTP.post(dtoUsuario, URL + "/registro");
+        peticionesHTTP.post(dtoUsuario, URL + "/registro", DTOUsuario.class);
     }
 
     @Override
     public void enviarMailRecuperacion(DTOEnvioCorreo dtoEnvioCorreo) {
-        peticionesHTTP.post(dtoEnvioCorreo, URL + "/enviar-mail-recuperacion");
+        peticionesHTTP.post(dtoEnvioCorreo, URL + "/enviar-mail-recuperacion", null);
     }
 
     @Override
     public void cambiarContrasenna(DTOCambioPassword dtoCambioPassword) {
-        peticionesHTTP.post(dtoCambioPassword, URL + "/cambiar-password");
+        peticionesHTTP.post(dtoCambioPassword, URL + "/cambiar-password", null);
     }
 }

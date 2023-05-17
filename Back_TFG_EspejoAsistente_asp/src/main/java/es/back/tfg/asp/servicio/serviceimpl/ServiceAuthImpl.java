@@ -94,6 +94,7 @@ public class ServiceAuthImpl implements IServiceAuth {
             CredencialesUsuario credencialesUsuario = repositorioCredenciales.findCredencialesByIdUsuario(usuario);
             credencialesUsuario.setPassword(dtoCambioPasswordIn.getNuevaPassword());
             usuario.setTokenSeguridad(null);
+            usuario.setCodigoVerificacionCambioContrasenna(null);
             repositorioUsuario.save(usuario);
             repositorioCredenciales.save(credencialesUsuario);
         }

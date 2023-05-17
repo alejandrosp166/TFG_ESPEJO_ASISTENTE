@@ -47,15 +47,13 @@ public class EnviarMailVerificarCodigoWinController implements Initializable {
     }
 
     public void enviarMail(ActionEvent e) {
-        // llamar al servicio para enviar el mail
         serviceAuth.enviarMailRecuperacion(new DTOEnvioCorreo(fieldEmail.getText(), "nombre"));
-        // AVISAR CUANDO SE HAGA AL USUARIO
     }
 
     public void verificarCodigo(ActionEvent e) {
-        // AQUÍ CUANDO TENGO EL USUARIO TENGO QUE RECUPERAR TAMBIÉN EL TOKEN
         DTOUsuario usuario = serviceUsuario.obtenerUsuarioPorCodigoVerificacion(fieldCodigo.getText());
-        if(Objects.nonNull(usuario)) {
+        if (Objects.nonNull(usuario)) {
+            utiles.guardarTokenSeguridad(usuario.getTokenSeguridad());
             cambiarVentana(e, getClass(), "/vistas/cambiar-pass.fxml");
         } else {
             // AVISAR AL USUARIO DE QUE NO EXISTE ESE CÓDIGO

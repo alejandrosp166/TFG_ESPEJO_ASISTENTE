@@ -12,13 +12,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
+import java.io.*;
+import java.util.Properties;
 
 @Component
 @Setter
 public class Utiles {
     @Autowired
     private ConfigurableApplicationContext applicationContext;
+
     public void cambiarVentanaAplicacion(ActionEvent e, Class<?> c, String resource) {
         try {
             FXMLLoader loader = new FXMLLoader(c.getResource(resource));
@@ -32,5 +34,27 @@ public class Utiles {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+    }
+
+    public void guardarTokenSeguridad(String token) {
+        Properties properties = new Properties();
+        properties.setProperty("token", token);
+        try (OutputStream escribir = new FileOutputStream("session-config.properties")) {
+            properties.store(escribir, null);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String obtenerTokenSeguridad() {
+        String token = null;
+        try (InputStream leer = new FileInputStream("session-config.properties")) {
+            Properties properties = new Properties();
+            properties.load(leer);
+            token = properties.getProperty("token");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return token;
     }
 }

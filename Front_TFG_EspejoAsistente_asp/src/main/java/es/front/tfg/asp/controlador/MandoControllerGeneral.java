@@ -14,6 +14,7 @@ public class MandoControllerGeneral implements Runnable {
     private net.java.games.input.Controller ps4Input;
     private int posicionPuntero;
     private boolean confirmarPulsado;
+    private boolean cancelarPulsado;
     public MandoControllerGeneral() {
         posicionPuntero = 1;
     }
@@ -52,6 +53,8 @@ public class MandoControllerGeneral implements Runnable {
                     System.out.println(posicionPuntero);
                 } else if(component.getName().equals("Botón 1") && event.getValue() == 1.0f) {
                     confirmarPulsado = true;
+                } else if(component.getName().equals("Botón 13") && event.getValue() == 1.0f) {
+                    cancelarPulsado = true;
                 }
             }
         }
@@ -73,5 +76,13 @@ public class MandoControllerGeneral implements Runnable {
 
     public void setPosicionPuntero(int posicionPuntero) {
         this.posicionPuntero = posicionPuntero;
+    }
+
+    public boolean isCancelarPulsado() {
+        return cancelarPulsado;
+    }
+
+    public void setCancelarPulsado(boolean cancelarPulsado) {
+        this.cancelarPulsado = cancelarPulsado;
     }
 }
