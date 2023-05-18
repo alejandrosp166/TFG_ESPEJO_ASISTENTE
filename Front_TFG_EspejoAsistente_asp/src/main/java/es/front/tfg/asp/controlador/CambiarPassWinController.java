@@ -1,9 +1,9 @@
 package es.front.tfg.asp.controlador;
 
 import es.front.tfg.asp.dtos.DTOCambioPassword;
-import es.front.tfg.asp.dtos.DTOUsuario;
 import es.front.tfg.asp.servicio.iservice.IServiceAuth;
 import es.front.tfg.asp.servicio.iservice.IServiceUsuario;
+import es.front.tfg.asp.utils.MandoControllerGeneral;
 import es.front.tfg.asp.utils.Utiles;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
@@ -11,14 +11,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.net.URL;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class CambiarPassWinController implements Initializable {

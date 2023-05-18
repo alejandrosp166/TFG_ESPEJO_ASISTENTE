@@ -1,4 +1,4 @@
-package es.front.tfg.asp.controlador;
+package es.front.tfg.asp.utils;
 
 import net.java.games.input.Component;
 import net.java.games.input.ControllerEnvironment;
@@ -53,7 +53,7 @@ public class MandoControllerGeneral implements Runnable {
                     System.out.println(posicionPuntero);
                 } else if(component.getName().equals("Botón 1") && event.getValue() == 1.0f) {
                     confirmarPulsado = true;
-                } else if(component.getName().equals("Botón 13") && event.getValue() == 1.0f) {
+                } else if(component.getName().equals("Botón 9") && event.getValue() == 1.0f) {
                     cancelarPulsado = true;
                 }
             }

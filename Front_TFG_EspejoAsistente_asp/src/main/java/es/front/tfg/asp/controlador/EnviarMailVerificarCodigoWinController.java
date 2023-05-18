@@ -4,6 +4,7 @@ import es.front.tfg.asp.dtos.DTOEnvioCorreo;
 import es.front.tfg.asp.dtos.DTOUsuario;
 import es.front.tfg.asp.servicio.iservice.IServiceAuth;
 import es.front.tfg.asp.servicio.iservice.IServiceUsuario;
+import es.front.tfg.asp.utils.MandoControllerGeneral;
 import es.front.tfg.asp.utils.Utiles;
 import javafx.application.Platform;
 import javafx.concurrent.Task;

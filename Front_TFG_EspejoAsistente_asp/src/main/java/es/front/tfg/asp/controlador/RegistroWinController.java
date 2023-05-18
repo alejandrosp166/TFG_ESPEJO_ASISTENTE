@@ -2,6 +2,7 @@ package es.front.tfg.asp.controlador;
 
 import es.front.tfg.asp.dtos.DTOUsuario;
 import es.front.tfg.asp.servicio.iservice.IServiceAuth;
+import es.front.tfg.asp.utils.MandoControllerGeneral;
 import es.front.tfg.asp.utils.Utiles;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
@@ -134,10 +135,12 @@ public class RegistroWinController implements Initializable {
                             }
                         });
                     }
-                    if (mandoControllerGeneral.isCancelarPulsado()) {
-                        mandoControllerGeneral.setCancelarPulsado(false);
-                        btnVolver.fire();
-                    }
+                    Platform.runLater(() -> {
+                        if (mandoControllerGeneral.isCancelarPulsado()) {
+                            mandoControllerGeneral.setCancelarPulsado(false);
+                            btnVolver.fire();
+                        }
+                    });
                     Thread.sleep(100);
                 }
                 return null;

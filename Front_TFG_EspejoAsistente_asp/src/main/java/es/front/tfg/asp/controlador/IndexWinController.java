@@ -1,6 +1,7 @@
 package es.front.tfg.asp.controlador;
 
 import es.front.tfg.asp.servicio.iservice.IServiceEquipo;
+import es.front.tfg.asp.utils.MandoControllerGeneral;
 import es.front.tfg.asp.utils.Utiles;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
