@@ -11,6 +11,7 @@ public interface IServiceUsuario {
     DTOUsuarioOut actualizarUsuario(DTOUsuarioIn dtoUsuario, String uuid);
     DTOUsuarioOut guardarUsuario(DTOUsuarioIn dtoUsuario);
     List<DTOUsuarioOut> obtenerUsuarios();
+    DTOUsuarioOut obtenerUsuarioPorUsername(String username);
     DTOUsuarioOut obtenerUsuarioPorId(String uuid);
     DTOUsuarioOut obtenerUsuarioPorCodigoVerificacion(String codigo);
 }

@@ -16,4 +16,13 @@ public class ServiceUsuarioImpl implements IServiceUsuario {
     public DTOUsuario obtenerUsuarioPorCodigoVerificacion(String codigo) {
         return peticionesHTTP.get(URL + "/obtener-por-codigo-verificacion/" + codigo, DTOUsuario.class);
     }
+
+    @Override
+    public DTOUsuario obtenerUsuarioPorUsername(String username) {
+        return peticionesHTTP.get(URL + "/obtener-por-username/" + username, DTOUsuario.class);
+    }
+    @Override
+    public void actualizarUsuario(DTOUsuario usuario) {
+
+    }
 }

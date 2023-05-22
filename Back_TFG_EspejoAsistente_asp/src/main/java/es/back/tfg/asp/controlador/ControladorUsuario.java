@@ -40,6 +40,12 @@ public class ControladorUsuario {
         return ResponseEntity.status(HttpStatus.OK).body(dtoUsuarioOut);
     }
 
+    @GetMapping("/obtener-por-username/{username}")
+    public ResponseEntity<DTOUsuarioOut> obtenerUsuarioPorUsername(@PathVariable String username) {
+        DTOUsuarioOut dtoUsuarioOut = IServiceUsuario.obtenerUsuarioPorUsername(username);
+        return ResponseEntity.status(HttpStatus.OK).body(dtoUsuarioOut);
+    }
+
     @PutMapping("/{uuid}")
     public ResponseEntity<DTOUsuarioOut> actualizarUsuario(@RequestBody DTOUsuarioIn dtoUsuarioIn, @PathVariable String uuid) {
         DTOUsuarioOut dtoUsuarioOut = IServiceUsuario.actualizarUsuario(dtoUsuarioIn, uuid);

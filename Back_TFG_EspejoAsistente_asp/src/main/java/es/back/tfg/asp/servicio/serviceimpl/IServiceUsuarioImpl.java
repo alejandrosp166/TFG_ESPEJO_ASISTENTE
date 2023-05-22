@@ -33,6 +33,11 @@ public class IServiceUsuarioImpl implements IServiceUsuario {
         Usuario usuario = repositorioUsuario.findById(UUID.fromString(uuid)).orElseThrow(() -> new RuntimeException("ERROR"));
         return converterUsuario.entidadADTOOut(usuario);
     }
+    @Override
+    public DTOUsuarioOut obtenerUsuarioPorUsername(String username) {
+        Usuario usuario = repositorioUsuario.findUsuarioByUsername(username);
+        return converterUsuario.entidadADTOOut(usuario);
+    }
 
     @Override
     public DTOUsuarioOut obtenerUsuarioPorCodigoVerificacion(String codigo) {
