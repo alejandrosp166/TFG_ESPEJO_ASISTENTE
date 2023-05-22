@@ -27,8 +27,8 @@ public class Utiles {
     private MandoControllerGeneral mandoControllerGeneral;
     @Autowired
     private TaskCambioInterfaz taskCambioInterfaz;
-    private static Thread hiloMandoController;
-    private static Thread hiloTaskCambioInterfaz;
+    private Thread hiloMandoController;
+    private Thread hiloTaskCambioInterfaz;
 
     public void iniciarHilos() {
         if (!mandoControllerGeneral.isIniciado() && !taskCambioInterfaz.isIniciado()) {
