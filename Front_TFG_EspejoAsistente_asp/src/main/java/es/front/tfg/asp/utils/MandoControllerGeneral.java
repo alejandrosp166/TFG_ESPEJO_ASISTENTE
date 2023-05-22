@@ -1,5 +1,6 @@
 package es.front.tfg.asp.utils;
 
+import javafx.concurrent.Task;
 import net.java.games.input.Component;
 import net.java.games.input.ControllerEnvironment;
 import net.java.games.input.Event;
@@ -15,6 +16,7 @@ public class MandoControllerGeneral implements Runnable {
     private int posicionPuntero;
     private boolean confirmarPulsado;
     private boolean cancelarPulsado;
+    private boolean iniciado = false;
     public MandoControllerGeneral() {
         posicionPuntero = 1;
     }
@@ -39,6 +41,7 @@ public class MandoControllerGeneral implements Runnable {
     // Start Botón 9 // r1 Botón 5 // l1 botón 4 // panel Botón 13 // share Botón 8 // ps Botón 12
     @Override
     public void run() {
+        iniciado = true;
         while (hayInput()) {
             ps4Input.poll();
             EventQueue queue = ps4Input.getEventQueue();
@@ -47,10 +50,8 @@ public class MandoControllerGeneral implements Runnable {
                 Component component = event.getComponent();
                 if (component.getName().equals("Botón 5") && event.getValue() == 1.0f) {
                     posicionPuntero++;
-                    System.out.println(posicionPuntero);
                 } else if (component.getName().equals("Botón 4") && event.getValue() == 1.0f) {
                     posicionPuntero--;
-                    System.out.println(posicionPuntero);
                 } else if(component.getName().equals("Botón 1") && event.getValue() == 1.0f) {
                     confirmarPulsado = true;
                 } else if(component.getName().equals("Botón 9") && event.getValue() == 1.0f) {
@@ -60,6 +61,14 @@ public class MandoControllerGeneral implements Runnable {
         }
         System.out.println("No hay input!");
         posicionPuntero = 1;
+    }
+
+    public boolean isIniciado() {
+        return iniciado;
+    }
+
+    public void setIniciado(boolean iniciado) {
+        this.iniciado = iniciado;
     }
 
     public boolean isConfirmarPulsado() {

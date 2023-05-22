@@ -1,5 +1,6 @@
 package es.front.tfg.asp.utils;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -13,6 +14,8 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
 
 import java.io.*;
+import java.util.HashMap;
+import java.util.Objects;
 import java.util.Properties;
 
 @Component
@@ -20,6 +23,21 @@ import java.util.Properties;
 public class Utiles {
     @Autowired
     private ConfigurableApplicationContext applicationContext;
+    @Autowired
+    private MandoControllerGeneral mandoControllerGeneral;
+    @Autowired
+    private TaskCambioInterfaz taskCambioInterfaz;
+    private static Thread hiloMandoController;
+    private static Thread hiloTaskCambioInterfaz;
+
+    public void iniciarHilos() {
+        if (!mandoControllerGeneral.isIniciado() && !taskCambioInterfaz.isIniciado()) {
+            Thread hiloMandoController = new Thread(mandoControllerGeneral);
+            hiloMandoController.start();
+            Thread hiloTaskCambioInterfaz = new Thread(taskCambioInterfaz);
+            hiloTaskCambioInterfaz.start();
+        }
+    }
 
     public void cambiarVentanaAplicacion(ActionEvent e, Class<?> c, String resource) {
         try {

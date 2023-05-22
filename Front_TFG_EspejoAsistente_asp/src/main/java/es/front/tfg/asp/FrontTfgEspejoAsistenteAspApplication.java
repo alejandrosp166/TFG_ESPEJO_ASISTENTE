@@ -9,17 +9,19 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
+import java.util.HashMap;
+
 @SpringBootApplication
 public class FrontTfgEspejoAsistenteAspApplication extends Application {
     public static ConfigurableApplicationContext applicationContext;
 
     public static void main(String[] args) {
+        applicationContext = SpringApplication.run(FrontTfgEspejoAsistenteAspApplication.class, args);
         launch(args);
     }
 
     @Override
     public void start(Stage stage) throws Exception {
-        applicationContext = SpringApplication.run(getClass());
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/vistas/index.fxml"));
         loader.setControllerFactory(applicationContext::getBean);
         Scene scene = new Scene(loader.load(), 800, 800, false, SceneAntialiasing.BALANCED);

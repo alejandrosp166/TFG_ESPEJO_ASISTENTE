@@ -2,12 +2,14 @@ package es.front.tfg.asp.controlador;
 
 import es.front.tfg.asp.servicio.iservice.IServiceEquipo;
 import es.front.tfg.asp.utils.MandoControllerGeneral;
+import es.front.tfg.asp.utils.TaskCambioInterfaz;
 import es.front.tfg.asp.utils.Utiles;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -17,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import java.net.URL;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 /**
@@ -35,11 +38,11 @@ public class IndexWinController implements Initializable {
     @Autowired
     private MandoControllerGeneral mandoControllerGeneral;
     @Autowired
+    private TaskCambioInterfaz taskCambioInterfaz;
+    @Autowired
     private IServiceEquipo serviceEquipo;
     @Autowired
     private Utiles utiles;
-    private boolean cambioVentana;
-    private Thread hiloCambioInterfaz;
 
     /**
      * El método initialize en JavaFX se utiliza para inicializar un controlador de vista después de que se hayan establecido todos los objetos de la vista.
@@ -51,10 +54,8 @@ public class IndexWinController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         mandoControllerGeneral.setPosicionPuntero(1);
         mandoControllerGeneral.setConfirmarPulsado(false);
-        cambioVentana = false;
-        Thread hiloMando = new Thread(mandoControllerGeneral);
-        hiloMando.start();
-        taskCambioInterfaz();
+        taskCambioInterfaz.setListaComponentes(cargarComponentes());
+        utiles.iniciarHilos();
     }
 
     public void iniciarSesion(ActionEvent e) {
@@ -71,8 +72,6 @@ public class IndexWinController implements Initializable {
     }
 
     private void cambiarVentana(ActionEvent e, Class<?> c, String resource) {
-        cambioVentana = true;
-        hiloCambioInterfaz.interrupt();
         utiles.cambiarVentanaAplicacion(e, c, resource);
     }
 
@@ -80,73 +79,14 @@ public class IndexWinController implements Initializable {
 
     }
 
-    private void taskCambioInterfaz() {
-        Task<Void> task = new Task<>() {
-            @Override
-            protected Void call() throws Exception {
-                Border borde = new Border(new BorderStroke(Color.BLUE, BorderStrokeStyle.SOLID, new CornerRadii(20), new BorderWidths(3)));
-                while (!cambioVentana) {
-                    eliminarBordes();
-                    switch (mandoControllerGeneral.getPosicionPuntero()) {
-                        case 1 -> Platform.runLater(() -> {
-                            fieldUsuario.setBorder(borde);
-                            fieldUsuario.requestFocus();
-                            // Añadir que abra el "TECLADO"
-                        });
-                        case 2 -> Platform.runLater(() -> {
-                            fieldPassword.setBorder(borde);
-                            fieldPassword.requestFocus();
-                            // Añadir que abra el "TECLADO"
-                        });
-                        case 3 -> Platform.runLater(() -> {
-                            btnOlvidarContrasenna.setBorder(borde);
-                            btnOlvidarContrasenna.requestFocus();
-                            if (mandoControllerGeneral.isConfirmarPulsado()) {
-                                mandoControllerGeneral.setConfirmarPulsado(false);
-                                btnOlvidarContrasenna.fire();
-                            }
-                        });
-                        case 4 -> Platform.runLater(() -> {
-                            btnIniciarSesion.setBorder(borde);
-                            btnIniciarSesion.requestFocus();
-                            if (mandoControllerGeneral.isConfirmarPulsado()) {
-                                mandoControllerGeneral.setConfirmarPulsado(false);
-                                btnIniciarSesion.fire();
-                            }
-                        });
-                        case 5 -> Platform.runLater(() -> {
-                            btnIniciarSesionFaceId.setBorder(borde);
-                            btnIniciarSesionFaceId.requestFocus();
-                            if (mandoControllerGeneral.isConfirmarPulsado()) {
-                                mandoControllerGeneral.setConfirmarPulsado(false);
-                                btnIniciarSesionFaceId.fire();
-                            }
-                        });
-                        case 6 -> Platform.runLater(() -> {
-                            btnRegistro.setBorder(borde);
-                            btnRegistro.requestFocus();
-                            if (mandoControllerGeneral.isConfirmarPulsado()) {
-                                mandoControllerGeneral.setConfirmarPulsado(false);
-                                btnRegistro.fire();
-                            }
-                        });
-                    }
-                    Thread.sleep(100);
-                }
-                return null;
-            }
-
-            private void eliminarBordes() {
-                Border borde = new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(5), new BorderWidths(3)));
-                fieldUsuario.setBorder(borde);
-                fieldPassword.setBorder(borde);
-                btnRegistro.setBorder(borde);
-                btnOlvidarContrasenna.setBorder(borde);
-                btnIniciarSesion.setBorder(borde);
-                btnIniciarSesionFaceId.setBorder(borde);
-            }
-        };
-        hiloCambioInterfaz = new Thread(task);
-        hiloCambioInterfaz.start();
+    private Map<Integer, Node> cargarComponentes() {
+        return Map.ofEntries(
+                Map.entry(1, fieldUsuario),
+                Map.entry(2, fieldPassword),
+                Map.entry(3, btnOlvidarContrasenna),
+                Map.entry(4, btnIniciarSesion),
+                Map.entry(5, btnIniciarSesionFaceId),
+                Map.entry(6, btnRegistro)
+        );
     }
 }

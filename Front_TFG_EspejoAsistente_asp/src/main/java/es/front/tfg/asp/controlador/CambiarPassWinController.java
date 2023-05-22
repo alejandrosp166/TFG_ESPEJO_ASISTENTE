@@ -4,12 +4,14 @@ import es.front.tfg.asp.dtos.DTOCambioPassword;
 import es.front.tfg.asp.servicio.iservice.IServiceAuth;
 import es.front.tfg.asp.servicio.iservice.IServiceUsuario;
 import es.front.tfg.asp.utils.MandoControllerGeneral;
+import es.front.tfg.asp.utils.TaskCambioInterfaz;
 import es.front.tfg.asp.utils.Utiles;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
@@ -17,6 +19,7 @@ import javafx.scene.paint.Color;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.net.URL;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class CambiarPassWinController implements Initializable {
@@ -27,20 +30,20 @@ public class CambiarPassWinController implements Initializable {
     @Autowired
     private MandoControllerGeneral mandoControllerGeneral;
     @Autowired
+    private TaskCambioInterfaz taskCambioInterfaz;
+    @Autowired
     private IServiceAuth serviceAuth;
     @Autowired
     private IServiceUsuario serviceUsuario;
     @Autowired
     private Utiles utiles;
-    private boolean cambioVentana;
-    private Thread hiloCambioInterfaz;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         mandoControllerGeneral.setPosicionPuntero(1);
         mandoControllerGeneral.setConfirmarPulsado(false);
-        cambioVentana = false;
-        taskCambioInterfaz();
+        taskCambioInterfaz.setListaComponentes(cargarComponentes());
+        utiles.iniciarHilos();
     }
 
     public void cambiarContrasenna(ActionEvent e) {
@@ -54,49 +57,14 @@ public class CambiarPassWinController implements Initializable {
     }
 
     private void cambiarVentana(ActionEvent e, Class<?> c, String resource) {
-        cambioVentana = true;
-        hiloCambioInterfaz.interrupt();
         utiles.cambiarVentanaAplicacion(e, c, resource);
     }
 
-    private void taskCambioInterfaz() {
-        Task<Void> task = new Task<>() {
-            @Override
-            protected Void call() throws Exception {
-                Border borde = new Border(new BorderStroke(Color.BLUE, BorderStrokeStyle.SOLID, new CornerRadii(20), new BorderWidths(3)));
-                while (!cambioVentana) {
-                    eliminarBordes();
-                    switch (mandoControllerGeneral.getPosicionPuntero()) {
-                        case 1 -> Platform.runLater(() -> {
-                            fieldPassword1.setBorder(borde);
-                            fieldPassword1.requestFocus();
-                        });
-                        case 2 -> Platform.runLater(() -> {
-                            fieldPassword2.setBorder(borde);
-                            fieldPassword2.requestFocus();
-                        });
-                        case 3 -> Platform.runLater(() -> {
-                            btnCambiarContrasenna.setBorder(borde);
-                            btnCambiarContrasenna.requestFocus();
-                            if (mandoControllerGeneral.isConfirmarPulsado()) {
-                                mandoControllerGeneral.setConfirmarPulsado(false);
-                                btnCambiarContrasenna.fire();
-                            }
-                        });
-                    }
-                    Thread.sleep(100);
-                }
-                return null;
-            }
-
-            private void eliminarBordes() {
-                Border borde = new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(5), new BorderWidths(3)));
-                fieldPassword2.setBorder(borde);
-                fieldPassword1.setBorder(borde);
-                btnCambiarContrasenna.setBorder(borde);
-            }
-        };
-        hiloCambioInterfaz = new Thread(task);
-        hiloCambioInterfaz.start();
+    private Map<Integer, Node> cargarComponentes() {
+        return Map.ofEntries(
+                Map.entry(1, fieldPassword1),
+                Map.entry(2, fieldPassword2),
+                Map.entry(3, btnCambiarContrasenna)
+        );
     }
 }
