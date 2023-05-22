@@ -5,6 +5,7 @@ import org.apache.hc.client5.http.classic.HttpClient;
 import org.apache.hc.client5.http.classic.methods.HttpDelete;
 import org.apache.hc.client5.http.classic.methods.HttpGet;
 import org.apache.hc.client5.http.classic.methods.HttpPost;
+import org.apache.hc.client5.http.classic.methods.HttpPut;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
@@ -55,6 +56,25 @@ public class PeticionesHTTP {
             throw new RuntimeException(e);
         }
         return entidad;
+    }
+
+    public <T> void put(Object objeto, String url, Class<T> claseObjetoDevolver) {
+        T entidad = null;
+        try {
+            HttpPut peticion = new HttpPut(url);
+            String cuerpoPeticion = GSON_MAPPER.toJson(objeto);
+            StringEntity dto = new StringEntity(cuerpoPeticion);
+            peticion.setEntity(dto);
+            peticion.setHeader("Content-type", "application/json");
+            CloseableHttpResponse respuesta = client.execute(peticion);
+            if (respuesta.getCode() == 200) {
+                entidad = GSON_MAPPER.fromJson(EntityUtils.toString(respuesta.getEntity()), claseObjetoDevolver);
+            } else {
+                throw new RuntimeException("Error al hacer la petición PUT");
+            }
+        } catch (IOException | ParseException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void delete(String url) {

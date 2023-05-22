@@ -52,7 +52,15 @@ public class ConfiguracionWinController implements Initializable {
     }
 
     private DTOUsuario cargarUsuarioVista() {
-        return null;
+        String username = fieldUsuario.getText();
+        String password = ""; // TIENE QUE SER OTRO DTO
+        String nombre = fieldNombre.getText();
+        String apellidos = fieldApellidos.getText();
+        String email = fieldEmail.getText();
+        boolean admin = checkEsAdmin.isSelected();
+        // String ciudad = cmbLocalizacion.getValue().toString();
+        // String equipo = cmbEquipoFav.getValue().toString();
+        return new DTOUsuario(username, nombre, apellidos, email, admin, password, null, null);
     }
 
     private void cargarDatosUsuarioLogeado() {
