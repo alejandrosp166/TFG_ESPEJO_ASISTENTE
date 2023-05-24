@@ -2,6 +2,7 @@ package es.back.tfg.asp.servicio.serviceimpl;
 
 import es.back.tfg.asp.modelo.converters.ConverterUsuario;
 import es.back.tfg.asp.modelo.dto.in.DTOUsuarioIn;
+import es.back.tfg.asp.modelo.dto.in.DTOUsuarioInActualizar;
 import es.back.tfg.asp.modelo.dto.out.DTOUsuarioOut;
 import es.back.tfg.asp.modelo.entidades.CredencialesUsuario;
 import es.back.tfg.asp.modelo.entidades.Usuario;
@@ -53,7 +54,7 @@ public class IServiceUsuarioImpl implements IServiceUsuario {
     }
 
     @Override
-    public DTOUsuarioOut actualizarUsuario(DTOUsuarioIn dtoUsuario, String uuid) {
+    public DTOUsuarioOut actualizarUsuario(DTOUsuarioInActualizar dtoUsuario, String uuid) {
         Usuario usuario = repositorioUsuario.findById(UUID.fromString(uuid)).orElseThrow(() -> new RuntimeException("ERROR"));
         usuario.setUsername(dtoUsuario.getUsername());
         usuario.setNombre(dtoUsuario.getNombre());

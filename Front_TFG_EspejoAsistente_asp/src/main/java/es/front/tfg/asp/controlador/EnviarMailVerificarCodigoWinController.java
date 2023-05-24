@@ -1,22 +1,18 @@
 package es.front.tfg.asp.controlador;
 
-import es.front.tfg.asp.dtos.DTOEnvioCorreo;
-import es.front.tfg.asp.dtos.DTOUsuario;
+import es.front.tfg.asp.modelo.dtos.DTOEnvioCorreo;
+import es.front.tfg.asp.modelo.dtos.DTOUsuario;
 import es.front.tfg.asp.servicio.iservice.IServiceAuth;
 import es.front.tfg.asp.servicio.iservice.IServiceUsuario;
 import es.front.tfg.asp.utils.MandoControllerGeneral;
 import es.front.tfg.asp.utils.TaskCambioInterfaz;
 import es.front.tfg.asp.utils.Utiles;
-import javafx.application.Platform;
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -57,7 +53,7 @@ public class EnviarMailVerificarCodigoWinController implements Initializable {
     public void verificarCodigo(ActionEvent e) {
         DTOUsuario usuario = serviceUsuario.obtenerUsuarioPorCodigoVerificacion(fieldCodigo.getText());
         if (Objects.nonNull(usuario)) {
-            utiles.guardarTokenSeguridad(usuario.getTokenSeguridad());
+            utiles.guardarElementoPropiedades("token",usuario.getTokenSeguridad());
             cambiarVentana(e, getClass(), "/vistas/cambiar-pass.fxml");
         } else {
             // AVISAR AL USUARIO DE QUE NO EXISTE ESE CÓDIGO

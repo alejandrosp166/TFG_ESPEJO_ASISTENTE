@@ -26,7 +26,7 @@ public class ConverterUsuario {
         DTOUsuarioOut dtoUsuarioOut = new DTOUsuarioOut();
         dtoUsuarioOut.setUsername(usuarioEntidad.getUsername());
         dtoUsuarioOut.setUuid(usuarioEntidad.getUuid());
-        dtoUsuarioOut.setNombre(usuarioEntidad.getUsername());
+        dtoUsuarioOut.setNombre(usuarioEntidad.getNombre());
         dtoUsuarioOut.setApellidos(usuarioEntidad.getApellidos());
         dtoUsuarioOut.setEmail(usuarioEntidad.getEmail());
         dtoUsuarioOut.setEsAdmin(usuarioEntidad.isAdmin());

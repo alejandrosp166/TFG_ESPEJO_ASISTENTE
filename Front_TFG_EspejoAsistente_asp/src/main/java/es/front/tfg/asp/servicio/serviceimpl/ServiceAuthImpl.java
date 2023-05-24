@@ -1,8 +1,8 @@
 package es.front.tfg.asp.servicio.serviceimpl;
 
-import es.front.tfg.asp.dtos.DTOCambioPassword;
-import es.front.tfg.asp.dtos.DTOEnvioCorreo;
-import es.front.tfg.asp.dtos.DTOUsuario;
+import es.front.tfg.asp.modelo.dtos.DTOCambioPassword;
+import es.front.tfg.asp.modelo.dtos.DTOEnvioCorreo;
+import es.front.tfg.asp.modelo.dtos.DTOUsuario;
 import es.front.tfg.asp.servicio.iservice.IServiceAuth;
 
 import es.front.tfg.asp.utils.PeticionesHTTP;

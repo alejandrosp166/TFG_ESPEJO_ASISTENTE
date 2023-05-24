@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 import java.net.URL;
 import java.time.LocalDateTime;
@@ -14,6 +15,7 @@ import java.time.format.TextStyle;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+@Controller
 public class ClimaWinController implements Initializable, Runnable {
     @FXML
     private Label lblHora, lblDiaMesAnio;

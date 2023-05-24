@@ -1,10 +1,8 @@
 package es.front.tfg.asp.utils;
 
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.SceneAntialiasing;
 import javafx.stage.Stage;
@@ -14,8 +12,6 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
 
 import java.io.*;
-import java.util.HashMap;
-import java.util.Objects;
 import java.util.Properties;
 
 @Component
@@ -54,9 +50,9 @@ public class Utiles {
         }
     }
 
-    public void guardarTokenSeguridad(String token) {
+    public void guardarElementoPropiedades(String key, String contenido) {
         Properties properties = new Properties();
-        properties.setProperty("token", token);
+        properties.setProperty(key, contenido);
         try (OutputStream escribir = new FileOutputStream("session-config.properties")) {
             properties.store(escribir, null);
         } catch (IOException e) {
@@ -64,12 +60,12 @@ public class Utiles {
         }
     }
 
-    public String obtenerTokenSeguridad() {
+    public String obtenerElementoPropieades(String key) {
         String token = null;
         try (InputStream leer = new FileInputStream("session-config.properties")) {
             Properties properties = new Properties();
             properties.load(leer);
-            token = properties.getProperty("token");
+            token = properties.getProperty(key);
         } catch (IOException e) {
             e.printStackTrace();
         }

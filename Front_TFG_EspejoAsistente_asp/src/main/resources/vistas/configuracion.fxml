@@ -103,7 +103,7 @@
                         <Font name="Courier New" size="24.0" />
                     </font>
                 </TextField>
-                <Button fx:id="btnVolver" mnemonicParsing="false" onAction="#volver" prefHeight="47.0" prefWidth="102.0" GridPane.columnIndex="8" GridPane.rowIndex="21" />
+                <Button fx:id="btnVolver" mnemonicParsing="false" prefHeight="47.0" prefWidth="102.0" GridPane.columnIndex="8" GridPane.rowIndex="21" />
             </children>
         </GridPane>
     </children>

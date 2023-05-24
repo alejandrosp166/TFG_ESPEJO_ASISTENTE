@@ -1,6 +1,7 @@
 package es.front.tfg.asp.servicio.serviceimpl;
 
-import es.front.tfg.asp.dtos.DTOUsuario;
+import es.front.tfg.asp.modelo.dtos.DTOUsuario;
+import es.front.tfg.asp.modelo.response.ApiResponse;
 import es.front.tfg.asp.servicio.iservice.IServiceUsuario;
 import es.front.tfg.asp.utils.PeticionesHTTP;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ public class ServiceUsuarioImpl implements IServiceUsuario {
     private final String URL = "http://localhost:8080/v0/api/usuario";
     @Autowired
     private PeticionesHTTP peticionesHTTP;
+
 
     @Override
     public DTOUsuario obtenerUsuarioPorCodigoVerificacion(String codigo) {
@@ -23,7 +25,12 @@ public class ServiceUsuarioImpl implements IServiceUsuario {
     }
 
     @Override
-    public void actualizarUsuario(DTOUsuario usuario) {
-        peticionesHTTP.put(usuario, URL + "idUsuario", DTOUsuario.class);
+    public DTOUsuario obtenerUsuarioPorUuid(String uuid) {
+        return peticionesHTTP.get(URL + "/" + uuid, DTOUsuario.class);
+    }
+
+    @Override
+    public void actualizarUsuario(DTOUsuario usuario, String uuid) {
+        peticionesHTTP.put(usuario, URL + "/" + uuid, DTOUsuario.class);
     }
 }

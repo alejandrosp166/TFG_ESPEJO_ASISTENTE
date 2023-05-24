@@ -1,6 +1,6 @@
 package es.front.tfg.asp.controlador;
 
-import es.front.tfg.asp.dtos.DTOUsuario;
+import es.front.tfg.asp.modelo.dtos.DTOUsuario;
 import es.front.tfg.asp.servicio.iservice.IServiceUsuario;
 import es.front.tfg.asp.utils.MandoControllerGeneral;
 import es.front.tfg.asp.utils.TaskCambioInterfaz;
@@ -14,12 +14,13 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 import java.net.URL;
 import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
-
+@Controller
 public class ConfiguracionWinController implements Initializable {
     @FXML
     private TextField fieldUsuario, fieldNombre, fieldApellidos, fieldEmail;
@@ -40,7 +41,7 @@ public class ConfiguracionWinController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        cargarDatosUsuarioLogeado();
+        cargarDatosUsuarioLogeadoEnVista();
         mandoControllerGeneral.setPosicionPuntero(1);
         mandoControllerGeneral.setConfirmarPulsado(false);
         taskCambioInterfaz.setListaComponentes(cargarComponentes());
@@ -48,10 +49,10 @@ public class ConfiguracionWinController implements Initializable {
     }
 
     public void guardarConfig(ActionEvent e) {
-        serviceUsuario.actualizarUsuario(cargarUsuarioVista());
+        serviceUsuario.actualizarUsuario(obtenerDatosVista(), utiles.obtenerElementoPropieades("uuidUsuario"));
     }
 
-    private DTOUsuario cargarUsuarioVista() {
+    private DTOUsuario obtenerDatosVista() {
         String username = fieldUsuario.getText();
         String password = ""; // TIENE QUE SER OTRO DTO
         String nombre = fieldNombre.getText();
@@ -60,17 +61,17 @@ public class ConfiguracionWinController implements Initializable {
         boolean admin = checkEsAdmin.isSelected();
         // String ciudad = cmbLocalizacion.getValue().toString();
         // String equipo = cmbEquipoFav.getValue().toString();
-        return new DTOUsuario(username, nombre, apellidos, email, admin, password, null, null);
+        return new DTOUsuario(null, username, nombre, apellidos, email, admin, password, null, null);
     }
 
-    private void cargarDatosUsuarioLogeado() {
-        DTOUsuario usuario = serviceUsuario.obtenerUsuarioPorUsername("");
+    private void cargarDatosUsuarioLogeadoEnVista() {
+        DTOUsuario usuario = serviceUsuario.obtenerUsuarioPorUuid(utiles.obtenerElementoPropieades("uuidUsuario"));
         if (Objects.nonNull(usuario)) {
             fieldUsuario.setText(usuario.getUsername());
             fieldNombre.setText(usuario.getNombre());
             fieldApellidos.setText(usuario.getApellidos());
             fieldEmail.setText(usuario.getEmail());
-            checkEsAdmin.setSelected(usuario.isAdmin());
+            checkEsAdmin.setSelected(usuario.isEsAdmin());
             // cmbEquipoFav
             // cmbLocalizacion
         }

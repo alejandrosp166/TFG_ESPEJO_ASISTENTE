@@ -1,6 +1,8 @@
 package es.front.tfg.asp.controlador;
 
+import es.front.tfg.asp.modelo.dtos.DTOUsuario;
 import es.front.tfg.asp.servicio.iservice.IServiceEquipo;
+import es.front.tfg.asp.servicio.iservice.IServiceUsuario;
 import es.front.tfg.asp.utils.MandoControllerGeneral;
 import es.front.tfg.asp.utils.TaskCambioInterfaz;
 import es.front.tfg.asp.utils.Utiles;
@@ -40,7 +42,7 @@ public class IndexWinController implements Initializable {
     @Autowired
     private TaskCambioInterfaz taskCambioInterfaz;
     @Autowired
-    private IServiceEquipo serviceEquipo;
+    private IServiceUsuario serviceUsuario;
     @Autowired
     private Utiles utiles;
 
@@ -59,8 +61,11 @@ public class IndexWinController implements Initializable {
     }
 
     public void iniciarSesion(ActionEvent e) {
-        // LLAMAR AL SERVICE DE LOGIN
-        cambiarVentana(e, getClass(), "/vistas/clima.fxml");
+        DTOUsuario usuario = serviceUsuario.obtenerUsuarioPorUsername(fieldUsuario.getText());
+        if(true) {
+            utiles.guardarElementoPropiedades("uuidUsuario", usuario.getUuid());
+            cambiarVentana(e, getClass(), "/vistas/clima.fxml");
+        }
     }
 
     public void registrarse(ActionEvent e) {

@@ -1,6 +1,6 @@
 package es.front.tfg.asp.controlador;
 
-import es.front.tfg.asp.dtos.DTOUsuario;
+import es.front.tfg.asp.modelo.dtos.DTOUsuario;
 import es.front.tfg.asp.servicio.iservice.IServiceAuth;
 import es.front.tfg.asp.utils.MandoControllerGeneral;
 import es.front.tfg.asp.utils.TaskCambioInterfaz;
@@ -71,7 +71,7 @@ public class RegistroWinController implements Initializable {
         boolean admin = checkEsAdmin.isSelected();
         // String ciudad = cmbLocalizacion.getValue().toString();
         // String equipo = cmbEquipoFav.getValue().toString();
-        return new DTOUsuario(username, nombre, apellidos, email, admin, password, null, null);
+        return new DTOUsuario(null, username, nombre, apellidos, email, admin, password, null, null);
     }
 
     private void cambiarVentana(ActionEvent e, Class<?> c, String resource) {

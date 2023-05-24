@@ -1,6 +1,7 @@
 package es.back.tfg.asp.controlador;
 
 import es.back.tfg.asp.modelo.dto.in.DTOUsuarioIn;
+import es.back.tfg.asp.modelo.dto.in.DTOUsuarioInActualizar;
 import es.back.tfg.asp.modelo.dto.out.DTOUsuarioOut;
 import es.back.tfg.asp.servicio.iservice.IServiceUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +48,7 @@ public class ControladorUsuario {
     }
 
     @PutMapping("/{uuid}")
-    public ResponseEntity<DTOUsuarioOut> actualizarUsuario(@RequestBody DTOUsuarioIn dtoUsuarioIn, @PathVariable String uuid) {
+    public ResponseEntity<DTOUsuarioOut> actualizarUsuario(@RequestBody DTOUsuarioInActualizar dtoUsuarioIn, @PathVariable String uuid) {
         DTOUsuarioOut dtoUsuarioOut = IServiceUsuario.actualizarUsuario(dtoUsuarioIn, uuid);
         return ResponseEntity.status(HttpStatus.OK).body(dtoUsuarioOut);
     }

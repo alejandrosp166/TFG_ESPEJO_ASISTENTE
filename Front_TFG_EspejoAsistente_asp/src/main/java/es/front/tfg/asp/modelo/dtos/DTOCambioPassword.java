@@ -1,4 +1,4 @@
-package es.front.tfg.asp.dtos;
+package es.front.tfg.asp.modelo.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

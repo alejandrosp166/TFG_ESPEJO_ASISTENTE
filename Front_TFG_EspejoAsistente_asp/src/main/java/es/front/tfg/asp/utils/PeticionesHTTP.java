@@ -1,6 +1,7 @@
 package es.front.tfg.asp.utils;
 
 import com.google.gson.Gson;
+import es.front.tfg.asp.modelo.response.ApiResponse;
 import org.apache.hc.client5.http.classic.HttpClient;
 import org.apache.hc.client5.http.classic.methods.HttpDelete;
 import org.apache.hc.client5.http.classic.methods.HttpGet;
@@ -15,6 +16,7 @@ import org.apache.hc.core5.http.io.entity.StringEntity;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 
 @Component
 public class PeticionesHTTP {
@@ -50,7 +52,7 @@ public class PeticionesHTTP {
             if (respuesta.getCode() == 200) {
                 entidad = GSON_MAPPER.fromJson(EntityUtils.toString(respuesta.getEntity()), claseObjetoDevolver);
             } else {
-                throw new RuntimeException("Error al hacer la petición GET");
+                entidad = GSON_MAPPER.fromJson(EntityUtils.toString(respuesta.getEntity()), (Type) ApiResponse.class);
             }
         } catch (IOException | ParseException e) {
             throw new RuntimeException(e);
