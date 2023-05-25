@@ -10,4 +10,5 @@ public class DTOUsuarioIn {
     private String email;
     private boolean admin;
     private String password;
+    private String equipoFav;
 }

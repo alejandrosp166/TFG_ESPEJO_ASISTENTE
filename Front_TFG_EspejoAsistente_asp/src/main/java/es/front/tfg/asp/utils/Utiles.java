@@ -1,10 +1,14 @@
 package es.front.tfg.asp.utils;
 
+import es.front.tfg.asp.modelo.dtos.DTOEquipo;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.SceneAntialiasing;
+import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +16,9 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
 
 import java.io.*;
+import java.util.List;
 import java.util.Properties;
+import java.util.function.Function;
 
 @Component
 @Setter
@@ -48,6 +54,15 @@ public class Utiles {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+    }
+
+    public <T, R> void llenarCombobox(List<T> listaObjetos, ComboBox<R> comboBox, Function<T, R> map) {
+        ObservableList<R> observable = FXCollections.observableArrayList();
+        for (T objeto : listaObjetos) {
+            R nombre = map.apply(objeto);
+            observable.add(nombre);
+        }
+        comboBox.setItems(observable);
     }
 
     public void guardarElementoPropiedades(String key, String contenido) {

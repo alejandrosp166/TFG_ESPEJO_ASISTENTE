@@ -23,6 +23,8 @@ public class Usuario extends UuId {
     private boolean admin;
     @OneToOne(mappedBy = "usuario")
     private CredencialesUsuario credencialesUsuario;
+    @OneToOne(mappedBy = "usuario")
+    private Equipo equipo;
 
     @Override
     public String toString() {

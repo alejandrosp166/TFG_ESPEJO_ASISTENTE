@@ -1,6 +1,8 @@
 package es.back.tfg.asp.modelo.entidades;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,4 +22,7 @@ public class Equipo extends UuId{
     private int partidosGanados;
     private int partidosPerdidos;
     private int partidosEmpatados;
+    @OneToOne
+    @JoinColumn(name = "uuid_usuario")
+    private Usuario usuario;
 }

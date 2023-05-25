@@ -7,8 +7,10 @@ import es.back.tfg.asp.modelo.dto.in.DTOIniciarSesion;
 import es.back.tfg.asp.modelo.dto.in.DTOUsuarioIn;
 import es.back.tfg.asp.modelo.dto.out.DTOUsuarioOut;
 import es.back.tfg.asp.modelo.entidades.CredencialesUsuario;
+import es.back.tfg.asp.modelo.entidades.Equipo;
 import es.back.tfg.asp.modelo.entidades.Usuario;
 import es.back.tfg.asp.repositorio.RepositorioCredenciales;
+import es.back.tfg.asp.repositorio.RepositorioEquipo;
 import es.back.tfg.asp.repositorio.RepositorioUsuario;
 import es.back.tfg.asp.servicio.iservice.IServiceAuth;
 import jakarta.mail.MessagingException;
@@ -37,6 +39,8 @@ public class ServiceAuthImpl implements IServiceAuth {
     @Autowired
     private RepositorioCredenciales repositorioCredenciales;
     @Autowired
+    private RepositorioEquipo repositorioEquipo;
+    @Autowired
     private ConverterUsuario converterUsuario;
     @Value("${spring.mail.username}")
     private String emailRemitente;
@@ -45,9 +49,12 @@ public class ServiceAuthImpl implements IServiceAuth {
     public DTOUsuarioOut registrarUsuario(DTOUsuarioIn dtoUsuarioIn) {
         Usuario usuario = converterUsuario.dtoInAEntidad(dtoUsuarioIn);
         CredencialesUsuario credencialesUsuario = new CredencialesUsuario(dtoUsuarioIn.getPassword(), usuario);
+        Equipo equipo = new Equipo(dtoUsuarioIn.getEquipoFav(), 0, 0, 0, usuario);
         repositorioUsuario.save(usuario);
         usuario.setCredencialesUsuario(credencialesUsuario);
         repositorioCredenciales.save(credencialesUsuario);
+        usuario.setEquipo(equipo);
+        repositorioEquipo.save(equipo);
         return converterUsuario.entidadADTOOut(usuario);
     }
 

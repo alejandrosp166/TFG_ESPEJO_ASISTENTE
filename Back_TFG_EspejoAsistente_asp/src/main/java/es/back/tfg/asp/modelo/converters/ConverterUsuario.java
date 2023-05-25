@@ -33,6 +33,8 @@ public class ConverterUsuario {
         dtoUsuarioOut.setTokenSeguridad(usuarioEntidad.getTokenSeguridad());
         dtoUsuarioOut.setCodigoVerificacionCambioContrasenna(usuarioEntidad.getCodigoVerificacionCambioContrasenna());
         dtoUsuarioOut.setUuidCredenciales(usuarioEntidad.getCredencialesUsuario().getUuid());
+        dtoUsuarioOut.setEquipoFav(usuarioEntidad.getEquipo().getNombre());
+        dtoUsuarioOut.setUuidEquipo(usuarioEntidad.getEquipo().getUuid());
         return dtoUsuarioOut;
     }
 

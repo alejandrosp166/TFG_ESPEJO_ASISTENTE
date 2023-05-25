@@ -15,4 +15,6 @@ public class DTOUsuarioOut {
     private String tokenSeguridad;
     private String codigoVerificacionCambioContrasenna;
     private UUID uuidCredenciales;
+    private String equipoFav;
+    private UUID uuidEquipo;
 }

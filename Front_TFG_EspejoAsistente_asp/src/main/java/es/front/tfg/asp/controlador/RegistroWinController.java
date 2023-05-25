@@ -40,7 +40,7 @@ public class RegistroWinController implements Initializable {
     @FXML
     private Button btnRegistroRostro, btnCompletarRegistro, btnVolver;
     @FXML
-    private ComboBox cmbLocalizacion, cmbEquipoFav;
+    private ComboBox<String> cmbLocalizacion, cmbEquipoFav;
     @Autowired
     private MandoControllerGeneral mandoControllerGeneral;
     @Autowired
@@ -68,6 +68,8 @@ public class RegistroWinController implements Initializable {
     public void completarRegistro(ActionEvent e) {
         DTOUsuario dtoUsuario = cargarUsuarioDatosVista();
         serviceAuth.registrarUsuario(dtoUsuario);
+        // VALIDAR
+        cambiarVentana(e, getClass(), "/vistas/index.fxml");
     }
 
     private void cambiarVentana(ActionEvent e, Class<?> c, String resource) {
@@ -82,17 +84,12 @@ public class RegistroWinController implements Initializable {
         String email = fieldEmail.getText();
         boolean admin = checkEsAdmin.isSelected();
         // String ciudad = cmbLocalizacion.getValue().toString();
-        // String equipo = cmbEquipoFav.getValue().toString();
-        return new DTOUsuario(null, username, nombre, apellidos, email, admin, password, null, null);
+        String equipo = cmbEquipoFav.getValue().toString();
+        return new DTOUsuario(null, username, nombre, apellidos, email, admin, password, equipo, null, null);
     }
 
     private void cargarEquiposCmb() {
-        List<DTOEquipo> listaEquipos = serviceEquipo.obtenerEquiposLigaSantander();
-        ObservableList<String> equipos = FXCollections.observableArrayList();
-        for (DTOEquipo equipo : listaEquipos) {
-            equipos.add(equipo.getTeam().getName());
-        }
-        cmbEquipoFav.setItems(equipos);
+        utiles.llenarCombobox(serviceEquipo.obtenerEquiposLigaSantander(), cmbEquipoFav, equipo -> equipo.getTeam().getName());
     }
 
     private Map<Integer, Node> cargarComponentes() {

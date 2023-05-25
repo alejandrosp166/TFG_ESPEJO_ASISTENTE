@@ -13,6 +13,7 @@ public class DTOUsuario {
     private String email;
     private boolean esAdmin;
     private String password;
+    private String equipoFav;
     private String tokenSeguridad;
     private String codigoVerificacionCambioContrasenna;
 }
