@@ -1,6 +1,11 @@
 package es.front.tfg.asp.utils;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
+import es.front.tfg.asp.modelo.dtos.DTOEquipo;
 import es.front.tfg.asp.modelo.response.ApiResponse;
 import org.apache.hc.client5.http.classic.HttpClient;
 import org.apache.hc.client5.http.classic.methods.HttpDelete;
@@ -10,6 +15,7 @@ import org.apache.hc.client5.http.classic.methods.HttpPut;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
+import org.apache.hc.core5.http.HttpResponse;
 import org.apache.hc.core5.http.ParseException;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.apache.hc.core5.http.io.entity.StringEntity;
@@ -17,11 +23,14 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class PeticionesHTTP {
     private final Gson GSON_MAPPER = new Gson();
     private CloseableHttpClient client = obtenerClienteHttp();
+    private final String API_KEY_FOOTBAL = "e61e7d6e91e99d91bb18a7eded870a9e";
 
     public <T> T post(Object objeto, String url, Class<T> claseObjetoDevolver) {
         T entidad = null;
@@ -58,6 +67,35 @@ public class PeticionesHTTP {
             throw new RuntimeException(e);
         }
         return entidad;
+    }
+
+    public <T> List<T> getApiEquipos(String url, Class<T> claseObjetoDevolver) {
+        List<T> listaEntidades = new ArrayList<>();
+        try {
+            HttpGet peticion = new HttpGet(url);
+            peticion.addHeader("x-rapidapi-key", API_KEY_FOOTBAL);
+            peticion.addHeader("x-rapidapi-host", "v3.football.api-sports.io");
+            CloseableHttpResponse respuesta = client.execute(peticion);
+
+            if (respuesta.getCode() == 200) {
+                String json = EntityUtils.toString(respuesta.getEntity());
+                JsonObject jsonObject = GSON_MAPPER.fromJson(json, JsonObject.class);
+                JsonElement elementoJson = jsonObject.get("response");
+                if (elementoJson != null && elementoJson.isJsonArray()) {
+                    JsonArray respuestaEnArray = elementoJson.getAsJsonArray();
+                    if (respuestaEnArray.size() > 0) {
+                        for (int i = 0; i < respuestaEnArray.size(); i++) {
+                            listaEntidades.add(GSON_MAPPER.fromJson(respuestaEnArray.get(i), claseObjetoDevolver));
+                        }
+                    }
+                }
+            } else {
+                listaEntidades = GSON_MAPPER.fromJson(EntityUtils.toString(respuesta.getEntity()), (Type) ApiResponse.class);
+            }
+        } catch (IOException | ParseException e) {
+            throw new RuntimeException(e);
+        }
+        return listaEntidades;
     }
 
     public <T> void put(Object objeto, String url, Class<T> claseObjetoDevolver) {

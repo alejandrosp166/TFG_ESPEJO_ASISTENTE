@@ -1,10 +1,14 @@
 package es.front.tfg.asp.controlador;
 
+import es.front.tfg.asp.modelo.dtos.DTOEquipo;
 import es.front.tfg.asp.modelo.dtos.DTOUsuario;
 import es.front.tfg.asp.servicio.iservice.IServiceAuth;
+import es.front.tfg.asp.servicio.iservice.IServiceEquipo;
 import es.front.tfg.asp.utils.MandoControllerGeneral;
 import es.front.tfg.asp.utils.TaskCambioInterfaz;
 import es.front.tfg.asp.utils.Utiles;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -18,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import java.net.URL;
+import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -43,6 +48,8 @@ public class RegistroWinController implements Initializable {
     @Autowired
     private IServiceAuth serviceAuth;
     @Autowired
+    private IServiceEquipo serviceEquipo;
+    @Autowired
     private Utiles utiles;
 
     @Override
@@ -51,6 +58,7 @@ public class RegistroWinController implements Initializable {
         mandoControllerGeneral.setConfirmarPulsado(false);
         taskCambioInterfaz.setListaComponentes(cargarComponentes());
         utiles.iniciarHilos();
+        cargarEquiposCmb();
     }
 
     public void volver(ActionEvent e) {
@@ -60,6 +68,10 @@ public class RegistroWinController implements Initializable {
     public void completarRegistro(ActionEvent e) {
         DTOUsuario dtoUsuario = cargarUsuarioDatosVista();
         serviceAuth.registrarUsuario(dtoUsuario);
+    }
+
+    private void cambiarVentana(ActionEvent e, Class<?> c, String resource) {
+        utiles.cambiarVentanaAplicacion(e, c, resource);
     }
 
     private DTOUsuario cargarUsuarioDatosVista() {
@@ -74,8 +86,13 @@ public class RegistroWinController implements Initializable {
         return new DTOUsuario(null, username, nombre, apellidos, email, admin, password, null, null);
     }
 
-    private void cambiarVentana(ActionEvent e, Class<?> c, String resource) {
-        utiles.cambiarVentanaAplicacion(e, c, resource);
+    private void cargarEquiposCmb() {
+        List<DTOEquipo> listaEquipos = serviceEquipo.obtenerEquiposLigaSantander();
+        ObservableList<String> equipos = FXCollections.observableArrayList();
+        for (DTOEquipo equipo : listaEquipos) {
+            equipos.add(equipo.getTeam().getName());
+        }
+        cmbEquipoFav.setItems(equipos);
     }
 
     private Map<Integer, Node> cargarComponentes() {

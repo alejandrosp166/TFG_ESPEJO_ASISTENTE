@@ -12,8 +12,7 @@ public class ServiceUsuarioImpl implements IServiceUsuario {
     private final String URL = "http://localhost:8080/v0/api/usuario";
     @Autowired
     private PeticionesHTTP peticionesHTTP;
-
-
+    
     @Override
     public DTOUsuario obtenerUsuarioPorCodigoVerificacion(String codigo) {
         return peticionesHTTP.get(URL + "/obtener-por-codigo-verificacion/" + codigo, DTOUsuario.class);
