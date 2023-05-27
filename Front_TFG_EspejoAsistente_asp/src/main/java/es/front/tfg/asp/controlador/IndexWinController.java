@@ -1,13 +1,10 @@
 package es.front.tfg.asp.controlador;
 
 import es.front.tfg.asp.modelo.dtos.DTOUsuario;
-import es.front.tfg.asp.servicio.iservice.IServiceEquipo;
 import es.front.tfg.asp.servicio.iservice.IServiceUsuario;
-import es.front.tfg.asp.utils.MandoControllerGeneral;
-import es.front.tfg.asp.utils.TaskCambioInterfaz;
+import es.front.tfg.asp.utils.HiloControlMando;
+import es.front.tfg.asp.utils.HiloCambiarInterfaz;
 import es.front.tfg.asp.utils.Utiles;
-import javafx.application.Platform;
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -15,8 +12,6 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -38,9 +33,9 @@ public class IndexWinController implements Initializable {
     @FXML
     private Button btnIniciarSesion, btnIniciarSesionFaceId, btnRegistro, btnOlvidarContrasenna;
     @Autowired
-    private MandoControllerGeneral mandoControllerGeneral;
+    private HiloControlMando hiloControlMando;
     @Autowired
-    private TaskCambioInterfaz taskCambioInterfaz;
+    private HiloCambiarInterfaz hiloCambiarInterfaz;
     @Autowired
     private IServiceUsuario serviceUsuario;
     @Autowired
@@ -54,9 +49,9 @@ public class IndexWinController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        mandoControllerGeneral.setPosicionPuntero(1);
-        mandoControllerGeneral.setConfirmarPulsado(false);
-        taskCambioInterfaz.setListaComponentes(cargarComponentes());
+        hiloControlMando.setPosicionPuntero(1);
+        hiloControlMando.setBtnEquisPulsada(false);
+        hiloCambiarInterfaz.setListaComponentes(cargarComponentes());
         utiles.iniciarHilos();
     }
 

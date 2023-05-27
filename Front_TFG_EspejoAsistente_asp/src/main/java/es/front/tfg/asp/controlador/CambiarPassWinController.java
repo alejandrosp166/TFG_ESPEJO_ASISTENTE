@@ -3,8 +3,8 @@ package es.front.tfg.asp.controlador;
 import es.front.tfg.asp.modelo.dtos.DTOCambioPassword;
 import es.front.tfg.asp.servicio.iservice.IServiceAuth;
 import es.front.tfg.asp.servicio.iservice.IServiceUsuario;
-import es.front.tfg.asp.utils.MandoControllerGeneral;
-import es.front.tfg.asp.utils.TaskCambioInterfaz;
+import es.front.tfg.asp.utils.HiloControlMando;
+import es.front.tfg.asp.utils.HiloCambiarInterfaz;
 import es.front.tfg.asp.utils.Utiles;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -25,9 +25,9 @@ public class CambiarPassWinController implements Initializable {
     @FXML
     private Button btnCambiarContrasenna;
     @Autowired
-    private MandoControllerGeneral mandoControllerGeneral;
+    private HiloControlMando hiloControlMando;
     @Autowired
-    private TaskCambioInterfaz taskCambioInterfaz;
+    private HiloCambiarInterfaz hiloCambiarInterfaz;
     @Autowired
     private IServiceAuth serviceAuth;
     @Autowired
@@ -37,9 +37,9 @@ public class CambiarPassWinController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        mandoControllerGeneral.setPosicionPuntero(1);
-        mandoControllerGeneral.setConfirmarPulsado(false);
-        taskCambioInterfaz.setListaComponentes(cargarComponentes());
+        hiloControlMando.setPosicionPuntero(1);
+        hiloControlMando.setBtnEquisPulsada(false);
+        hiloCambiarInterfaz.setListaComponentes(cargarComponentes());
         utiles.iniciarHilos();
     }
 

@@ -1,6 +1,6 @@
 package es.front.tfg.asp.controlador;
 
-import es.front.tfg.asp.utils.MandoControllerGeneral;
+import es.front.tfg.asp.utils.HiloControlMando;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
@@ -20,14 +20,14 @@ public class ClimaWinController implements Initializable, Runnable {
     @FXML
     private Label lblHora, lblDiaMesAnio;
     @Autowired
-    private MandoControllerGeneral mandoControllerGeneral;
+    private HiloControlMando hiloControlMando;
     private boolean cambioVentana;
     private Thread hiloCambioInterfaz;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        mandoControllerGeneral.setPosicionPuntero(1);
-        mandoControllerGeneral.setConfirmarPulsado(false);
+        hiloControlMando.setPosicionPuntero(1);
+        hiloControlMando.setBtnEquisPulsada(false);
         cambioVentana = false;
         this.run();
     }

@@ -1,14 +1,11 @@
 package es.front.tfg.asp.controlador;
 
-import es.front.tfg.asp.modelo.dtos.DTOEquipo;
 import es.front.tfg.asp.modelo.dtos.DTOUsuario;
 import es.front.tfg.asp.servicio.iservice.IServiceAuth;
 import es.front.tfg.asp.servicio.iservice.IServiceEquipo;
-import es.front.tfg.asp.utils.MandoControllerGeneral;
-import es.front.tfg.asp.utils.TaskCambioInterfaz;
+import es.front.tfg.asp.utils.HiloControlMando;
+import es.front.tfg.asp.utils.HiloCambiarInterfaz;
 import es.front.tfg.asp.utils.Utiles;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -22,7 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import java.net.URL;
-import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -42,9 +38,9 @@ public class RegistroWinController implements Initializable {
     @FXML
     private ComboBox<String> cmbLocalizacion, cmbEquipoFav;
     @Autowired
-    private MandoControllerGeneral mandoControllerGeneral;
+    private HiloControlMando hiloControlMando;
     @Autowired
-    private TaskCambioInterfaz taskCambioInterfaz;
+    private HiloCambiarInterfaz hiloCambiarInterfaz;
     @Autowired
     private IServiceAuth serviceAuth;
     @Autowired
@@ -54,9 +50,9 @@ public class RegistroWinController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        mandoControllerGeneral.setPosicionPuntero(1);
-        mandoControllerGeneral.setConfirmarPulsado(false);
-        taskCambioInterfaz.setListaComponentes(cargarComponentes());
+        hiloControlMando.setPosicionPuntero(1);
+        hiloControlMando.setBtnEquisPulsada(false);
+        hiloCambiarInterfaz.setListaComponentes(cargarComponentes());
         utiles.iniciarHilos();
         cargarEquiposCmb();
     }
@@ -103,7 +99,8 @@ public class RegistroWinController implements Initializable {
                 Map.entry(7, checkEsAdmin),
                 Map.entry(8, cmbLocalizacion),
                 Map.entry(9, cmbEquipoFav),
-                Map.entry(10, btnCompletarRegistro)
+                Map.entry(10, btnCompletarRegistro),
+                Map.entry(11, btnVolver)
         );
     }
 }

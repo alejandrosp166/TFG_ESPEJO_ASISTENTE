@@ -1,6 +1,7 @@
 package es.front.tfg.asp.utils;
 
-import javafx.concurrent.Task;
+import lombok.Getter;
+import lombok.Setter;
 import net.java.games.input.Component;
 import net.java.games.input.ControllerEnvironment;
 import net.java.games.input.Event;
@@ -11,13 +12,25 @@ import org.springframework.stereotype.Controller;
  * Esta clase permite moverse al usuario por la interfaz
  */
 @Controller
-public class MandoControllerGeneral implements Runnable {
+public class HiloControlMando implements Runnable {
     private net.java.games.input.Controller ps4Input;
+    @Getter
+    @Setter
     private int posicionPuntero;
-    private boolean confirmarPulsado;
-    private boolean cancelarPulsado;
+    @Getter
+    @Setter
+    private boolean btnEquisPulsada;
+    @Getter
+    @Setter
+    private boolean btnCirculoPulsado;
+    @Getter
+    @Setter
+    private boolean btnTrianguloPulsado;
+    @Getter
+    @Setter
     private boolean iniciado = false;
-    public MandoControllerGeneral() {
+
+    public HiloControlMando() {
         posicionPuntero = 1;
     }
 
@@ -38,7 +51,7 @@ public class MandoControllerGeneral implements Runnable {
         return inputEncontrado;
     }
 
-    // Start Botón 9 // r1 Botón 5 // l1 botón 4 // panel Botón 13 // share Botón 8 // ps Botón 12
+    // Start Botón 9 // r1 Botón 5 // l1 botón 4 // panel Botón 13 // share Botón 8 // ps Botón 12 // triángulo Botón 3
     @Override
     public void run() {
         iniciado = true;
@@ -52,46 +65,16 @@ public class MandoControllerGeneral implements Runnable {
                     posicionPuntero++;
                 } else if (component.getName().equals("Botón 4") && event.getValue() == 1.0f) {
                     posicionPuntero--;
-                } else if(component.getName().equals("Botón 1") && event.getValue() == 1.0f) {
-                    confirmarPulsado = true;
-                } else if(component.getName().equals("Botón 9") && event.getValue() == 1.0f) {
-                    cancelarPulsado = true;
+                } else if (component.getName().equals("Botón 1") && event.getValue() == 1.0f) {
+                    btnEquisPulsada = true;
+                } else if (component.getName().equals("Botón 2") && event.getValue() == 1.0f) {
+                    btnCirculoPulsado = true;
+                } else if(component.getName().equals("Botón 3") && event.getValue() == 1.0f) {
+                    btnTrianguloPulsado = true;
                 }
             }
         }
         System.out.println("No hay input!");
         posicionPuntero = 1;
-    }
-
-    public boolean isIniciado() {
-        return iniciado;
-    }
-
-    public void setIniciado(boolean iniciado) {
-        this.iniciado = iniciado;
-    }
-
-    public boolean isConfirmarPulsado() {
-        return confirmarPulsado;
-    }
-
-    public void setConfirmarPulsado(boolean confirmarPulsado) {
-        this.confirmarPulsado = confirmarPulsado;
-    }
-
-    public int getPosicionPuntero() {
-        return posicionPuntero;
-    }
-
-    public void setPosicionPuntero(int posicionPuntero) {
-        this.posicionPuntero = posicionPuntero;
-    }
-
-    public boolean isCancelarPulsado() {
-        return cancelarPulsado;
-    }
-
-    public void setCancelarPulsado(boolean cancelarPulsado) {
-        this.cancelarPulsado = cancelarPulsado;
     }
 }
