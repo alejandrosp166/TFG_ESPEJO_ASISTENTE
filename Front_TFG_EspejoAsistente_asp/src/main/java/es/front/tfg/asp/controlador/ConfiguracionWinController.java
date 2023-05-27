@@ -41,10 +41,11 @@ public class ConfiguracionWinController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        cargarDatosUsuarioLogeadoEnVista();
+        Map<Integer, Node> map = cargarComponentes();
         hiloControlMando.setPosicionPuntero(1);
         hiloControlMando.setBtnEquisPulsada(false);
-        hiloCambiarInterfaz.setListaComponentes(cargarComponentes());
+        hiloControlMando.setLimitePuntero(map.size());
+        hiloCambiarInterfaz.setListaComponentes(map);
         utiles.iniciarHilos();
     }
 

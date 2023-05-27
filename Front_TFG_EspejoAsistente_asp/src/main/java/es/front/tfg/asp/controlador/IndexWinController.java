@@ -49,15 +49,17 @@ public class IndexWinController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        Map<Integer, Node> map = cargarComponentes();
         hiloControlMando.setPosicionPuntero(1);
         hiloControlMando.setBtnEquisPulsada(false);
-        hiloCambiarInterfaz.setListaComponentes(cargarComponentes());
+        hiloControlMando.setLimitePuntero(map.size());
+        hiloCambiarInterfaz.setListaComponentes(map);
         utiles.iniciarHilos();
     }
 
     public void iniciarSesion(ActionEvent e) {
         DTOUsuario usuario = serviceUsuario.obtenerUsuarioPorUsername(fieldUsuario.getText());
-        if(true) {
+        if (true) {
             utiles.guardarElementoPropiedades("uuidUsuario", usuario.getUuid());
             cambiarVentana(e, getClass(), "/vistas/clima.fxml");
         }

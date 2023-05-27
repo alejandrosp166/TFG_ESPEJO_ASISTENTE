@@ -40,9 +40,11 @@ public class EnviarMailVerificarCodigoWinController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        Map<Integer, Node> map = cargarComponentes();
         hiloControlMando.setPosicionPuntero(1);
         hiloControlMando.setBtnEquisPulsada(false);
-        hiloCambiarInterfaz.setListaComponentes(cargarComponentes());
+        hiloControlMando.setLimitePuntero(map.size());
+        hiloCambiarInterfaz.setListaComponentes(map);
         utiles.iniciarHilos();
     }
 

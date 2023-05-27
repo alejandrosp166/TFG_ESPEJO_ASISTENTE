@@ -25,8 +25,9 @@ public class HiloCambiarInterfaz implements Runnable {
     private Utiles utiles;
     @Setter
     private Map<Integer, Node> listaComponentes = new HashMap<>();
-    @Setter @Getter
-    private boolean iniciado = false;
+    @Setter
+    @Getter
+    private boolean hiloIniciado = false;
     private int indexComboBox = 0;
 
     @Override
@@ -34,8 +35,8 @@ public class HiloCambiarInterfaz implements Runnable {
     public void run() {
         Border bordeAzul = new Border(new BorderStroke(Color.BLUE, BorderStrokeStyle.SOLID, new CornerRadii(20), new BorderWidths(2)));
         Border bordeNegro = new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, new CornerRadii(20), new BorderWidths(2)));
-        iniciado = true;
-        while (iniciado) {
+        hiloIniciado = true;
+        while (hiloIniciado) {
             if (listaComponentes.size() > 0) {
                 int puntero = hiloControlMando.getPosicionPuntero();
                 Node componente = listaComponentes.get(puntero);
@@ -43,39 +44,6 @@ public class HiloCambiarInterfaz implements Runnable {
                 eliminarBordes(bordeNegro);
                 Thread.sleep(100);
             }
-        }
-    }
-
-    private void comprobarPulsadoTextField(TextField text) {
-        if(hiloControlMando.isBtnEquisPulsada()) {
-            hiloControlMando.setBtnEquisPulsada(false);
-            utiles.tecladoVirtual(text);
-        }
-    }
-
-    private void comprobarPulsadoBoton(Button btn) {
-        if (hiloControlMando.isBtnEquisPulsada()) {
-            hiloControlMando.setBtnEquisPulsada(false);
-            btn.fire();
-        }
-    }
-
-    private void comprobarPulsadoCheckBox(CheckBox checkBox) {
-        if (hiloControlMando.isBtnEquisPulsada()) {
-            hiloControlMando.setBtnEquisPulsada(false);
-            checkBox.setSelected(!checkBox.isSelected());
-        }
-    }
-
-    private void cambiarContenidoComboBox(ComboBox<?> cmb) {
-        if (hiloControlMando.isBtnTrianguloPulsado()) {
-            hiloControlMando.setBtnTrianguloPulsado(false);
-            if (indexComboBox <= cmb.getItems().size()) {
-                indexComboBox++;
-            } else {
-                indexComboBox = 0;
-            }
-            cmb.getSelectionModel().select(indexComboBox);
         }
     }
 
@@ -107,6 +75,39 @@ public class HiloCambiarInterfaz implements Runnable {
             } else if (componente instanceof CheckBox checkBox) {
                 checkBox.setBorder(borde);
             }
+        }
+    }
+
+    private void comprobarPulsadoTextField(TextField text) {
+        if (hiloControlMando.isBtnEquisPulsada()) {
+            hiloControlMando.setBtnEquisPulsada(false);
+            utiles.tecladoVirtual(text);
+        }
+    }
+
+    private void comprobarPulsadoBoton(Button btn) {
+        if (hiloControlMando.isBtnEquisPulsada()) {
+            hiloControlMando.setBtnEquisPulsada(false);
+            btn.fire();
+        }
+    }
+
+    private void comprobarPulsadoCheckBox(CheckBox checkBox) {
+        if (hiloControlMando.isBtnEquisPulsada()) {
+            hiloControlMando.setBtnEquisPulsada(false);
+            checkBox.setSelected(!checkBox.isSelected());
+        }
+    }
+
+    private void cambiarContenidoComboBox(ComboBox<?> cmb) {
+        if (hiloControlMando.isBtnTrianguloPulsado()) {
+            hiloControlMando.setBtnTrianguloPulsado(false);
+            if (indexComboBox <= cmb.getItems().size()) {
+                indexComboBox++;
+            } else {
+                indexComboBox = 0;
+            }
+            cmb.getSelectionModel().select(indexComboBox);
         }
     }
 }

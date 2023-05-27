@@ -37,7 +37,7 @@ public class Utiles {
     private Stage stage;
 
     public void iniciarHilos() {
-        if (!hiloControlMando.isIniciado() && !hiloCambiarInterfaz.isIniciado()) {
+        if (!hiloControlMando.isHiloIniciado() && !hiloCambiarInterfaz.isHiloIniciado()) {
             Thread hiloMandoController = new Thread(hiloControlMando);
             hiloMandoController.start();
             Thread hiloTaskCambioInterfaz = new Thread(hiloCambiarInterfaz);

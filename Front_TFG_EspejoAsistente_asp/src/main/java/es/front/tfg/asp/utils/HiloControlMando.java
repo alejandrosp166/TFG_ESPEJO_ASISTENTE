@@ -1,43 +1,33 @@
 package es.front.tfg.asp.utils;
 
+import lombok.AccessLevel;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import net.java.games.input.Component;
 import net.java.games.input.ControllerEnvironment;
 import net.java.games.input.Event;
-import net.java.games.input.EventQueue;
 import org.springframework.stereotype.Controller;
 
 /**
  * Esta clase permite moverse al usuario por la interfaz
  */
+@Data
 @Controller
 public class HiloControlMando implements Runnable {
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
     private net.java.games.input.Controller ps4Input;
-    @Getter
-    @Setter
-    private int posicionPuntero;
-    @Getter
-    @Setter
+    private int posicionPuntero = 1;
+    private int limitePuntero;
     private boolean btnEquisPulsada;
-    @Getter
-    @Setter
     private boolean btnCirculoPulsado;
-    @Getter
-    @Setter
     private boolean btnTrianguloPulsado;
-    @Getter
-    @Setter
-    private boolean iniciado = false;
-
-    public HiloControlMando() {
-        posicionPuntero = 1;
-    }
+    private boolean hiloIniciado = false;
 
     private boolean hayInput() {
         // Analizamos los dispositivos conectados y los guardamos en una lista
         net.java.games.input.Controller[] controllers = ControllerEnvironment.getDefaultEnvironment().getControllers();
-        ps4Input = null;
         boolean inputEncontrado = false;
         // Recorremos esta lista
         for (net.java.games.input.Controller controller : controllers) {
@@ -54,22 +44,25 @@ public class HiloControlMando implements Runnable {
     // Start Botón 9 // r1 Botón 5 // l1 botón 4 // panel Botón 13 // share Botón 8 // ps Botón 12 // triángulo Botón 3
     @Override
     public void run() {
-        iniciado = true;
+        hiloIniciado = true;
         while (hayInput()) {
             ps4Input.poll();
-            EventQueue queue = ps4Input.getEventQueue();
             Event event = new Event();
-            while (queue.getNextEvent(event)) {
+            while (ps4Input.getEventQueue().getNextEvent(event)) {
                 Component component = event.getComponent();
                 if (component.getName().equals("Botón 5") && event.getValue() == 1.0f) {
-                    posicionPuntero++;
+                    if (++posicionPuntero > limitePuntero) {
+                        posicionPuntero = 1;
+                    }
                 } else if (component.getName().equals("Botón 4") && event.getValue() == 1.0f) {
-                    posicionPuntero--;
+                    if (--posicionPuntero < 1) {
+                        posicionPuntero = 1;
+                    }
                 } else if (component.getName().equals("Botón 1") && event.getValue() == 1.0f) {
                     btnEquisPulsada = true;
                 } else if (component.getName().equals("Botón 2") && event.getValue() == 1.0f) {
                     btnCirculoPulsado = true;
-                } else if(component.getName().equals("Botón 3") && event.getValue() == 1.0f) {
+                } else if (component.getName().equals("Botón 3") && event.getValue() == 1.0f) {
                     btnTrianguloPulsado = true;
                 }
             }
