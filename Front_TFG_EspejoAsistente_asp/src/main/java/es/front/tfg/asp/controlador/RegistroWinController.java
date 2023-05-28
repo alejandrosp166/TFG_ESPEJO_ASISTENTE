@@ -16,6 +16,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Controller;
 
 import java.net.URL;
@@ -34,7 +35,7 @@ public class RegistroWinController implements Initializable {
     @FXML
     private CheckBox checkEsAdmin;
     @FXML
-    private Button btnRegistroRostro, btnCompletarRegistro, btnVolver;
+    private Button btnCompletarRegistro, btnVolver;
     @FXML
     private ComboBox<String> cmbLocalizacion, cmbEquipoFav;
     @Autowired
@@ -53,7 +54,6 @@ public class RegistroWinController implements Initializable {
         Map<Integer, Node> map = cargarComponentes();
         hiloControlMando.setPosicionPuntero(1);
         hiloControlMando.setBtnEquisPulsada(false);
-        hiloControlMando.setLimitePuntero(map.size());
         hiloCambiarInterfaz.setListaComponentes(map);
         utiles.iniciarHilos();
         cargarEquiposCmb();
@@ -97,12 +97,11 @@ public class RegistroWinController implements Initializable {
                 Map.entry(3, fieldNombre),
                 Map.entry(4, fieldApellidos),
                 Map.entry(5, fieldEmail),
-                Map.entry(6, btnRegistroRostro),
-                Map.entry(7, checkEsAdmin),
-                Map.entry(8, cmbLocalizacion),
-                Map.entry(9, cmbEquipoFav),
-                Map.entry(10, btnCompletarRegistro),
-                Map.entry(11, btnVolver)
+                Map.entry(6, checkEsAdmin),
+                Map.entry(7, cmbLocalizacion),
+                Map.entry(8, cmbEquipoFav),
+                Map.entry(9, btnCompletarRegistro),
+                Map.entry(10, btnVolver)
         );
     }
 }

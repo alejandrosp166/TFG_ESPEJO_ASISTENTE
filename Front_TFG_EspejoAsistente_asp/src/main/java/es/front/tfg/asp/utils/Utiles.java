@@ -32,8 +32,6 @@ public class Utiles {
     private HiloControlMando hiloControlMando;
     @Autowired
     private HiloCambiarInterfaz hiloCambiarInterfaz;
-    private Thread hiloMandoController;
-    private Thread hiloTaskCambioInterfaz;
     private Stage stage;
 
     public void iniciarHilos() {
@@ -60,43 +58,66 @@ public class Utiles {
         }
     }
 
-    public void tecladoVirtual(TextField txt) {
+    public void crearModal(String tituloModal, String contenidoTexto) {
         Dialog<Void> dialog = new Dialog<>();
-        dialog.setTitle("Teclado Virtual");
-        GridPane teclado = crearTecladoVirtual(txt);
-        dialog.getDialogPane().setContent(teclado);
+        dialog.setTitle(tituloModal);
+        dialog.setContentText(contenidoTexto);
         dialog.initOwner(stage);
         dialog.showAndWait();
     }
 
-    private GridPane crearTecladoVirtual(TextField txt) {
+    public void crearTecladoVirtual(TextField txt) {
+        Dialog<Void> dialog = new Dialog<>();
+        dialog.setTitle("Teclado Virtual");
+        GridPane teclado = obtenerTecladoVirtual(txt);
+        dialog.getDialogPane().setContent(teclado);
+        // dialog.setY(txt.getLayoutY() + txt.getPrefHeight() * 2);
+        // dialog.setX(txt.getLayoutX() - 25);
+        dialog.initOwner(stage);
+        dialog.showAndWait();
+    }
+
+    private GridPane obtenerTecladoVirtual(TextField txt) {
         GridPane gridPane = new GridPane();
         gridPane.setAlignment(Pos.CENTER);
-        gridPane.setHgap(10);
-        gridPane.setVgap(10);
+        gridPane.setPrefWidth(txt.getPrefWidth());
+        gridPane.setHgap(15);
+        gridPane.setVgap(15);
 
-        String[][] keys = {
+        String[][] teclasTeclado = {
                 {"1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "<----"},
-                {"Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "BORRAR TODO"},
+                {"Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "BORRAR"},
                 {"A", "S", "D", "F", "G", "H", "J", "K", "L", "Ñ"},
-                {"Z", "X", "C", "V", "B", "N", "M"}
+                {"Z", "X", "C", "V", "B", "N", "M", "CERRAR"}
         };
         int indiceBotones = 0;
         Map<Integer, Node> listaComponentes = new HashMap<>();
-        for (int row = 0; row < keys.length; row++) {
-            for (int col = 0; col < keys[row].length; col++) {
-                String key = keys[row][col];
-                Button button = new Button(key);
-                button.setStyle("-fx-font-size: 16px; -fx-pref-width: 60px; -fx-pref-height: 40px;");
-                if (key.equals("<----")) {
-                    button.setOnAction(event -> txt.setText(txt.getText().substring(0, txt.getText().length() - 1)));
-                } else if (key.equals("BORRAR TODO")) {
-                    button.setOnAction(event -> txt.setText(""));
-                } else {
-                    button.setOnAction(event -> txt.setText(txt.getText() + key));
+        Map<Integer, Node> listaComponentesAnterior = hiloCambiarInterfaz.getListaComponentes();
+        for (int row = 0; row < teclasTeclado.length; row++) {
+            for (int col = 0; col < teclasTeclado[row].length; col++) {
+                String tecla = teclasTeclado[row][col];
+                Button boton = new Button(tecla);
+                boton.setStyle("-fx-font-size: 16px; -fx-pref-width: 100px; -fx-pref-height: 50px;");
+                String textoField = txt.getText();
+                switch (tecla) {
+                    case "<----" -> {
+                        if (!textoField.equals("")) {
+                            boton.setOnAction(event -> txt.setText(textoField.substring(0, txt.getText().length() - 1)));
+                        }
+                    }
+                    case "BORRAR" -> boton.setOnAction(event -> txt.setText(""));
+                    case "CERRAR" -> boton.setOnAction(event -> {
+                        Node source = (Node) event.getSource();
+                        Stage stage = (Stage) source.getScene().getWindow();
+                        stage.close();
+                        hiloCambiarInterfaz.setListaComponentes(listaComponentesAnterior);
+                        hiloControlMando.setPosicionPuntero(1);
+                    });
+                    default -> boton.setOnAction(event -> txt.setText(textoField + tecla));
                 }
-                gridPane.add(button, col, row);
-                listaComponentes.put(++indiceBotones, button);
+
+                gridPane.add(boton, col, row);
+                listaComponentes.put(++indiceBotones, boton);
             }
         }
         hiloCambiarInterfaz.setListaComponentes(listaComponentes);

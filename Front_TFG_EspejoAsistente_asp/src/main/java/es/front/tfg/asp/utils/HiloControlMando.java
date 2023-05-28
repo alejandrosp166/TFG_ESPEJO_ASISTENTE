@@ -67,7 +67,5 @@ public class HiloControlMando implements Runnable {
                 }
             }
         }
-        System.out.println("No hay input!");
-        posicionPuntero = 1;
     }
 }

@@ -23,7 +23,7 @@ public class HiloCambiarInterfaz implements Runnable {
     private HiloControlMando hiloControlMando;
     @Autowired
     private Utiles utiles;
-    @Setter
+    @Getter
     private Map<Integer, Node> listaComponentes = new HashMap<>();
     @Setter
     @Getter
@@ -81,7 +81,7 @@ public class HiloCambiarInterfaz implements Runnable {
     private void comprobarPulsadoTextField(TextField text) {
         if (hiloControlMando.isBtnEquisPulsada()) {
             hiloControlMando.setBtnEquisPulsada(false);
-            utiles.tecladoVirtual(text);
+            utiles.crearTecladoVirtual(text);
         }
     }
 
@@ -109,5 +109,10 @@ public class HiloCambiarInterfaz implements Runnable {
             }
             cmb.getSelectionModel().select(indexComboBox);
         }
+    }
+
+    public void setListaComponentes(Map<Integer, Node> listaComponentes) {
+        hiloControlMando.setLimitePuntero(listaComponentes.size());
+        this.listaComponentes = listaComponentes;
     }
 }

@@ -4,10 +4,6 @@ import es.front.tfg.asp.modelo.dtos.DTOEquipo;
 import es.front.tfg.asp.servicio.iservice.IServiceEquipo;
 
 import es.front.tfg.asp.utils.PeticionesHTTP;
-import org.apache.hc.client5.http.classic.HttpClient;
-import org.apache.hc.client5.http.classic.methods.HttpGet;
-import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
-import org.apache.hc.core5.http.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

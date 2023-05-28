@@ -4,10 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.reflect.TypeToken;
-import es.front.tfg.asp.modelo.dtos.DTOEquipo;
 import es.front.tfg.asp.modelo.response.ApiResponse;
-import org.apache.hc.client5.http.classic.HttpClient;
 import org.apache.hc.client5.http.classic.methods.HttpDelete;
 import org.apache.hc.client5.http.classic.methods.HttpGet;
 import org.apache.hc.client5.http.classic.methods.HttpPost;
@@ -15,10 +12,10 @@ import org.apache.hc.client5.http.classic.methods.HttpPut;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
-import org.apache.hc.core5.http.HttpResponse;
 import org.apache.hc.core5.http.ParseException;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.apache.hc.core5.http.io.entity.StringEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -32,6 +29,7 @@ public class PeticionesHTTP {
     private CloseableHttpClient client = obtenerClienteHttp();
     private final String API_KEY_FOOTBAL = "e61e7d6e91e99d91bb18a7eded870a9e";
 
+    @Async
     public <T> T post(Object objeto, String url, Class<T> claseObjetoDevolver) {
         T entidad = null;
         try {
@@ -52,6 +50,7 @@ public class PeticionesHTTP {
         return entidad;
     }
 
+    @Async
     public <T> T get(String url, Class<T> claseObjetoDevolver) {
         T entidad = null;
         try {
@@ -69,6 +68,7 @@ public class PeticionesHTTP {
         return entidad;
     }
 
+    @Async
     public <T> List<T> getApiEquipos(String url, Class<T> claseObjetoDevolver) {
         List<T> listaEntidades = new ArrayList<>();
         try {
@@ -98,6 +98,7 @@ public class PeticionesHTTP {
         return listaEntidades;
     }
 
+    @Async
     public <T> void put(Object objeto, String url, Class<T> claseObjetoDevolver) {
         T entidad = null;
         try {
@@ -117,6 +118,7 @@ public class PeticionesHTTP {
         }
     }
 
+    @Async
     public void delete(String url) {
         try {
             HttpDelete peticion = new HttpDelete(url);

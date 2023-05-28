@@ -43,7 +43,6 @@ public class EnviarMailVerificarCodigoWinController implements Initializable {
         Map<Integer, Node> map = cargarComponentes();
         hiloControlMando.setPosicionPuntero(1);
         hiloControlMando.setBtnEquisPulsada(false);
-        hiloControlMando.setLimitePuntero(map.size());
         hiloCambiarInterfaz.setListaComponentes(map);
         utiles.iniciarHilos();
     }

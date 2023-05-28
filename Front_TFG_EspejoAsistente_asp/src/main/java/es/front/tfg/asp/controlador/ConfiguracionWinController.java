@@ -25,7 +25,7 @@ public class ConfiguracionWinController implements Initializable {
     @FXML
     private TextField fieldUsuario, fieldNombre, fieldApellidos, fieldEmail;
     @FXML
-    private Button btnRegistroRostro, btnCompletarRegistro;
+    private Button btnGuardarConfiguracion, btnVolver;
     @FXML
     private CheckBox checkEsAdmin;
     @FXML
@@ -44,7 +44,6 @@ public class ConfiguracionWinController implements Initializable {
         Map<Integer, Node> map = cargarComponentes();
         hiloControlMando.setPosicionPuntero(1);
         hiloControlMando.setBtnEquisPulsada(false);
-        hiloControlMando.setLimitePuntero(map.size());
         hiloCambiarInterfaz.setListaComponentes(map);
         utiles.iniciarHilos();
     }
@@ -88,11 +87,11 @@ public class ConfiguracionWinController implements Initializable {
                 Map.entry(2, fieldNombre),
                 Map.entry(3, fieldApellidos),
                 Map.entry(4, fieldEmail),
-                Map.entry(5, btnRegistroRostro),
-                Map.entry(6, checkEsAdmin),
-                Map.entry(7, cmbLocalizacion),
-                Map.entry(8, cmbEquipoFav),
-                Map.entry(9, btnCompletarRegistro)
+                Map.entry(5, checkEsAdmin),
+                Map.entry(6, cmbLocalizacion),
+                Map.entry(7, cmbEquipoFav),
+                Map.entry(8, btnGuardarConfiguracion),
+                Map.entry(9, btnVolver)
         );
     }
 }

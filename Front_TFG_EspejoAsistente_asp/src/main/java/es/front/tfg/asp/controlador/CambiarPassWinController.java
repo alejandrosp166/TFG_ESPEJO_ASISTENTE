@@ -38,9 +38,6 @@ public class CambiarPassWinController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Map<Integer, Node> map = cargarComponentes();
-        hiloControlMando.setPosicionPuntero(1);
-        hiloControlMando.setBtnEquisPulsada(false);
-        hiloControlMando.setLimitePuntero(map.size());
         hiloCambiarInterfaz.setListaComponentes(map);
         utiles.iniciarHilos();
     }
@@ -51,7 +48,7 @@ public class CambiarPassWinController implements Initializable {
             serviceAuth.cambiarContrasenna(new DTOCambioPassword(utiles.obtenerElementoPropieades("token"), nuevaPass));
             cambiarVentana(e, getClass(), "/vistas/index.fxml");
         } else {
-            // Las contraseñas no son iguales
+            utiles.crearModal("Error", "No se pudo cambiar la contraseña");
         }
     }
 
