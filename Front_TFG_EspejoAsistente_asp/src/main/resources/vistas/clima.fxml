@@ -46,7 +46,7 @@
             <ToolBar prefHeight="40.0" prefWidth="200.0" GridPane.columnIndex="2">
                <items>
                   <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
-                  <Label text="Username">
+                  <Label prefHeight="53.0" prefWidth="176.0" text="Username">
                      <font>
                         <Font name="System Bold" size="36.0" />
                      </font>
@@ -66,6 +66,16 @@
             <Separator maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="4.0" prefWidth="640.0" GridPane.rowIndex="4" />
             <Separator maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="21.0" prefWidth="640.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
             <Separator maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="21.0" prefWidth="640.0" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+            <Label fx:id="lblHora1" text="TEMP" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="3">
+               <font>
+                  <Font name="System Bold" size="72.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblHora11" text="VIENTO" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="5">
+               <font>
+                  <Font name="System Bold" size="72.0" />
+               </font>
+            </Label>
          </children>
       </GridPane>
    </children>

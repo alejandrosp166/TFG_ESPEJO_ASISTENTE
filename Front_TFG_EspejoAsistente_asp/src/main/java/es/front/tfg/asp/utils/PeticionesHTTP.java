@@ -68,7 +68,7 @@ public class PeticionesHTTP {
         return entidad;
     }
 
-    @Async
+    // @Async
     public <T> List<T> getApiEquipos(String url, Class<T> claseObjetoDevolver) {
         List<T> listaEntidades = new ArrayList<>();
         try {

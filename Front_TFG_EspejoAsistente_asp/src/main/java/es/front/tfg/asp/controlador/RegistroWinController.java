@@ -98,8 +98,8 @@ public class RegistroWinController implements Initializable {
                 Map.entry(4, fieldApellidos),
                 Map.entry(5, fieldEmail),
                 Map.entry(6, checkEsAdmin),
-                Map.entry(7, cmbLocalizacion),
-                Map.entry(8, cmbEquipoFav),
+                Map.entry(7, cmbEquipoFav),
+                Map.entry(8, cmbLocalizacion),
                 Map.entry(9, btnCompletarRegistro),
                 Map.entry(10, btnVolver)
         );

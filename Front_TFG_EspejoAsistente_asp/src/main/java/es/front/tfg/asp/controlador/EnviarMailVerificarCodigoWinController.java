@@ -26,7 +26,7 @@ public class EnviarMailVerificarCodigoWinController implements Initializable {
     @FXML
     private TextField fieldCodigo, fieldEmail;
     @FXML
-    private Button btnVerificarCodigo, btnEmail;
+    private Button btnVerificarCodigo, btnEmail, btnVolver;
     @Autowired
     private HiloControlMando hiloControlMando;
     @Autowired
@@ -61,6 +61,10 @@ public class EnviarMailVerificarCodigoWinController implements Initializable {
         }
     }
 
+    public void volver(ActionEvent e) {
+        cambiarVentana(e, getClass(), "/vistas/index.fxml");
+    }
+
     private void cambiarVentana(ActionEvent e, Class<?> c, String resource) {
         utiles.cambiarVentanaAplicacion(e, c, resource);
     }
@@ -70,7 +74,8 @@ public class EnviarMailVerificarCodigoWinController implements Initializable {
                 Map.entry(1, fieldEmail),
                 Map.entry(2, btnEmail),
                 Map.entry(3, fieldCodigo),
-                Map.entry(4, btnVerificarCodigo)
+                Map.entry(4, btnVerificarCodigo),
+                Map.entry(5, btnVolver)
         );
     }
 }
