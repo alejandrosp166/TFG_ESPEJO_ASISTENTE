@@ -51,7 +51,7 @@ public class Utiles {
             Scene scene = new Scene(loader.load(), 800, 800, false, SceneAntialiasing.BALANCED);
             stage.setScene(scene);
             stage.setFullScreenExitHint("");
-            stage.setFullScreen(false);
+            stage.setFullScreen(true);
             stage.show();
         } catch (IOException ex) {
             ex.printStackTrace();

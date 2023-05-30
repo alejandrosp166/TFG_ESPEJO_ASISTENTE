@@ -57,10 +57,10 @@ public class IndexWinController implements Initializable {
     }
 
     public void iniciarSesion(ActionEvent e) {
-        DTOUsuario usuario = serviceUsuario.obtenerUsuarioPorUsername(fieldUsuario.getText());
+        // DTOUsuario usuario = serviceUsuario.obtenerUsuarioPorUsername(fieldUsuario.getText());
         if (true) {
-            utiles.guardarElementoPropiedades("uuidUsuario", usuario.getUuid());
-            cambiarVentana(e, getClass(), "/vistas/clima.fxml");
+            // utiles.guardarElementoPropiedades("uuidUsuario", usuario.getUuid());
+            cambiarVentana(e, getClass(), "/vistas/equipo.fxml");
         }
     }
 
