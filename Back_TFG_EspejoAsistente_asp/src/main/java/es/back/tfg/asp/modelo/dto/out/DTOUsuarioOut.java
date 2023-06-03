@@ -17,4 +17,6 @@ public class DTOUsuarioOut {
     private UUID uuidCredenciales;
     private String equipoFav;
     private UUID uuidEquipo;
+    private String localizacion;
+    private UUID uuidLocalizacion;
 }

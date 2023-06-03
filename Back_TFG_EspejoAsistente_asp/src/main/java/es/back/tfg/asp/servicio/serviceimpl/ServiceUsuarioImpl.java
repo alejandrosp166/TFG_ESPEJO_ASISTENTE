@@ -4,7 +4,6 @@ import es.back.tfg.asp.modelo.converters.ConverterUsuario;
 import es.back.tfg.asp.modelo.dto.in.DTOUsuarioIn;
 import es.back.tfg.asp.modelo.dto.in.DTOUsuarioInActualizar;
 import es.back.tfg.asp.modelo.dto.out.DTOUsuarioOut;
-import es.back.tfg.asp.modelo.entidades.CredencialesUsuario;
 import es.back.tfg.asp.modelo.entidades.Usuario;
 import es.back.tfg.asp.repositorio.RepositorioCredenciales;
 import es.back.tfg.asp.repositorio.RepositorioUsuario;
@@ -16,7 +15,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class IServiceUsuarioImpl implements IServiceUsuario {
+public class ServiceUsuarioImpl implements IServiceUsuario {
     @Autowired
     private RepositorioUsuario repositorioUsuario;
     @Autowired

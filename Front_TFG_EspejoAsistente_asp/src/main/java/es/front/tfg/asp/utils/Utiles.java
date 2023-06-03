@@ -1,5 +1,7 @@
 package es.front.tfg.asp.utils;
 
+import es.front.tfg.asp.modelo.response.ResponseClima;
+import es.front.tfg.asp.modelo.response.ResponseEquipo;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -9,6 +11,8 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.SceneAntialiasing;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import lombok.Setter;
@@ -17,10 +21,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
 
 import java.io.*;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 import java.util.function.Function;
 
 @Component
@@ -133,6 +134,34 @@ public class Utiles {
         comboBox.setItems(observable);
     }
 
+    public <T> void llenarListView(ListView<T> lista) {
+        lista.setCellFactory(param -> new ListCell<T>() {
+            private ImageView imageView = new ImageView();
+
+            @Override
+            protected void updateItem(T item, boolean empty) {
+                super.updateItem(item, empty);
+                if (!empty && Objects.nonNull(item)) {
+                    switch (item.getClass().getSimpleName()) {
+                        case "ResponseEquipo" -> {
+                            ResponseEquipo equipo = (ResponseEquipo) item;
+                            setText(equipo.getTeam().getName() + " - Posición: " + equipo.getTeam().getName());
+                            Image image = new Image(equipo.getTeam().getLogo(), true);
+                            imageView.setImage(image);
+                            imageView.setFitWidth(40);
+                            imageView.setFitHeight(40);
+                            setGraphic(imageView);
+                        }
+                        case "ResponseClima" -> {
+                            ResponseClima clima = (ResponseClima) item;
+                            // FORMATEAR DATOS
+                        }
+                    }
+                }
+            }
+        });
+    }
+
     public void guardarElementoPropiedades(String key, String contenido) {
         Properties properties = new Properties();
         properties.setProperty(key, contenido);
@@ -153,5 +182,13 @@ public class Utiles {
             e.printStackTrace();
         }
         return token;
+    }
+
+    public String pasarKelvinAGrados(String kelvin) {
+        return Double.toString(Math.round(Double.parseDouble(kelvin) - 273.15));
+    }
+
+    public String pasarMetrosPorSegundosKilometrosPorHora(String metrosPorSegundo) {
+        return Double.toString(Math.round(Double.parseDouble(metrosPorSegundo) * 3.6));
     }
 }

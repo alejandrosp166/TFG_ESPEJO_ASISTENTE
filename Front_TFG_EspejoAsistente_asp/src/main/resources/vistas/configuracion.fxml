@@ -93,7 +93,12 @@
                         <Font name="Courier New" size="24.0" />
                     </font>
                 </TextField>
-            <Button fx:id="btnVolver" mnemonicParsing="false" onAction="#volver" prefHeight="99.0" prefWidth="1119.0" style="-fx-background-radius: 20; -fx-background-color: DEB841;" text="VOLVER" textFill="#d01212" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="18">
+            <Button fx:id="btnVolver" mnemonicParsing="false" onAction="#volver" prefHeight="99.0" prefWidth="1119.0" style="-fx-background-radius: 20; -fx-background-color: DEB841;" text="VOLVER" textFill="#d01212" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="20">
+               <font>
+                  <Font name="Courier New Bold" size="40.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnVolver1" mnemonicParsing="false" onAction="#volver" prefHeight="99.0" prefWidth="1119.0" style="-fx-background-radius: 20; -fx-background-color: DEB841;" text="BORRAR CUENTA" textFill="#d01212" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="18">
                <font>
                   <Font name="Courier New Bold" size="40.0" />
                </font>

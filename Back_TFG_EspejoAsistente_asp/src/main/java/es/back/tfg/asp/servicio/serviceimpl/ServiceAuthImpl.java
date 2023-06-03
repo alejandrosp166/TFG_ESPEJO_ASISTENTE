@@ -8,11 +8,14 @@ import es.back.tfg.asp.modelo.dto.in.DTOUsuarioIn;
 import es.back.tfg.asp.modelo.dto.out.DTOUsuarioOut;
 import es.back.tfg.asp.modelo.entidades.CredencialesUsuario;
 import es.back.tfg.asp.modelo.entidades.Equipo;
+import es.back.tfg.asp.modelo.entidades.LocalizacionClima;
 import es.back.tfg.asp.modelo.entidades.Usuario;
 import es.back.tfg.asp.repositorio.RepositorioCredenciales;
 import es.back.tfg.asp.repositorio.RepositorioEquipo;
+import es.back.tfg.asp.repositorio.RepositorioLocalizacionClima;
 import es.back.tfg.asp.repositorio.RepositorioUsuario;
 import es.back.tfg.asp.servicio.iservice.IServiceAuth;
+import es.back.tfg.asp.servicio.iservice.IServiceCorreosElectronicos;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,17 +26,10 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class ServiceAuthImpl implements IServiceAuth {
-    @Autowired
-    private JavaMailSender javaMailSender;
-    @Autowired
-    private TemplateEngine templateEngine;
     @Autowired
     private RepositorioUsuario repositorioUsuario;
     @Autowired
@@ -41,20 +37,25 @@ public class ServiceAuthImpl implements IServiceAuth {
     @Autowired
     private RepositorioEquipo repositorioEquipo;
     @Autowired
+    private RepositorioLocalizacionClima repositorioLocalizacionClima;
+    @Autowired
+    private IServiceCorreosElectronicos serviceCorreosElectronicos;
+    @Autowired
     private ConverterUsuario converterUsuario;
-    @Value("${spring.mail.username}")
-    private String emailRemitente;
 
     @Override
     public DTOUsuarioOut registrarUsuario(DTOUsuarioIn dtoUsuarioIn) {
         Usuario usuario = converterUsuario.dtoInAEntidad(dtoUsuarioIn);
         CredencialesUsuario credencialesUsuario = new CredencialesUsuario(dtoUsuarioIn.getPassword(), usuario);
-        Equipo equipo = new Equipo(dtoUsuarioIn.getEquipoFav(), 0, 0, 0, usuario);
+        Equipo equipo = new Equipo(dtoUsuarioIn.getEquipo().getNombreEquipo(), dtoUsuarioIn.getEquipo().getLiga(), 0, 0, 0, Collections.emptyList());
+        LocalizacionClima localizacionClima = new LocalizacionClima("NOMBRE CIUDAD", dtoUsuarioIn.getLocalizacionClima().getPais(), dtoUsuarioIn.getLocalizacionClima().getCodigoPostal(), Collections.emptyList());
         repositorioUsuario.save(usuario);
         usuario.setCredencialesUsuario(credencialesUsuario);
         repositorioCredenciales.save(credencialesUsuario);
         usuario.setEquipo(equipo);
         repositorioEquipo.save(equipo);
+        usuario.setLocalizacionClima(localizacionClima);
+        repositorioLocalizacionClima.save(localizacionClima);
         return converterUsuario.entidadADTOOut(usuario);
     }
 
@@ -66,9 +67,7 @@ public class ServiceAuthImpl implements IServiceAuth {
         Usuario usuario = repositorioUsuario.findUsuarioByUsername(usernameUsuario);
         // Comprobamos que exista y que el email no sea nulo
         if (Objects.nonNull(usuario) && Objects.nonNull(emailUsuario) && !emailUsuario.isEmpty()) {
-            MimeMessage mensaje = javaMailSender.createMimeMessage();
             try {
-                MimeMessageHelper helper = new MimeMessageHelper(mensaje, true);
                 Context context = new Context();
                 Map<String, Object> model = new HashMap<>();
                 // Generamos los códigos de seguridad y los seteamos en el usuario
@@ -80,13 +79,8 @@ public class ServiceAuthImpl implements IServiceAuth {
                 model.put("url", emailUsuario);
                 model.put("codVerificacion", codigoVerificacion);
                 context.setVariables(model);
-                // Generamos la plantilla de tymeleaf
-                String htmlTemplate = templateEngine.process("recuperar-pass-email", context);
-                helper.setFrom(emailRemitente);
-                helper.setTo(emailUsuario);
-                helper.setText(htmlTemplate, true);
-                // Enviamos el mail con la plantilla y actualizamos el usuario
-                javaMailSender.send(mensaje);
+                // Enviamos el email y actualizamos el usuario
+                serviceCorreosElectronicos.enviarCorreoElectronico(context, "recuperar-pass-email", dtoEnvioCorreoIn);
                 repositorioUsuario.save(usuario);
             } catch (MessagingException e) {
                 throw new RuntimeException(e);

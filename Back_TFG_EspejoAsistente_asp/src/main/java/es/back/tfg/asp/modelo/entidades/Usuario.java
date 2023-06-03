@@ -23,9 +23,12 @@ public class Usuario extends UuId {
     private boolean admin;
     @OneToOne(mappedBy = "usuario")
     private CredencialesUsuario credencialesUsuario;
-    @OneToOne(mappedBy = "usuario")
+    @ManyToOne
+    @JoinColumn(name = "uuid_equipo")
     private Equipo equipo;
-
+    @ManyToOne
+    @JoinColumn(name = "uuid_localizacion")
+    private LocalizacionClima localizacionClima;
     @Override
     public String toString() {
         return "Usuario{" +

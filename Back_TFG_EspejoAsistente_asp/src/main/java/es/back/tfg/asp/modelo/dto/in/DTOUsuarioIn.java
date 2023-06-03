@@ -10,5 +10,18 @@ public class DTOUsuarioIn {
     private String email;
     private boolean admin;
     private String password;
-    private String equipoFav;
+    private DTOEquipoIn equipo;
+    private DTOLocalizacionClimaIn localizacionClima;
+
+    @Data
+    public static class DTOEquipoIn {
+        private String liga;
+        private String nombreEquipo;
+    }
+
+    @Data
+    public static class DTOLocalizacionClimaIn {
+        private String pais;
+        private String codigoPostal;
+    }
 }
