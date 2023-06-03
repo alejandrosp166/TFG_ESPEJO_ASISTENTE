@@ -1,5 +1,7 @@
 package es.front.tfg.asp.controlador;
 
+import es.front.tfg.asp.modelo.dtos.DTOEquipo;
+import es.front.tfg.asp.modelo.dtos.DTOLocalizacionClima;
 import es.front.tfg.asp.modelo.dtos.DTOUsuario;
 import es.front.tfg.asp.servicio.iservice.IServiceAuth;
 import es.front.tfg.asp.servicio.iservice.IServiceEquipo;
@@ -31,7 +33,7 @@ public class RegistroWinController implements Initializable {
     @FXML
     private ImageView imgConfirmFaceId;
     @FXML
-    private TextField fieldUsuario, fieldPassword, fieldNombre, fieldApellidos, fieldEmail;
+    private TextField fieldUsuario, fieldPassword, fieldNombre, fieldApellidos, fieldEmail, fieldCodigoPostal;
     @FXML
     private CheckBox checkEsAdmin;
     @FXML
@@ -66,7 +68,6 @@ public class RegistroWinController implements Initializable {
     public void completarRegistro(ActionEvent e) {
         DTOUsuario dtoUsuario = cargarUsuarioDatosVista();
         serviceAuth.registrarUsuario(dtoUsuario);
-        // VALIDAR
         cambiarVentana(e, getClass(), "/vistas/index.fxml");
     }
 
@@ -80,10 +81,13 @@ public class RegistroWinController implements Initializable {
         String nombre = fieldNombre.getText();
         String apellidos = fieldApellidos.getText();
         String email = fieldEmail.getText();
+        String codigoPostal = fieldCodigoPostal.getText();
         boolean admin = checkEsAdmin.isSelected();
-        // String ciudad = cmbLocalizacion.getValue().toString();
-        String equipo = cmbEquipoFav.getValue().toString();
-        return new DTOUsuario(null, username, nombre, apellidos, email, admin, password, equipo, null, null);
+        String pais = cmbLocalizacion.getValue();
+        String equipo = cmbEquipoFav.getValue();
+        DTOLocalizacionClima dtoLocalizacionClima = new DTOLocalizacionClima(pais, codigoPostal);
+        DTOEquipo dtoEquipo = new DTOEquipo("liga", equipo);
+        return new DTOUsuario(null, username, nombre, apellidos, email, admin, password, null, null, dtoEquipo, dtoLocalizacionClima);
     }
 
     private void cargarEquiposCmb() {
@@ -97,11 +101,12 @@ public class RegistroWinController implements Initializable {
                 Map.entry(3, fieldNombre),
                 Map.entry(4, fieldApellidos),
                 Map.entry(5, fieldEmail),
-                Map.entry(6, checkEsAdmin),
-                Map.entry(7, cmbEquipoFav),
-                Map.entry(8, cmbLocalizacion),
-                Map.entry(9, btnCompletarRegistro),
-                Map.entry(10, btnVolver)
+                Map.entry(6, fieldCodigoPostal),
+                Map.entry(7, checkEsAdmin),
+                Map.entry(8, cmbEquipoFav),
+                Map.entry(9, cmbLocalizacion),
+                Map.entry(10, btnCompletarRegistro),
+                Map.entry(11, btnVolver)
         );
     }
 }

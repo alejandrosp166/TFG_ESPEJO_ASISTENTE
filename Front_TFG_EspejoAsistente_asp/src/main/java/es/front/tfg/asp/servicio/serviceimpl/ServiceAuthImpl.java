@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ServiceAuthImpl implements IServiceAuth {
-    private final String URL = "http://localhost:8080/v0/api/auth";
+    private final String URL = "http://proxmox.iesmartinezm.es:8102/v0/api/auth";
     @Autowired
     private PeticionesHTTP peticionesHTTP;
     @Override

@@ -61,7 +61,7 @@ public class ConfiguracionWinController implements Initializable {
         boolean admin = checkEsAdmin.isSelected();
         // String ciudad = cmbLocalizacion.getValue().toString();
         String equipo = cmbEquipoFav.getValue().toString();
-        return new DTOUsuario(null, username, nombre, apellidos, email, admin, password,null ,null, null);
+        return null;
     }
 
     private void cargarDatosUsuarioLogeadoEnVista() {
