@@ -18,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import java.net.URL;
 import java.util.Map;
 import java.util.ResourceBundle;
+
 @Controller
 public class CambiarPassWinController implements Initializable {
     @FXML
@@ -46,14 +47,10 @@ public class CambiarPassWinController implements Initializable {
         String nuevaPass = fieldPassword1.getText();
         if (nuevaPass.equals(fieldPassword2.getText())) {
             serviceAuth.cambiarContrasenna(new DTOCambioPassword(utiles.obtenerElementoPropieades("token"), nuevaPass));
-            cambiarVentana(e, getClass(), "/vistas/index.fxml");
+            utiles.cambiarVentanaAplicacion(e, getClass(), "/vistas/index.fxml");
         } else {
             utiles.crearModal("Error", "No se pudo cambiar la contraseña");
         }
-    }
-
-    private void cambiarVentana(ActionEvent e, Class<?> c, String resource) {
-        utiles.cambiarVentanaAplicacion(e, c, resource);
     }
 
     private Map<Integer, Node> cargarComponentes() {

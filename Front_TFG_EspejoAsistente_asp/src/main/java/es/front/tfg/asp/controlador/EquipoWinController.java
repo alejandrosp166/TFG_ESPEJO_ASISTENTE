@@ -5,6 +5,7 @@ import es.front.tfg.asp.modelo.response.ResponsePartido;
 import es.front.tfg.asp.servicio.iservice.IServiceEquipo;
 import es.front.tfg.asp.utils.Utiles;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -39,5 +40,17 @@ public class EquipoWinController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         listClasificacion.setItems(FXCollections.observableArrayList(serviceEquipo.obtenerEquiposLigaSantander()));
         utiles.llenarListView(listClasificacion);
+    }
+
+    public void cerrarSesion(ActionEvent e) {
+        utiles.cerrarSesion(e, getClass(), "/vistas/index.fxml");
+    }
+
+    public void ventanaConfiguracion(ActionEvent e) {
+        utiles.cambiarVentanaAplicacion(e, getClass(), "/vistas/configuracion.fxml");
+    }
+
+    public void ventanaClima(ActionEvent e) {
+        utiles.cambiarVentanaAplicacion(e, getClass(), "/vistas/clima.fxml");
     }
 }

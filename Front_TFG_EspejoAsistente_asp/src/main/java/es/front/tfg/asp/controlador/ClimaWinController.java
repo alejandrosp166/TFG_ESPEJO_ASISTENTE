@@ -7,8 +7,10 @@ import es.front.tfg.asp.utils.Utiles;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.concurrent.Task;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
@@ -27,6 +29,8 @@ import java.util.ResourceBundle;
 public class ClimaWinController implements Initializable, Runnable {
     @FXML
     private Label lblHora, lblDiaMesAnio, lblTemperatura, lblVelocidadViento, lblTempMax, lblTempMin, lblHumedad;
+    @FXML
+    private Button btnConfiguracion, btnCerrarSesion;
     @FXML
     private ImageView imgEstadoClima;
     @FXML
@@ -51,16 +55,25 @@ public class ClimaWinController implements Initializable, Runnable {
 
     private void cargarDatosClimaticos() {
         ResponseClima clima = serviceClima.obtenerDatosClimaticosActualesPorCodigoPostal("");
-        lblTemperatura.setText(utiles.pasarKelvinAGrados(clima.getMain().getTemp()) + " ºC");
+        lblTemperatura.setText(clima.getMain().getTemp() + " ºC");
         lblVelocidadViento.setText(utiles.pasarMetrosPorSegundosKilometrosPorHora(clima.getWind().getSpeed()) + " Km/H");
-        lblTempMax.setText(utiles.pasarKelvinAGrados(clima.getMain().getTemp_max()) + " ºC");
-        lblTempMin.setText(utiles.pasarKelvinAGrados(clima.getMain().getTemp_min()) + " ºC");
-        lblHumedad.setText(clima.getMain().getHumidity() + " %");
+        lblTempMax.setText("MAX " + clima.getMain().getTemp_max() + " ºC ");
+        lblTempMin.setText("MIN " + clima.getMain().getTemp_min() + " ºC ");
+        lblHumedad.setText("HUMEDAD " + clima.getMain().getHumidity() + " %");
         imgEstadoClima.setImage(new Image("http://openweathermap.org/img/wn/" + clima.getWeather().get(0).getIcon() + "@2x.png", true));
+        listDatosProximosDias.setItems(FXCollections.observableArrayList(serviceClima.obtenerDatosClimaticosProximosDiasPorCodigoPostal("")));
     }
 
-    private void cargarDatosClimaticosLista() {
-        listDatosProximosDias.setItems(FXCollections.observableArrayList(serviceClima.obtenerDatosClimaticosActualesPorCodigoPostal("")));
+    public void cerrarSesion(ActionEvent e) {
+        utiles.cerrarSesion(e, getClass(), "/vistas/index.fxml");
+    }
+
+    public void ventanaConfiguracion(ActionEvent e) {
+        utiles.cambiarVentanaAplicacion(e, getClass(), "/vistas/configuracion.fxml");
+    }
+
+    public void ventanaEquipo(ActionEvent e) {
+        utiles.cambiarVentanaAplicacion(e, getClass(), "/vistas/equipo.fxml");
     }
 
     @Override

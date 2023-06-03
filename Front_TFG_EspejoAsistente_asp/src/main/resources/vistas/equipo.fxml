@@ -58,7 +58,7 @@
                                 <Font name="System Bold" size="36.0" />
                             </font>
                         </Label>
-                        <Button fx:id="btnConf" mnemonicParsing="false">
+                        <Button fx:id="btnConfiguracion" mnemonicParsing="false" onAction="#ventanaConfiguracion">
                             <font>
                                 <Font name="System Bold" size="30.0" />
                             </font>
@@ -70,7 +70,7 @@
                         </ImageView>
                      </graphic>
                         </Button>
-                        <Button fx:id="btnCerrarSesion" mnemonicParsing="false">
+                        <Button fx:id="btnCerrarSesion" mnemonicParsing="false" onAction="#cerrarSesion">
                             <font>
                                 <Font name="System Bold" size="30.0" />
                             </font>
@@ -91,9 +91,9 @@
                 </Label>
                 <Separator maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="50.0" prefWidth="322.0" GridPane.columnIndex="2" GridPane.rowIndex="6" />
             <ListView fx:id="listClasificacion" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="3" GridPane.rowSpan="15" />
-            <Button fx:id="btnVolver" graphicTextGap="0.0" mnemonicParsing="false" prefHeight="85.0" prefWidth="516.0" style="-fx-background-color: DEB841; -fx-background-radius: 20;" text="V" GridPane.columnIndex="2" GridPane.rowIndex="17">
+            <Button fx:id="btnVolver" graphicTextGap="0.0" mnemonicParsing="false" onAction="#ventanaClima" prefHeight="85.0" prefWidth="516.0" style="-fx-background-color: DEB841; -fx-background-radius: 20;" text="VENTANA CLIMA" GridPane.columnIndex="2" GridPane.rowIndex="16">
                <font>
-                  <Font name="Courier New Bold" size="45.0" />
+                  <Font name="Courier New Bold" size="36.0" />
                </font>
             </Button>
             <GridPane gridLinesVisible="true" hgap="15.0" vgap="15.0" GridPane.columnIndex="2" GridPane.rowIndex="7">

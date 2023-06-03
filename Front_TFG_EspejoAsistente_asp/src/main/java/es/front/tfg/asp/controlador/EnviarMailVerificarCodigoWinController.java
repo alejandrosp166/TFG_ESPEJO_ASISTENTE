@@ -55,18 +55,14 @@ public class EnviarMailVerificarCodigoWinController implements Initializable {
         DTOUsuario usuario = serviceUsuario.obtenerUsuarioPorCodigoVerificacion(fieldCodigo.getText());
         if (Objects.nonNull(usuario)) {
             utiles.guardarElementoPropiedades("token",usuario.getTokenSeguridad());
-            cambiarVentana(e, getClass(), "/vistas/cambiar-pass.fxml");
+            utiles.cambiarVentanaAplicacion(e, getClass(), "/vistas/cambiar-pass.fxml");
         } else {
             // AVISAR AL USUARIO DE QUE NO EXISTE ESE CÓDIGO
         }
     }
 
     public void volver(ActionEvent e) {
-        cambiarVentana(e, getClass(), "/vistas/index.fxml");
-    }
-
-    private void cambiarVentana(ActionEvent e, Class<?> c, String resource) {
-        utiles.cambiarVentanaAplicacion(e, c, resource);
+        utiles.cambiarVentanaAplicacion(e, getClass(), "/vistas/index.fxml");
     }
 
     private Map<Integer, Node> cargarComponentes() {

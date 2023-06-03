@@ -62,34 +62,25 @@ public class IndexWinController implements Initializable {
         // DTOUsuario usuario = serviceUsuario.obtenerUsuarioPorUsername(fieldUsuario.getText());
         if (true) {
             // utiles.guardarElementoPropiedades("uuidUsuario", usuario.getUuid());
-            cambiarVentana(e, getClass(), "/vistas/clima.fxml");
+            utiles.cambiarVentanaAplicacion(e, getClass(), "/vistas/clima.fxml");
         }
     }
 
     public void registrarse(ActionEvent e) {
-        cambiarVentana(e, getClass(), "/vistas/registro.fxml");
+        utiles.cambiarVentanaAplicacion(e, getClass(), "/vistas/registro.fxml");
     }
 
     public void olvidarContrasenna(ActionEvent e) {
-        cambiarVentana(e, getClass(), "/vistas/enviar-mail.fxml");
-    }
-
-    private void cambiarVentana(ActionEvent e, Class<?> c, String resource) {
-        utiles.cambiarVentanaAplicacion(e, c, resource);
-    }
-
-    public void iniciarSesionFaceId(ActionEvent e) {
-
+        utiles.cambiarVentanaAplicacion(e, getClass(), "/vistas/enviar-mail.fxml");
     }
 
     private Map<Integer, Node> cargarComponentes() {
         return Map.ofEntries(
                 Map.entry(1, fieldUsuario),
                 Map.entry(2, fieldPassword),
-                Map.entry(3, btnOlvidarContrasenna),
-                Map.entry(4, btnIniciarSesion),
-                Map.entry(5, btnIniciarSesionFaceId),
-                Map.entry(6, btnRegistro)
+                Map.entry(3, btnIniciarSesion),
+                Map.entry(4, btnRegistro),
+                Map.entry(5, btnOlvidarContrasenna)
         );
     }
 }

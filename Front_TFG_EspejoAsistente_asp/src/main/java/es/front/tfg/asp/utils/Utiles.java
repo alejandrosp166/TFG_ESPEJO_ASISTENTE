@@ -59,6 +59,10 @@ public class Utiles {
         }
     }
 
+    public void cerrarSesion(ActionEvent e, Class<?> c, String resource) {
+        cambiarVentanaAplicacion(e, c, resource);
+    }
+
     public void crearModal(String tituloModal, String contenidoTexto) {
         Dialog<Void> dialog = new Dialog<>();
         dialog.setTitle(tituloModal);
@@ -154,7 +158,6 @@ public class Utiles {
                         }
                         case "ResponseClima" -> {
                             ResponseClima clima = (ResponseClima) item;
-                            // FORMATEAR DATOS
                         }
                     }
                 }
@@ -173,15 +176,19 @@ public class Utiles {
     }
 
     public String obtenerElementoPropieades(String key) {
-        String token = null;
+        String propiedad = null;
         try (InputStream leer = new FileInputStream("session-config.properties")) {
             Properties properties = new Properties();
             properties.load(leer);
-            token = properties.getProperty(key);
+            propiedad = properties.getProperty(key);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return token;
+        return propiedad;
+    }
+
+    public void borrarPropiedades() {
+
     }
 
     public String pasarKelvinAGrados(String kelvin) {

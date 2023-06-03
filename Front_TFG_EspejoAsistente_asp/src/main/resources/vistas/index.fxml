@@ -68,12 +68,12 @@
                   <Insets top="20.0" />
                </GridPane.margin>
             </Button>
-            <Button fx:id="btnRegistro" mnemonicParsing="false" onAction="#registrarse" prefHeight="99.0" prefWidth="1119.0" style="-fx-background-color: DEB841; -fx-background-radius: 20;" text="REGISTRARSE" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="11" GridPane.rowSpan="2">
+            <Button fx:id="btnRegistro" mnemonicParsing="false" onAction="#registrarse" prefHeight="99.0" prefWidth="1119.0" style="-fx-background-color: DEB841; -fx-background-radius: 20;" text="REGISTRARSE" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="9" GridPane.rowSpan="2">
                <font>
                   <Font name="Courier New Bold" size="45.0" />
                </font>
             </Button>
-            <Button fx:id="btnIniciarSesionFaceId" mnemonicParsing="false" prefHeight="77.0" prefWidth="1123.0" style="-fx-background-color: DEB841; -fx-background-radius: 20;" text="INICIAR SESIÓN CON FACE ID" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="9" GridPane.rowSpan="2">
+            <Button fx:id="btnOlvidarContrasenna" mnemonicParsing="false" onAction="#olvidarContrasenna" prefHeight="77.0" prefWidth="1123.0" style="-fx-background-color: DEB841; -fx-background-radius: 20;" text="¿HAS OLVIDADO TU CONTRASEÑA?" textFill="#da1515" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="11" GridPane.rowSpan="2">
                <font>
                   <Font name="Courier New Bold" size="45.0" />
                </font>
@@ -99,11 +99,6 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <Button fx:id="btnOlvidarContrasenna" mnemonicParsing="false" onAction="#olvidarContrasenna" text="Olvidé mi contraseña" GridPane.columnIndex="7" GridPane.columnSpan="2" GridPane.rowIndex="5" GridPane.rowSpan="2">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Button>
          </children>
       </GridPane>
    </children>

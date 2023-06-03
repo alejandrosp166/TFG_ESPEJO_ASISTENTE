@@ -64,9 +64,9 @@
             <Separator maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="4.0" prefWidth="640.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
             <Separator maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="21.0" prefWidth="640.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
             <Separator maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="21.0" prefWidth="640.0" GridPane.columnIndex="3" GridPane.rowIndex="9" />
-            <Button fx:id="btnVolver" graphicTextGap="0.0" mnemonicParsing="false" prefHeight="85.0" prefWidth="516.0" style="-fx-background-color: DEB841; -fx-background-radius: 20;" text="V" GridPane.columnIndex="1" GridPane.rowIndex="22">
+            <Button fx:id="btnVolver" graphicTextGap="0.0" mnemonicParsing="false" onAction="#ventanaEquipo" prefHeight="85.0" prefWidth="516.0" style="-fx-background-color: DEB841; -fx-background-radius: 20;" text="VENTANA MI EQUIPO" GridPane.columnIndex="1" GridPane.rowIndex="22">
                <font>
-                  <Font name="Courier New Bold" size="45.0" />
+                  <Font name="Courier New Bold" size="36.0" />
                </font>
             </Button>
             <ToolBar prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: black;" GridPane.columnIndex="3" GridPane.rowIndex="1">
@@ -76,7 +76,7 @@
                         <Font name="System Bold" size="36.0" />
                      </font>
                   </Label>
-                  <Button fx:id="btnConfiguracion" mnemonicParsing="false">
+                  <Button fx:id="btnConfiguracion" mnemonicParsing="false" onAction="#ventanaConfiguracion">
                      <font>
                         <Font name="System Bold" size="30.0" />
                      </font>
@@ -88,7 +88,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="btnCerrarSesion" mnemonicParsing="false">
+                  <Button fx:id="btnCerrarSesion" mnemonicParsing="false" onAction="#cerrarSesion">
                      <font>
                         <Font name="System Bold" size="30.0" />
                      </font>
@@ -116,12 +116,12 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label fx:id="lblVelocidadViento" text="VIENTO" textFill="WHITE" GridPane.rowIndex="3">
+                  <Label fx:id="lblVelocidadViento" text="VIENTO" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="3">
                      <font>
                         <Font name="System Bold" size="48.0" />
                      </font>
                   </Label>
-                  <Label fx:id="lblTemperatura" text="TEMP" textFill="WHITE" GridPane.rowIndex="1">
+                  <Label fx:id="lblTemperatura" text="TEMP" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <font>
                         <Font name="System Bold" size="64.0" />
                      </font>
@@ -130,22 +130,22 @@
                      <items>
                         <Label fx:id="lblTempMax" text="MAX" textFill="WHITE">
                            <font>
-                              <Font size="36.0" />
+                              <Font size="24.0" />
                            </font>
                         </Label>
                         <Label fx:id="lblTempMin" text="MIN" textFill="WHITE">
                            <font>
-                              <Font size="36.0" />
+                              <Font size="24.0" />
                            </font>
                         </Label>
                         <Label fx:id="lblHumedad" text="HUM" textFill="WHITE">
                            <font>
-                              <Font size="36.0" />
+                              <Font size="24.0" />
                            </font>
                         </Label>
                      </items>
                   </ToolBar>
-                  <ImageView fx:id="imgEstadoClima" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <ImageView fx:id="imgEstadoClima" fitHeight="100.0" fitWidth="230.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1" />
                </children>
             </GridPane>
             <ListView fx:id="listDatosProximosDias" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="10" GridPane.rowSpan="13" />

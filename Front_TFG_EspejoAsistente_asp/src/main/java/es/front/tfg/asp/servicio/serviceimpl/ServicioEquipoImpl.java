@@ -18,10 +18,10 @@ public class ServicioEquipoImpl implements IServiceEquipo {
 
     @Override
     public List<ResponseEquipo> obtenerEquiposLigaSantander() {
-        return peticionesHTTP.getApiEquipos(URL, ResponseEquipo.class);
+        return peticionesHTTP.getListas(URL, ResponseEquipo.class, "response");
     }
 
     public List<ResponsePartido> obtenerPartidosHoy() {
-        return peticionesHTTP.getApiEquipos(URL + "&req=matchsday", ResponsePartido.class);
+        return peticionesHTTP.getListas(URL + "&req=matchsday", ResponsePartido.class, "response");
     }
 }

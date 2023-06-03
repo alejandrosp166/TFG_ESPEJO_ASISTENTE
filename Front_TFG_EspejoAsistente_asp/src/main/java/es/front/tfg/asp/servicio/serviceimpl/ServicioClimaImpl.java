@@ -10,9 +10,10 @@ import java.util.List;
 
 @Service
 public class ServicioClimaImpl implements IServiceClima {
-    private final String URL = "https://api.openweathermap.org/data/2.5/weather?zip=41020,es&appid=8d0067ebec1efdddbe5a7db4bd07a7f8";
+    private final String URL = "https://api.openweathermap.org/data/2.5/weather?zip=41020,es&appid=8d0067ebec1efdddbe5a7db4bd07a7f8&units=metric&lang=es";
     @Autowired
     private PeticionesHTTP peticionesHTTP;
+
     @Override
     public ResponseClima obtenerDatosClimaticosActualesPorCodigoPostal(String codigoPostal) {
         return peticionesHTTP.get(URL, ResponseClima.class);
@@ -20,8 +21,7 @@ public class ServicioClimaImpl implements IServiceClima {
 
     @Override
     public List<ResponseClima> obtenerDatosClimaticosProximosDiasPorCodigoPostal(String codigoPostal) {
-        // peticionesHTTP.get(URL, ResponseClima.class)
-        return null;
+        return peticionesHTTP.getListas(URL.replace("weather?", "forecast?"), ResponseClima.class, "list");
     }
 
 

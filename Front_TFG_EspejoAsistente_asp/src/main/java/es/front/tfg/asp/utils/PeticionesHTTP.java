@@ -5,6 +5,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import es.front.tfg.asp.modelo.response.ApiResponse;
+import es.front.tfg.asp.modelo.response.ResponseEquipo;
 import org.apache.hc.client5.http.classic.methods.HttpDelete;
 import org.apache.hc.client5.http.classic.methods.HttpGet;
 import org.apache.hc.client5.http.classic.methods.HttpPost;
@@ -65,7 +66,7 @@ public class PeticionesHTTP {
         return entidad;
     }
 
-    public <T> List<T> getApiEquipos(String url, Class<T> claseObjetoDevolver) {
+    public <T> List<T> getListas(String url, Class<T> claseObjetoDevolver, String container) {
         List<T> listaEntidades = new ArrayList<>();
         try {
             HttpGet peticion = new HttpGet(url);
@@ -76,7 +77,7 @@ public class PeticionesHTTP {
             if (respuesta.getCode() == 200) {
                 String json = EntityUtils.toString(respuesta.getEntity());
                 JsonObject jsonObject = GSON_MAPPER.fromJson(json, JsonObject.class);
-                JsonElement elementoJson = jsonObject.get("response");
+                JsonElement elementoJson = jsonObject.get(container);
                 if (elementoJson != null && elementoJson.isJsonArray()) {
                     JsonArray respuestaEnArray = elementoJson.getAsJsonArray();
                     if (respuestaEnArray.size() > 0) {
