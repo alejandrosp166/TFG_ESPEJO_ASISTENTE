@@ -30,6 +30,6 @@ public class ServiceUsuarioImpl implements IServiceUsuario {
 
     @Override
     public void actualizarUsuario(DTOUsuarioIn usuario, String uuid) {
-        peticionesHTTP.put(usuario, URL + "/" + uuid, DTOUsuarioIn.class);
+        peticionesHTTP.put(usuario, URL + "/" + uuid, DTOUsuarioOut.class);
     }
 }

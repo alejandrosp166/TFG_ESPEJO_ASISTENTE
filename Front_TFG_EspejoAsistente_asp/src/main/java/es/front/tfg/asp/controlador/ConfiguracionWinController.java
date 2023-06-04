@@ -59,6 +59,7 @@ public class ConfiguracionWinController implements Initializable {
 
     public void guardarConfig(ActionEvent e) {
         serviceUsuario.actualizarUsuario(obtenerDatosVista(), utiles.obtenerElementoPropieades("uuidUsuario"));
+        utiles.cambiarVentanaAplicacion(e, getClass(), "/vistas/index.fxml");
     }
 
     private DTOUsuarioIn obtenerDatosVista() {
@@ -67,7 +68,7 @@ public class ConfiguracionWinController implements Initializable {
         String apellidos = fieldApellidos.getText();
         String email = fieldEmail.getText();
         boolean admin = checkEsAdmin.isSelected();
-        String codigoPostal = cmbLocalizacion.getValue();
+        String codigoPostal = fieldCodigoPostal.getText();
         String pais = cmbLigaFav.getValue();
         String equipo = cmbEquipoFav.getValue();
         DTOEquipo dtoEquipo  = new DTOEquipo(pais, equipo);
@@ -118,11 +119,14 @@ public class ConfiguracionWinController implements Initializable {
                 Map.entry(2, fieldNombre),
                 Map.entry(3, fieldApellidos),
                 Map.entry(4, fieldEmail),
-                Map.entry(5, checkEsAdmin),
-                Map.entry(6, cmbLocalizacion),
+                Map.entry(5, fieldCodigoPostal),
+                Map.entry(6, cmbLigaFav),
                 Map.entry(7, cmbEquipoFav),
-                Map.entry(8, btnGuardarConfiguracion),
-                Map.entry(9, btnVolver)
+                Map.entry(8, checkEsAdmin),
+                Map.entry(9, cmbLocalizacion),
+                Map.entry(10, btnGuardarConfiguracion),
+                Map.entry(11, btnVolver),
+                Map.entry(12, btnEliminarCuenta)
         );
     }
 }

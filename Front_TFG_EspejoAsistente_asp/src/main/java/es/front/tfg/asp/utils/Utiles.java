@@ -52,7 +52,7 @@ public class Utiles {
             Scene scene = new Scene(loader.load(), 800, 800, false, SceneAntialiasing.BALANCED);
             stage.setScene(scene);
             stage.setFullScreenExitHint("");
-            stage.setFullScreen(true);
+            stage.setFullScreen(false);
             stage.show();
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -103,11 +103,10 @@ public class Utiles {
                 String tecla = teclasTeclado[row][col];
                 Button boton = new Button(tecla);
                 boton.setStyle("-fx-font-size: 16px; -fx-pref-width: 100px; -fx-pref-height: 50px;");
-                String textoField = txt.getText();
                 switch (tecla) {
                     case "<----" -> {
-                        if (!textoField.equals("")) {
-                            boton.setOnAction(event -> txt.setText(textoField.substring(0, txt.getText().length() - 1)));
+                        if (!txt.getText().equals("")) {
+                            boton.setOnAction(event -> txt.setText(txt.getText().substring(0, txt.getText().length() - 1)));
                         }
                     }
                     case "BORRAR" -> boton.setOnAction(event -> txt.setText(""));
@@ -118,7 +117,7 @@ public class Utiles {
                         hiloCambiarInterfaz.setListaComponentes(listaComponentesAnterior);
                         hiloControlMando.setPosicionPuntero(1);
                     });
-                    default -> boton.setOnAction(event -> txt.setText(textoField + tecla));
+                    default -> boton.setOnAction(event -> txt.setText(txt.getText() + tecla));
                 }
 
                 gridPane.add(boton, col, row);
