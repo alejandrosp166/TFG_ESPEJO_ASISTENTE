@@ -1,4 +1,4 @@
-package es.back.tfg.asp.modelo.dto.out;
+package es.front.tfg.asp.modelo.dtos;
 
 import lombok.Data;
 
@@ -14,10 +14,10 @@ public class DTOUsuarioOut {
     private boolean esAdmin;
     private String tokenSeguridad;
     private String codigoVerificacionCambioContrasenna;
-    private UUID uuidCredenciales;
+    private String uuidCredenciales;
     private String equipoFav;
-    private UUID uuidEquipo;
+    private String uuidEquipo;
     private String pais;
     private String codigoPostal;
-    private UUID uuidLocalizacion;
+    private String uuidLocalizacion;
 }

@@ -1,7 +1,7 @@
 package es.front.tfg.asp.controlador;
 
 import es.front.tfg.asp.modelo.dtos.DTOEnvioCorreo;
-import es.front.tfg.asp.modelo.dtos.DTOUsuario;
+import es.front.tfg.asp.modelo.dtos.DTOUsuarioIn;
 import es.front.tfg.asp.servicio.iservice.IServiceAuth;
 import es.front.tfg.asp.servicio.iservice.IServiceUsuario;
 import es.front.tfg.asp.utils.HiloControlMando;
@@ -52,7 +52,7 @@ public class EnviarMailVerificarCodigoWinController implements Initializable {
     }
 
     public void verificarCodigo(ActionEvent e) {
-        DTOUsuario usuario = serviceUsuario.obtenerUsuarioPorCodigoVerificacion(fieldCodigo.getText());
+        DTOUsuarioIn usuario = serviceUsuario.obtenerUsuarioPorCodigoVerificacion(fieldCodigo.getText());
         if (Objects.nonNull(usuario)) {
             utiles.guardarElementoPropiedades("token",usuario.getTokenSeguridad());
             utiles.cambiarVentanaAplicacion(e, getClass(), "/vistas/cambiar-pass.fxml");

@@ -1,8 +1,6 @@
 package es.front.tfg.asp.controlador;
 
-import es.front.tfg.asp.modelo.dtos.DTOUsuario;
-import es.front.tfg.asp.modelo.response.ResponseClima;
-import es.front.tfg.asp.servicio.iservice.IServiceClima;
+import es.front.tfg.asp.modelo.dtos.DTOUsuarioIn;
 import es.front.tfg.asp.servicio.iservice.IServiceUsuario;
 import es.front.tfg.asp.utils.HiloControlMando;
 import es.front.tfg.asp.utils.HiloCambiarInterfaz;
@@ -59,9 +57,9 @@ public class IndexWinController implements Initializable {
     }
 
     public void iniciarSesion(ActionEvent e) {
-        // DTOUsuario usuario = serviceUsuario.obtenerUsuarioPorUsername(fieldUsuario.getText());
+        DTOUsuarioIn usuario = serviceUsuario.obtenerUsuarioPorUsername(fieldUsuario.getText());
         if (true) {
-            // utiles.guardarElementoPropiedades("uuidUsuario", usuario.getUuid());
+            utiles.guardarElementoPropiedades("uuidUsuario", usuario.getUuid());
             utiles.cambiarVentanaAplicacion(e, getClass(), "/vistas/clima.fxml");
         }
     }

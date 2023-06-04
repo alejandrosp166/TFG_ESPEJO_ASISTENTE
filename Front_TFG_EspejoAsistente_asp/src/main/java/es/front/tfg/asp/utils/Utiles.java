@@ -191,6 +191,18 @@ public class Utiles {
 
     }
 
+    public String traducirPaisIngles(String paisEspannol) {
+        String paisIngles = "";
+        switch (paisEspannol.toLowerCase()) {
+            case "españa" -> paisIngles = "spain";
+            case "inglaterra" -> paisIngles = "england";
+            case "francia" -> paisIngles = "france";
+            case "italia" -> paisIngles = "italy";
+            case "alemania" -> paisIngles = "germany";
+        }
+        return paisIngles;
+    }
+
     public String pasarKelvinAGrados(String kelvin) {
         return Double.toString(Math.round(Double.parseDouble(kelvin) - 273.15));
     }

@@ -1,6 +1,6 @@
 package es.front.tfg.asp.controlador;
 
-import es.front.tfg.asp.modelo.dtos.DTOUsuario;
+import es.front.tfg.asp.modelo.dtos.DTOUsuarioIn;
 import es.front.tfg.asp.servicio.iservice.IServiceUsuario;
 import es.front.tfg.asp.utils.HiloControlMando;
 import es.front.tfg.asp.utils.HiloCambiarInterfaz;
@@ -52,7 +52,7 @@ public class ConfiguracionWinController implements Initializable {
         serviceUsuario.actualizarUsuario(obtenerDatosVista(), utiles.obtenerElementoPropieades("uuidUsuario"));
     }
 
-    private DTOUsuario obtenerDatosVista() {
+    private DTOUsuarioIn obtenerDatosVista() {
         String username = fieldUsuario.getText();
         String password = ""; // TIENE QUE SER OTRO DTO
         String nombre = fieldNombre.getText();
@@ -65,14 +65,13 @@ public class ConfiguracionWinController implements Initializable {
     }
 
     private void cargarDatosUsuarioLogeadoEnVista() {
-        DTOUsuario usuario = serviceUsuario.obtenerUsuarioPorUuid(utiles.obtenerElementoPropieades("uuidUsuario"));
+        DTOUsuarioIn usuario = serviceUsuario.obtenerUsuarioPorUuid(utiles.obtenerElementoPropieades("uuidUsuario"));
         if (Objects.nonNull(usuario)) {
             fieldUsuario.setText(usuario.getUsername());
             fieldNombre.setText(usuario.getNombre());
             fieldApellidos.setText(usuario.getApellidos());
             fieldEmail.setText(usuario.getEmail());
             checkEsAdmin.setSelected(usuario.isEsAdmin());
-            // cmbEquipoFav
             // cmbLocalizacion
         }
     }

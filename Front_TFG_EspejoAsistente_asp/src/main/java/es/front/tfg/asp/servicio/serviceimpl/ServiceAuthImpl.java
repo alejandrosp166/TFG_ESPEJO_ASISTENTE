@@ -2,7 +2,7 @@ package es.front.tfg.asp.servicio.serviceimpl;
 
 import es.front.tfg.asp.modelo.dtos.DTOCambioPassword;
 import es.front.tfg.asp.modelo.dtos.DTOEnvioCorreo;
-import es.front.tfg.asp.modelo.dtos.DTOUsuario;
+import es.front.tfg.asp.modelo.dtos.DTOUsuarioIn;
 import es.front.tfg.asp.servicio.iservice.IServiceAuth;
 
 import es.front.tfg.asp.utils.PeticionesHTTP;
@@ -16,8 +16,8 @@ public class ServiceAuthImpl implements IServiceAuth {
     @Autowired
     private PeticionesHTTP peticionesHTTP;
     @Override
-    public void registrarUsuario(DTOUsuario dtoUsuario) {
-        peticionesHTTP.post(dtoUsuario, URL + "/registro", DTOUsuario.class);
+    public void registrarUsuario(DTOUsuarioIn dtoUsuarioIn) {
+        peticionesHTTP.post(dtoUsuarioIn, URL + "/registro", DTOUsuarioIn.class);
     }
 
     @Override

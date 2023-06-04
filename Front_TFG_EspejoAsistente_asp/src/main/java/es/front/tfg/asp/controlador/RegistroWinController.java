@@ -2,12 +2,13 @@ package es.front.tfg.asp.controlador;
 
 import es.front.tfg.asp.modelo.dtos.DTOEquipo;
 import es.front.tfg.asp.modelo.dtos.DTOLocalizacionClima;
-import es.front.tfg.asp.modelo.dtos.DTOUsuario;
+import es.front.tfg.asp.modelo.dtos.DTOUsuarioIn;
 import es.front.tfg.asp.servicio.iservice.IServiceAuth;
 import es.front.tfg.asp.servicio.iservice.IServiceEquipo;
 import es.front.tfg.asp.utils.HiloControlMando;
 import es.front.tfg.asp.utils.HiloCambiarInterfaz;
 import es.front.tfg.asp.utils.Utiles;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -22,6 +23,7 @@ import org.springframework.stereotype.Controller;
 
 import java.net.URL;
 import java.util.Map;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 /**
@@ -38,7 +40,7 @@ public class RegistroWinController implements Initializable {
     @FXML
     private Button btnCompletarRegistro, btnVolver;
     @FXML
-    private ComboBox<String> cmbLocalizacion, cmbEquipoFav;
+    private ComboBox<String> cmbLocalizacion, cmbEquipoFav, cmbLigaFav;
     @Autowired
     private HiloControlMando hiloControlMando;
     @Autowired
@@ -57,7 +59,7 @@ public class RegistroWinController implements Initializable {
         hiloControlMando.setBtnEquisPulsada(false);
         hiloCambiarInterfaz.setListaComponentes(map);
         utiles.iniciarHilos();
-        cargarEquiposCmb();
+        cargarPaises();
     }
 
     public void volver(ActionEvent e) {
@@ -65,8 +67,8 @@ public class RegistroWinController implements Initializable {
     }
 
     public void completarRegistro(ActionEvent e) {
-        DTOUsuario dtoUsuario = cargarUsuarioDatosVista();
-        serviceAuth.registrarUsuario(dtoUsuario);
+        DTOUsuarioIn dtoUsuarioIn = cargarUsuarioDatosVista();
+        serviceAuth.registrarUsuario(dtoUsuarioIn);
         cambiarVentana(e, getClass(), "/vistas/index.fxml");
     }
 
@@ -74,7 +76,7 @@ public class RegistroWinController implements Initializable {
         utiles.cambiarVentanaAplicacion(e, c, resource);
     }
 
-    private DTOUsuario cargarUsuarioDatosVista() {
+    private DTOUsuarioIn cargarUsuarioDatosVista() {
         String username = fieldUsuario.getText();
         String password = fieldPassword.getText();
         String nombre = fieldNombre.getText();
@@ -82,15 +84,26 @@ public class RegistroWinController implements Initializable {
         String email = fieldEmail.getText();
         String codigoPostal = fieldCodigoPostal.getText();
         boolean admin = checkEsAdmin.isSelected();
-        String pais = cmbLocalizacion.getValue();
+        String pais = cmbLigaFav.getValue();
         String equipo = cmbEquipoFav.getValue();
         DTOLocalizacionClima dtoLocalizacionClima = new DTOLocalizacionClima(pais, codigoPostal);
-        DTOEquipo dtoEquipo = new DTOEquipo("liga", equipo);
-        return new DTOUsuario(null, username, nombre, apellidos, email, admin, password, null, null, dtoEquipo, dtoLocalizacionClima);
+        DTOEquipo dtoEquipo = new DTOEquipo(pais, equipo);
+        return new DTOUsuarioIn(null, username, nombre, apellidos, email, admin, password, null, null, dtoEquipo, dtoLocalizacionClima);
     }
 
-    private void cargarEquiposCmb() {
-        utiles.llenarCombobox(serviceEquipo.obtenerEquiposLigaSantander(), cmbEquipoFav, equipo -> equipo.getTeam().getName());
+    public void activarCmbBoxEquipo(ActionEvent e) {
+        String pais = cmbLigaFav.getSelectionModel().getSelectedItem();
+        if (Objects.nonNull(pais)) {
+            cargarDatosComboBoxEquipo(utiles.traducirPaisIngles(pais));
+        }
+    }
+
+    private void cargarPaises() {
+        cmbLigaFav.setItems(FXCollections.observableArrayList("España", "Inglaterra", "Alemania", "Italia", "Francia"));
+    }
+
+    private void cargarDatosComboBoxEquipo(String pais) {
+        utiles.llenarCombobox(serviceEquipo.obtenerEquiposPorPais(pais), cmbEquipoFav, equipo -> equipo.getTeam().getName());
     }
 
     private Map<Integer, Node> cargarComponentes() {
@@ -101,11 +114,12 @@ public class RegistroWinController implements Initializable {
                 Map.entry(4, fieldApellidos),
                 Map.entry(5, fieldEmail),
                 Map.entry(6, fieldCodigoPostal),
-                Map.entry(7, checkEsAdmin),
+                Map.entry(7, cmbLigaFav),
                 Map.entry(8, cmbEquipoFav),
-                Map.entry(9, cmbLocalizacion),
-                Map.entry(10, btnCompletarRegistro),
-                Map.entry(11, btnVolver)
+                Map.entry(9, checkEsAdmin),
+                Map.entry(10, cmbLocalizacion),
+                Map.entry(11, btnCompletarRegistro),
+                Map.entry(12, btnVolver)
         );
     }
 }

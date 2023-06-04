@@ -61,19 +61,19 @@
                         <Font name="Courier New" size="24.0" />
                     </font>
                 </TextField>
-                <Button fx:id="btnGuardarConfiguracion" mnemonicParsing="false" onAction="#guardarConfig" prefHeight="99.0" prefWidth="1119.0" style="-fx-background-radius: 20; -fx-background-color: DEB841;" text="GUARDAR CONFIGURACIÓN" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="16">
+                <Button fx:id="btnGuardarConfiguracion" mnemonicParsing="false" onAction="#guardarConfig" prefHeight="99.0" prefWidth="1119.0" style="-fx-background-radius: 20; -fx-background-color: DEB841;" text="GUARDAR CONFIGURACIÓN" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="19">
                     <font>
                         <Font name="Courier New Bold" size="40.0" />
                     </font>
                 </Button>
-                <ComboBox fx:id="cmbLocalizacion" prefHeight="49.0" prefWidth="208.0" style="-fx-background-radius: 20;" GridPane.columnIndex="5" GridPane.rowIndex="14" />
-                <ComboBox fx:id="cmbEquipoFav" prefHeight="49.0" prefWidth="202.0" style="-fx-background-radius: 20;" GridPane.columnIndex="6" GridPane.rowIndex="14" />
+                <ComboBox fx:id="cmbLocalizacion" prefHeight="44.0" prefWidth="320.0" style="-fx-background-radius: 20;" GridPane.columnIndex="6" GridPane.rowIndex="16" />
+                <ComboBox fx:id="cmbEquipoFav" prefHeight="49.0" prefWidth="260.0" style="-fx-background-radius: 20;" GridPane.columnIndex="4" GridPane.rowIndex="17" />
                 <Label prefHeight="105.0" prefWidth="902.0" text="CONFIGURACIÓN CUENTA" textFill="WHITE" GridPane.columnIndex="4" GridPane.columnSpan="5" GridPane.rowIndex="3">
                     <font>
                         <Font name="System Bold" size="72.0" />
                     </font>
                 </Label>
-                <CheckBox fx:id="checkEsAdmin" mnemonicParsing="false" text="ES ADMIN" textFill="WHITE" GridPane.columnIndex="4" GridPane.rowIndex="14">
+                <CheckBox fx:id="checkEsAdmin" mnemonicParsing="false" text="ES ADMIN" textFill="WHITE" GridPane.columnIndex="5" GridPane.rowIndex="16">
                     <font>
                         <Font name="Courier New Bold" size="36.0" />
                     </font>
@@ -93,16 +93,22 @@
                         <Font name="Courier New" size="24.0" />
                     </font>
                 </TextField>
-            <Button fx:id="btnVolver" mnemonicParsing="false" onAction="#volver" prefHeight="99.0" prefWidth="1119.0" style="-fx-background-radius: 20; -fx-background-color: DEB841;" text="VOLVER" textFill="#d01212" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="20">
+            <Button fx:id="btnVolver" mnemonicParsing="false" onAction="#volver" prefHeight="99.0" prefWidth="1119.0" style="-fx-background-radius: 20; -fx-background-color: DEB841;" text="VOLVER" GridPane.columnIndex="4" GridPane.rowIndex="21">
                <font>
                   <Font name="Courier New Bold" size="40.0" />
                </font>
             </Button>
-            <Button fx:id="btnVolver1" mnemonicParsing="false" onAction="#volver" prefHeight="99.0" prefWidth="1119.0" style="-fx-background-radius: 20; -fx-background-color: DEB841;" text="BORRAR CUENTA" textFill="#d01212" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="18">
+            <Button fx:id="btnVolver1" mnemonicParsing="false" onAction="#volver" prefHeight="99.0" prefWidth="1119.0" style="-fx-background-radius: 20; -fx-background-color: DEB841;" text="ELIMINAR" textFill="#d01212" GridPane.columnIndex="6" GridPane.rowIndex="21">
                <font>
-                  <Font name="Courier New Bold" size="40.0" />
+                  <Font name="Courier New Bold" size="36.0" />
                </font>
             </Button>
+            <TextField fx:id="fieldEmail1" prefHeight="25.0" prefWidth="900.0" promptText="NUEVO CÓDIGO POSTAL" style="-fx-background-radius: 25;" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="13">
+               <font>
+                  <Font name="Courier New" size="24.0" />
+               </font>
+            </TextField>
+            <ComboBox fx:id="cmbLigaFav" prefHeight="49.0" prefWidth="260.0" style="-fx-background-radius: 20;" GridPane.columnIndex="4" GridPane.rowIndex="15" />
             </children>
         </GridPane>
     </children>

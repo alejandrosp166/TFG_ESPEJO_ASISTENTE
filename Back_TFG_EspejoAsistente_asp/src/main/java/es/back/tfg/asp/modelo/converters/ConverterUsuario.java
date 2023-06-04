@@ -34,7 +34,8 @@ public class ConverterUsuario {
         dtoUsuarioOut.setUuidCredenciales(usuarioEntidad.getCredencialesUsuario().getUuid());
         dtoUsuarioOut.setEquipoFav(usuarioEntidad.getEquipo().getNombre());
         dtoUsuarioOut.setUuidEquipo(usuarioEntidad.getEquipo().getUuid());
-        dtoUsuarioOut.setLocalizacion(usuarioEntidad.getLocalizacionClima().getNombre());
+        dtoUsuarioOut.setPais(usuarioEntidad.getLocalizacionClima().getPais());
+        dtoUsuarioOut.setCodigoPostal(usuarioEntidad.getLocalizacionClima().getCodigoPostal());
         dtoUsuarioOut.setUuidLocalizacion(usuarioEntidad.getLocalizacionClima().getUuid());
         return dtoUsuarioOut;
     }

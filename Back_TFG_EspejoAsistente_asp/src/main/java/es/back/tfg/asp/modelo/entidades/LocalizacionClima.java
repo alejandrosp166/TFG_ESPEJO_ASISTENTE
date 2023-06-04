@@ -17,7 +17,6 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @Table(name = "clima_localizacion_usuario")
 public class LocalizacionClima extends UuId {
-    private String nombre;
     private String pais;
     private String codigoPostal;
     @OneToMany(mappedBy = "localizacionClima")

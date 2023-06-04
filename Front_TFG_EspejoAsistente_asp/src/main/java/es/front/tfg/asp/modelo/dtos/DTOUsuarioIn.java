@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class DTOUsuario {
+public class DTOUsuarioIn {
     private String uuid;
     private String username;
     private String nombre;
