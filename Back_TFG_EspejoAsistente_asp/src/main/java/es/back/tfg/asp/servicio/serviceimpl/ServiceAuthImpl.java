@@ -48,7 +48,7 @@ public class ServiceAuthImpl implements IServiceAuth {
         Usuario usuario = converterUsuario.dtoInAEntidad(dtoUsuarioIn);
         CredencialesUsuario credencialesUsuario = new CredencialesUsuario(dtoUsuarioIn.getPassword(), usuario);
         Equipo equipo = new Equipo(dtoUsuarioIn.getEquipo().getNombreEquipo(), dtoUsuarioIn.getEquipo().getLiga(), 0, 0, 0, Collections.emptyList());
-        LocalizacionClima localizacionClima = new LocalizacionClima("NOMBRE CIUDAD", dtoUsuarioIn.getLocalizacionClima().getPais(), dtoUsuarioIn.getLocalizacionClima().getCodigoPostal(), Collections.emptyList());
+        LocalizacionClima localizacionClima = new LocalizacionClima(dtoUsuarioIn.getLocalizacionClima().getPais(), dtoUsuarioIn.getLocalizacionClima().getCodigoPostal(), Collections.emptyList());
         repositorioUsuario.save(usuario);
         usuario.setCredencialesUsuario(credencialesUsuario);
         repositorioCredenciales.save(credencialesUsuario);

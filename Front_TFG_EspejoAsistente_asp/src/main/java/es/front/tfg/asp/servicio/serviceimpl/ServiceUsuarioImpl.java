@@ -1,6 +1,7 @@
 package es.front.tfg.asp.servicio.serviceimpl;
 
 import es.front.tfg.asp.modelo.dtos.DTOUsuarioIn;
+import es.front.tfg.asp.modelo.dtos.DTOUsuarioOut;
 import es.front.tfg.asp.servicio.iservice.IServiceUsuario;
 import es.front.tfg.asp.utils.PeticionesHTTP;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,18 +14,18 @@ public class ServiceUsuarioImpl implements IServiceUsuario {
     private PeticionesHTTP peticionesHTTP;
 
     @Override
-    public DTOUsuarioIn obtenerUsuarioPorCodigoVerificacion(String codigo) {
-        return peticionesHTTP.get(URL + "/obtener-por-codigo-verificacion/" + codigo, DTOUsuarioIn.class);
+    public DTOUsuarioOut obtenerUsuarioPorCodigoVerificacion(String codigo) {
+        return peticionesHTTP.get(URL + "/obtener-por-codigo-verificacion/" + codigo, DTOUsuarioOut.class);
     }
 
     @Override
-    public DTOUsuarioIn obtenerUsuarioPorUsername(String username) {
-        return peticionesHTTP.get(URL + "/obtener-por-username/" + username, DTOUsuarioIn.class);
+    public DTOUsuarioOut obtenerUsuarioPorUsername(String username) {
+        return peticionesHTTP.get(URL + "/obtener-por-username/" + username, DTOUsuarioOut.class);
     }
 
     @Override
-    public DTOUsuarioIn obtenerUsuarioPorUuid(String uuid) {
-        return peticionesHTTP.get(URL + "/" + uuid, DTOUsuarioIn.class);
+    public DTOUsuarioOut obtenerUsuarioPorUuid(String uuid) {
+        return peticionesHTTP.get(URL + "/" + uuid, DTOUsuarioOut.class);
     }
 
     @Override

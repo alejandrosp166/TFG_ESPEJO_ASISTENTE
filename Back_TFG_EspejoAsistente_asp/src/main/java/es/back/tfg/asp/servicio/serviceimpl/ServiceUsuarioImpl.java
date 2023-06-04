@@ -4,8 +4,12 @@ import es.back.tfg.asp.modelo.converters.ConverterUsuario;
 import es.back.tfg.asp.modelo.dto.in.DTOUsuarioIn;
 import es.back.tfg.asp.modelo.dto.in.DTOUsuarioInActualizar;
 import es.back.tfg.asp.modelo.dto.out.DTOUsuarioOut;
+import es.back.tfg.asp.modelo.entidades.Equipo;
+import es.back.tfg.asp.modelo.entidades.LocalizacionClima;
 import es.back.tfg.asp.modelo.entidades.Usuario;
 import es.back.tfg.asp.repositorio.RepositorioCredenciales;
+import es.back.tfg.asp.repositorio.RepositorioEquipo;
+import es.back.tfg.asp.repositorio.RepositorioLocalizacionClima;
 import es.back.tfg.asp.repositorio.RepositorioUsuario;
 import es.back.tfg.asp.servicio.iservice.IServiceUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +22,10 @@ import java.util.UUID;
 public class ServiceUsuarioImpl implements IServiceUsuario {
     @Autowired
     private RepositorioUsuario repositorioUsuario;
+    @Autowired
+    private RepositorioEquipo repositorioEquipo;
+    @Autowired
+    private RepositorioLocalizacionClima repositorioLocalizacionClima;
     @Autowired
     private RepositorioCredenciales repositorioCredenciales;
     @Autowired
@@ -33,6 +41,7 @@ public class ServiceUsuarioImpl implements IServiceUsuario {
         Usuario usuario = repositorioUsuario.findById(UUID.fromString(uuid)).orElseThrow(() -> new RuntimeException("ERROR"));
         return converterUsuario.entidadADTOOut(usuario);
     }
+
     @Override
     public DTOUsuarioOut obtenerUsuarioPorUsername(String username) {
         Usuario usuario = repositorioUsuario.findUsuarioByUsername(username);
@@ -60,6 +69,14 @@ public class ServiceUsuarioImpl implements IServiceUsuario {
         usuario.setApellidos(dtoUsuario.getApellidos());
         usuario.setAdmin(dtoUsuario.isAdmin());
         usuario.setEmail(dtoUsuario.getEmail());
+        Equipo equipo = repositorioEquipo.findById(usuario.getEquipo().getUuid()).orElseThrow(() -> new RuntimeException("ERROR"));
+        equipo.setLiga(dtoUsuario.getEquipo().getLiga());
+        equipo.setNombre(dtoUsuario.getEquipo().getNombreEquipo());
+        LocalizacionClima localizacionClima = repositorioLocalizacionClima.findById(usuario.getLocalizacionClima().getUuid()).orElseThrow(() -> new RuntimeException("ERROR"));
+        localizacionClima.setPais(dtoUsuario.getLocalizacionClima().getPais());
+        localizacionClima.setCodigoPostal(dtoUsuario.getLocalizacionClima().getCodigoPostal());
+        repositorioEquipo.save(equipo);
+        repositorioLocalizacionClima.save(localizacionClima);
         repositorioUsuario.save(usuario);
         return converterUsuario.entidadADTOOut(usuario);
     }

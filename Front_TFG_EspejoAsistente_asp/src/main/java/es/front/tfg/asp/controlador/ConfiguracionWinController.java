@@ -1,10 +1,15 @@
 package es.front.tfg.asp.controlador;
 
+import es.front.tfg.asp.modelo.dtos.DTOEquipo;
+import es.front.tfg.asp.modelo.dtos.DTOLocalizacionClima;
 import es.front.tfg.asp.modelo.dtos.DTOUsuarioIn;
+import es.front.tfg.asp.modelo.dtos.DTOUsuarioOut;
+import es.front.tfg.asp.servicio.iservice.IServiceEquipo;
 import es.front.tfg.asp.servicio.iservice.IServiceUsuario;
 import es.front.tfg.asp.utils.HiloControlMando;
 import es.front.tfg.asp.utils.HiloCambiarInterfaz;
 import es.front.tfg.asp.utils.Utiles;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -23,19 +28,21 @@ import java.util.ResourceBundle;
 @Controller
 public class ConfiguracionWinController implements Initializable {
     @FXML
-    private TextField fieldUsuario, fieldNombre, fieldApellidos, fieldEmail;
+    private TextField fieldUsuario, fieldNombre, fieldApellidos, fieldEmail, fieldCodigoPostal;
     @FXML
-    private Button btnGuardarConfiguracion, btnVolver;
+    private Button btnGuardarConfiguracion, btnVolver, btnEliminarCuenta;
     @FXML
     private CheckBox checkEsAdmin;
     @FXML
-    private ComboBox<?> cmbLocalizacion, cmbEquipoFav;
+    private ComboBox<String> cmbLocalizacion, cmbEquipoFav, cmbLigaFav;
     @Autowired
     private HiloControlMando hiloControlMando;
     @Autowired
     private HiloCambiarInterfaz hiloCambiarInterfaz;
     @Autowired
     private IServiceUsuario serviceUsuario;
+    @Autowired
+    private IServiceEquipo serviceEquipo;
     @Autowired
     private Utiles utiles;
 
@@ -46,6 +53,8 @@ public class ConfiguracionWinController implements Initializable {
         hiloControlMando.setBtnEquisPulsada(false);
         hiloCambiarInterfaz.setListaComponentes(map);
         utiles.iniciarHilos();
+        cargarPaises();
+        cargarDatosUsuarioLogeadoEnVista();
     }
 
     public void guardarConfig(ActionEvent e) {
@@ -54,30 +63,53 @@ public class ConfiguracionWinController implements Initializable {
 
     private DTOUsuarioIn obtenerDatosVista() {
         String username = fieldUsuario.getText();
-        String password = ""; // TIENE QUE SER OTRO DTO
         String nombre = fieldNombre.getText();
         String apellidos = fieldApellidos.getText();
         String email = fieldEmail.getText();
         boolean admin = checkEsAdmin.isSelected();
-        // String ciudad = cmbLocalizacion.getValue().toString();
-        String equipo = cmbEquipoFav.getValue().toString();
-        return null;
+        String codigoPostal = cmbLocalizacion.getValue();
+        String pais = cmbLigaFav.getValue();
+        String equipo = cmbEquipoFav.getValue();
+        DTOEquipo dtoEquipo  = new DTOEquipo(pais, equipo);
+        DTOLocalizacionClima dtoLocalizacionClima = new DTOLocalizacionClima(pais, codigoPostal);
+        return new DTOUsuarioIn(null, username, nombre, apellidos, email, admin, null, null, null, dtoEquipo, dtoLocalizacionClima);
     }
 
     private void cargarDatosUsuarioLogeadoEnVista() {
-        DTOUsuarioIn usuario = serviceUsuario.obtenerUsuarioPorUuid(utiles.obtenerElementoPropieades("uuidUsuario"));
+        DTOUsuarioOut usuario = serviceUsuario.obtenerUsuarioPorUuid(utiles.obtenerElementoPropieades("uuidUsuario"));
         if (Objects.nonNull(usuario)) {
             fieldUsuario.setText(usuario.getUsername());
             fieldNombre.setText(usuario.getNombre());
             fieldApellidos.setText(usuario.getApellidos());
             fieldEmail.setText(usuario.getEmail());
             checkEsAdmin.setSelected(usuario.isEsAdmin());
-            // cmbLocalizacion
+            fieldCodigoPostal.setText(usuario.getCodigoPostal());
+            cmbLigaFav.setValue(usuario.getPais());
+            cmbEquipoFav.setValue(usuario.getEquipoFav());
         }
     }
 
-    private void cambiarVentana(ActionEvent e, Class<?> c, String resource) {
-        utiles.cambiarVentanaAplicacion(e, c, resource);
+    public void activarCmbBoxEquipo(ActionEvent e) {
+        String pais = cmbLigaFav.getSelectionModel().getSelectedItem();
+        if (Objects.nonNull(pais)) {
+            cargarDatosComboBoxEquipo(utiles.traducirPaisIngles(pais));
+        }
+    }
+
+    private void cargarPaises() {
+        cmbLigaFav.setItems(FXCollections.observableArrayList("España", "Inglaterra", "Alemania", "Italia", "Francia"));
+    }
+
+    private void cargarDatosComboBoxEquipo(String pais) {
+        utiles.llenarCombobox(serviceEquipo.obtenerEquiposPorPais(pais), cmbEquipoFav, equipo -> equipo.getTeam().getName());
+    }
+
+    public void volver(ActionEvent e) {
+        utiles.cambiarVentanaAplicacion(e, getClass(), "/vistas/clima.fxml");
+    }
+    
+    public void eliminarCuenta(ActionEvent e) {
+
     }
 
     private Map<Integer, Node> cargarComponentes() {

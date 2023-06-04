@@ -6,7 +6,7 @@ import java.util.UUID;
 
 @Data
 public class DTOUsuarioOut {
-    private UUID uuid;
+    private String uuid;
     private String username;
     private String nombre;
     private String apellidos;

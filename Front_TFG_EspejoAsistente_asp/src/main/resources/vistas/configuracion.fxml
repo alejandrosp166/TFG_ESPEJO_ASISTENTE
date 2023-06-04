@@ -98,17 +98,17 @@
                   <Font name="Courier New Bold" size="40.0" />
                </font>
             </Button>
-            <Button fx:id="btnVolver1" mnemonicParsing="false" onAction="#volver" prefHeight="99.0" prefWidth="1119.0" style="-fx-background-radius: 20; -fx-background-color: DEB841;" text="ELIMINAR" textFill="#d01212" GridPane.columnIndex="6" GridPane.rowIndex="21">
+            <Button fx:id="btnEliminarCuenta" mnemonicParsing="false" onAction="#eliminarCuenta" prefHeight="99.0" prefWidth="1119.0" style="-fx-background-radius: 20; -fx-background-color: DEB841;" text="ELIMINAR" textFill="#d01212" GridPane.columnIndex="6" GridPane.rowIndex="21">
                <font>
                   <Font name="Courier New Bold" size="36.0" />
                </font>
             </Button>
-            <TextField fx:id="fieldEmail1" prefHeight="25.0" prefWidth="900.0" promptText="NUEVO CÓDIGO POSTAL" style="-fx-background-radius: 25;" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="13">
+            <TextField fx:id="fieldCodigoPostal" prefHeight="25.0" prefWidth="900.0" promptText="NUEVO CÓDIGO POSTAL" style="-fx-background-radius: 25;" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="13">
                <font>
                   <Font name="Courier New" size="24.0" />
                </font>
             </TextField>
-            <ComboBox fx:id="cmbLigaFav" prefHeight="49.0" prefWidth="260.0" style="-fx-background-radius: 20;" GridPane.columnIndex="4" GridPane.rowIndex="15" />
+            <ComboBox fx:id="cmbLigaFav" onAction="#activarCmbBoxEquipo" prefHeight="49.0" prefWidth="260.0" style="-fx-background-radius: 20;" GridPane.columnIndex="4" GridPane.rowIndex="15" />
             </children>
         </GridPane>
     </children>

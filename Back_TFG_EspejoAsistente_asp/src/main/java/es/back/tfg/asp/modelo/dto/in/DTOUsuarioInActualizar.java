@@ -9,4 +9,7 @@ public class DTOUsuarioInActualizar {
     private String apellidos;
     private String email;
     private boolean admin;
+    private String password;
+    private DTOUsuarioIn.DTOEquipoIn equipo;
+    private DTOUsuarioIn.DTOLocalizacionClimaIn localizacionClima;
 }
