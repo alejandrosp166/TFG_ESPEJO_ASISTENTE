@@ -1,5 +1,6 @@
 package es.front.tfg.asp.controlador;
 
+import es.front.tfg.asp.modelo.dtos.DTOUsuarioOut;
 import es.front.tfg.asp.modelo.response.ResponseEquipo;
 import es.front.tfg.asp.servicio.iservice.IServiceEquipo;
 import es.front.tfg.asp.utils.Utiles;
@@ -24,18 +25,25 @@ public class EquipoWinController implements Initializable {
     @FXML
     private ImageView imgLocalAhora, imgVisitanteAhora;
     @FXML
-    private Label lblResultadoHomeAhora, lblResultadoOutAhora;
+    private Label lblResultadoHomeAhora, lblResultadoOutAhora, lblUsername;
     @FXML
     private Button btnConf, btnCerrarSesion;
     @Autowired
     private IServiceEquipo serviceEquipo;
     @Autowired
     private Utiles utiles;
+    private DTOUsuarioOut usuarioLogeado;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        listClasificacion.setItems(FXCollections.observableArrayList(serviceEquipo.obtenerEquiposPorPais("spain")));
+        cargarDatosUsuario();
+        listClasificacion.setItems(FXCollections.observableArrayList(serviceEquipo.obtenerEquiposPorPais(utiles.traducirPaisIngles(usuarioLogeado.getPais()))));
         utiles.llenarListView(listClasificacion);
+    }
+
+    private void cargarDatosUsuario() {
+        usuarioLogeado = utiles.obtenerUsuarioLogeado();
+        lblUsername.setText(usuarioLogeado.getUsername());
     }
 
     public void cerrarSesion(ActionEvent e) {

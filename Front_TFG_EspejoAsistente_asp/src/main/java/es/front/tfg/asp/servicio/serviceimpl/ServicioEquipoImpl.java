@@ -15,6 +15,7 @@ public class ServicioEquipoImpl implements IServiceEquipo {
     private final String URL = "https://v3.football.api-sports.io/teams?country=PAIS";
     // https://v3.football.api-sports.io/leagues?country=england
     // https://v3.football.api-sports.io/teams?league=39&season=2019
+    // https://v3.football.api-sports.io/standings?league=39&season=2022 // TABLA CLASIFICACIÓN
     @Autowired
     private PeticionesHTTP peticionesHTTP;
 

@@ -5,7 +5,7 @@ import es.front.tfg.asp.modelo.response.ResponseClima;
 import java.util.List;
 
 public interface IServiceClima {
-    public ResponseClima obtenerDatosClimaticosActualesPorCodigoPostal(String codigoPostal);
+    public ResponseClima obtenerDatosClimaticosActualesPorCodigoPostalPais(String codigoPostal, String pais);
 
-    public List<ResponseClima> obtenerDatosClimaticosProximosDiasPorCodigoPostal(String codigoPostal);
+    public List<ResponseClima> obtenerDatosClimaticosProximosDiasPorCodigoPostalPais(String codigoPostal, String pais);
 }

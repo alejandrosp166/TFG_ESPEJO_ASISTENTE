@@ -1,7 +1,9 @@
 package es.front.tfg.asp.utils;
 
+import es.front.tfg.asp.modelo.dtos.DTOUsuarioOut;
 import es.front.tfg.asp.modelo.response.ResponseClima;
 import es.front.tfg.asp.modelo.response.ResponseEquipo;
+import es.front.tfg.asp.servicio.iservice.IServiceUsuario;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -33,7 +35,10 @@ public class Utiles {
     private HiloControlMando hiloControlMando;
     @Autowired
     private HiloCambiarInterfaz hiloCambiarInterfaz;
+    @Autowired
+    private IServiceUsuario serviceUsuario;
     private Stage stage;
+    private DTOUsuarioOut usuarioLogeado;
 
     public void iniciarHilos() {
         if (!hiloControlMando.isHiloIniciado() && !hiloCambiarInterfaz.isHiloIniciado()) {
@@ -157,11 +162,22 @@ public class Utiles {
                         }
                         case "ResponseClima" -> {
                             ResponseClima clima = (ResponseClima) item;
+                            setText(clima.getMain().getTemp() + "Cº " + clima.getMain().getHumidity() + " %");
+                            Image image = new Image("http://openweathermap.org/img/wn/" + clima.getWeather().get(0).getIcon() + ".png", true);
+                            imageView.setImage(image);
+                            setGraphic(imageView);
                         }
                     }
                 }
             }
         });
+    }
+
+    public DTOUsuarioOut obtenerUsuarioLogeado() {
+        if (Objects.isNull(usuarioLogeado)) {
+            usuarioLogeado = serviceUsuario.obtenerUsuarioPorUuid(obtenerElementoPropieades("uuidUsuario"));
+        }
+        return usuarioLogeado;
     }
 
     public void guardarElementoPropiedades(String key, String contenido) {
@@ -200,6 +216,18 @@ public class Utiles {
             case "alemania" -> paisIngles = "germany";
         }
         return paisIngles;
+    }
+
+    public String obtenerCodigoPais(String pais) {
+        String codigoPais = "";
+        switch (pais.toLowerCase()) {
+            case "españa" -> codigoPais = "es";
+            case "inglaterra" -> codigoPais = "uk";
+            case "francia" -> codigoPais = "fr";
+            case "italia" -> codigoPais = "it";
+            case "alemania" -> codigoPais = "de";
+        }
+        return codigoPais;
     }
 
     public String pasarKelvinAGrados(String kelvin) {

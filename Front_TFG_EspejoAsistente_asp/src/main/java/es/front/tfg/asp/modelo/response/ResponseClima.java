@@ -11,6 +11,7 @@ public class ResponseClima {
     private List<Weather> weather;
     private Main main;
     private Wind wind;
+    private String dt_txt;
 
     @Data
     @AllArgsConstructor

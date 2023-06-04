@@ -1,7 +1,9 @@
 package es.front.tfg.asp.controlador;
 
+import es.front.tfg.asp.modelo.dtos.DTOUsuarioOut;
 import es.front.tfg.asp.modelo.response.ResponseClima;
 import es.front.tfg.asp.servicio.iservice.IServiceClima;
+import es.front.tfg.asp.servicio.iservice.IServiceUsuario;
 import es.front.tfg.asp.utils.HiloControlMando;
 import es.front.tfg.asp.utils.Utiles;
 import javafx.application.Platform;
@@ -28,7 +30,7 @@ import java.util.ResourceBundle;
 @Controller
 public class ClimaWinController implements Initializable, Runnable {
     @FXML
-    private Label lblHora, lblDiaMesAnio, lblTemperatura, lblVelocidadViento, lblTempMax, lblTempMin, lblHumedad;
+    private Label lblHora, lblDiaMesAnio, lblUsername, lblTemperatura, lblVelocidadViento, lblTempMax, lblTempMin, lblHumedad;
     @FXML
     private Button btnConfiguracion, btnCerrarSesion;
     @FXML
@@ -41,6 +43,7 @@ public class ClimaWinController implements Initializable, Runnable {
     private IServiceClima serviceClima;
     @Autowired
     private Utiles utiles;
+    private DTOUsuarioOut usuarioLogeado;
     private boolean cambioVentana;
     private Thread hiloCambioInterfaz;
 
@@ -49,19 +52,29 @@ public class ClimaWinController implements Initializable, Runnable {
         hiloControlMando.setPosicionPuntero(1);
         hiloControlMando.setBtnEquisPulsada(false);
         cambioVentana = false;
+        cargarDatosUsuario();
         cargarDatosClimaticos();
         this.run();
     }
 
     private void cargarDatosClimaticos() {
-        ResponseClima clima = serviceClima.obtenerDatosClimaticosActualesPorCodigoPostal("");
+        String codigoPais = utiles.obtenerCodigoPais(usuarioLogeado.getPais());
+        String codigoPostal = usuarioLogeado.getCodigoPostal();
+        ResponseClima clima = serviceClima.obtenerDatosClimaticosActualesPorCodigoPostalPais(codigoPostal, codigoPais);
         lblTemperatura.setText(clima.getMain().getTemp() + " ºC");
         lblVelocidadViento.setText(utiles.pasarMetrosPorSegundosKilometrosPorHora(clima.getWind().getSpeed()) + " Km/H");
         lblTempMax.setText("MAX " + clima.getMain().getTemp_max() + " ºC ");
         lblTempMin.setText("MIN " + clima.getMain().getTemp_min() + " ºC ");
         lblHumedad.setText("HUMEDAD " + clima.getMain().getHumidity() + " %");
-        imgEstadoClima.setImage(new Image("http://openweathermap.org/img/wn/" + clima.getWeather().get(0).getIcon() + "@2x.png", true));
-        listDatosProximosDias.setItems(FXCollections.observableArrayList(serviceClima.obtenerDatosClimaticosProximosDiasPorCodigoPostal("")));
+        imgEstadoClima.setImage(new Image("http://openweathermap.org/img/wn/" + clima.getWeather().get(0).getIcon() + "@4x.png", true));
+        List<ResponseClima> listaClima = serviceClima.obtenerDatosClimaticosProximosDiasPorCodigoPostalPais(codigoPostal, codigoPais);
+        listDatosProximosDias.setItems(FXCollections.observableArrayList(listaClima));
+        utiles.llenarListView(listDatosProximosDias);
+    }
+
+    private void cargarDatosUsuario() {
+        usuarioLogeado = utiles.obtenerUsuarioLogeado();
+        lblUsername.setText(usuarioLogeado.getUsername());
     }
 
     public void cerrarSesion(ActionEvent e) {
