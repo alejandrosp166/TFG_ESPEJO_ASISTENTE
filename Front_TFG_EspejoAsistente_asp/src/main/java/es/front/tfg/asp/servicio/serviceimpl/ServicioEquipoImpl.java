@@ -1,6 +1,7 @@
 package es.front.tfg.asp.servicio.serviceimpl;
 
 import es.front.tfg.asp.modelo.response.ResponseEquipo;
+import es.front.tfg.asp.modelo.response.ResponseLiga;
 import es.front.tfg.asp.modelo.response.ResponsePartido;
 import es.front.tfg.asp.servicio.iservice.IServiceEquipo;
 
@@ -24,7 +25,9 @@ public class ServicioEquipoImpl implements IServiceEquipo {
         return peticionesHTTP.getListas(URL.replace("PAIS", pais), ResponseEquipo.class, "response");
     }
 
-    public List<ResponsePartido> obtenerPartidosHoy() {
-        return peticionesHTTP.getListas(URL + "&req=matchsday", ResponsePartido.class, "response");
+    @Override
+    public List<ResponseLiga> obtenerPartidosLiga() {
+        String url = URL.replace("teams?country=PAIS", "standings?league=39&season=2022");
+        return peticionesHTTP.getListas(url, ResponseLiga.class, "response");
     }
 }

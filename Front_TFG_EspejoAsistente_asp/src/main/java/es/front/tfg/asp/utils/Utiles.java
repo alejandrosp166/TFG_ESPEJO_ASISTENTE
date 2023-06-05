@@ -3,6 +3,7 @@ package es.front.tfg.asp.utils;
 import es.front.tfg.asp.modelo.dtos.DTOUsuarioOut;
 import es.front.tfg.asp.modelo.response.ResponseClima;
 import es.front.tfg.asp.modelo.response.ResponseEquipo;
+import es.front.tfg.asp.modelo.response.ResponseLiga;
 import es.front.tfg.asp.servicio.iservice.IServiceUsuario;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -145,19 +146,19 @@ public class Utiles {
     public <T> void llenarListView(ListView<T> lista) {
         lista.setCellFactory(param -> new ListCell<T>() {
             private ImageView imageView = new ImageView();
-
+            private int i = 0;
             @Override
             protected void updateItem(T item, boolean empty) {
                 super.updateItem(item, empty);
                 if (!empty && Objects.nonNull(item)) {
                     switch (item.getClass().getSimpleName()) {
-                        case "ResponseEquipo" -> {
-                            ResponseEquipo equipo = (ResponseEquipo) item;
-                            setText(equipo.getTeam().getName() + " - Posición: " + equipo.getTeam().getName());
-                            Image image = new Image(equipo.getTeam().getLogo(), true);
+                        case "Clasificacion" -> {
+                            ResponseLiga.Clasificacion responseLiga = (ResponseLiga.Clasificacion) item;
+                            setText(responseLiga.getRank() + responseLiga.getTeam().getName());
+                            Image image = new Image(responseLiga.getTeam().getLogo(), true);
                             imageView.setImage(image);
-                            imageView.setFitWidth(40);
-                            imageView.setFitHeight(40);
+                            imageView.setFitHeight(50);
+                            imageView.setFitWidth(50);
                             setGraphic(imageView);
                         }
                         case "ResponseClima" -> {

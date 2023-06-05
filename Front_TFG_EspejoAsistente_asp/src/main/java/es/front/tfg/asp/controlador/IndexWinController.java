@@ -61,7 +61,7 @@ public class IndexWinController implements Initializable {
         DTOUsuarioOut usuario = serviceUsuario.obtenerUsuarioPorUsername(fieldUsuario.getText());
         if (true) {
             utiles.guardarElementoPropiedades("uuidUsuario", usuario.getUuid());
-            utiles.cambiarVentanaAplicacion(e, getClass(), "/vistas/clima.fxml");
+            utiles.cambiarVentanaAplicacion(e, getClass(), "/vistas/equipo.fxml");
         }
     }
 

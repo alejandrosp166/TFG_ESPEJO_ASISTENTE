@@ -2,6 +2,7 @@ package es.front.tfg.asp.controlador;
 
 import es.front.tfg.asp.modelo.dtos.DTOUsuarioOut;
 import es.front.tfg.asp.modelo.response.ResponseEquipo;
+import es.front.tfg.asp.modelo.response.ResponseLiga;
 import es.front.tfg.asp.servicio.iservice.IServiceEquipo;
 import es.front.tfg.asp.utils.Utiles;
 import javafx.collections.FXCollections;
@@ -16,12 +17,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 @Controller
 public class EquipoWinController implements Initializable {
     @FXML
-    private ListView<ResponseEquipo> listClasificacion;
+    private ListView<ResponseLiga.Clasificacion> listClasificacion;
     @FXML
     private ImageView imgLocalAhora, imgVisitanteAhora;
     @FXML
@@ -37,7 +39,7 @@ public class EquipoWinController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         cargarDatosUsuario();
-        listClasificacion.setItems(FXCollections.observableArrayList(serviceEquipo.obtenerEquiposPorPais(utiles.traducirPaisIngles(usuarioLogeado.getPais()))));
+        listClasificacion.setItems(FXCollections.observableArrayList(serviceEquipo.obtenerPartidosLiga().get(0).getLeague().getStandings().get(0)));
         utiles.llenarListView(listClasificacion);
     }
 
