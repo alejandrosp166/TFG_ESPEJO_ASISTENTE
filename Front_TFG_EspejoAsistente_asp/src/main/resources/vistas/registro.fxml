@@ -79,7 +79,7 @@
                         <Font name="Courier New Bold" size="40.0" />
                     </font>
                 </Button>
-            <ComboBox fx:id="cmbLocalizacion" prefHeight="44.0" prefWidth="197.0" style="-fx-background-radius: 20;" GridPane.columnIndex="8" GridPane.rowIndex="18" />
+            <ComboBox fx:id="cmbPaisClima" prefHeight="44.0" prefWidth="197.0" style="-fx-background-radius: 20;" GridPane.columnIndex="8" GridPane.rowIndex="18" />
             <ComboBox fx:id="cmbEquipoFav" prefHeight="44.0" prefWidth="203.0" style="-fx-background-radius: 20;" GridPane.columnIndex="6" GridPane.rowIndex="19" />
             <Label prefHeight="105.0" prefWidth="346.0" text="REGISTRO" textFill="WHITE" GridPane.columnIndex="6" GridPane.columnSpan="2" GridPane.rowIndex="3">
                <font>

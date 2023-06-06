@@ -16,8 +16,9 @@ public class DTOUsuarioOut {
     private String codigoVerificacionCambioContrasenna;
     private String uuidCredenciales;
     private String equipoFav;
-    private String uuidEquipo;
-    private String pais;
+    private String paisLiga;
+    private UUID uuidEquipo;
+    private String paisClima;
     private String codigoPostal;
     private String uuidLocalizacion;
 }

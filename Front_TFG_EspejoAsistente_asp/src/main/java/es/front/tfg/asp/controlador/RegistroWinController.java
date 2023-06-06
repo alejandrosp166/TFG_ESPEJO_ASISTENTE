@@ -22,9 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import java.net.URL;
-import java.util.Map;
-import java.util.Objects;
-import java.util.ResourceBundle;
+import java.util.*;
 
 /**
  * Clase controlador Registro
@@ -32,15 +30,13 @@ import java.util.ResourceBundle;
 @Controller
 public class RegistroWinController implements Initializable {
     @FXML
-    private ImageView imgConfirmFaceId;
-    @FXML
     private TextField fieldUsuario, fieldPassword, fieldNombre, fieldApellidos, fieldEmail, fieldCodigoPostal;
     @FXML
     private CheckBox checkEsAdmin;
     @FXML
     private Button btnCompletarRegistro, btnVolver;
     @FXML
-    private ComboBox<String> cmbLocalizacion, cmbEquipoFav, cmbLigaFav;
+    private ComboBox<String> cmbPaisClima, cmbEquipoFav, cmbLigaFav;
     @Autowired
     private HiloControlMando hiloControlMando;
     @Autowired
@@ -63,17 +59,13 @@ public class RegistroWinController implements Initializable {
     }
 
     public void volver(ActionEvent e) {
-        cambiarVentana(e, getClass(), "/vistas/index.fxml");
+        utiles.cambiarVentanaAplicacion(e, getClass(), "/vistas/index.fxml");
     }
 
     public void completarRegistro(ActionEvent e) {
         DTOUsuarioIn dtoUsuarioIn = cargarUsuarioDatosVista();
         serviceAuth.registrarUsuario(dtoUsuarioIn);
-        cambiarVentana(e, getClass(), "/vistas/index.fxml");
-    }
-
-    private void cambiarVentana(ActionEvent e, Class<?> c, String resource) {
-        utiles.cambiarVentanaAplicacion(e, c, resource);
+        utiles.cambiarVentanaAplicacion(e, getClass(), "/vistas/index.fxml");
     }
 
     private DTOUsuarioIn cargarUsuarioDatosVista() {
@@ -84,10 +76,11 @@ public class RegistroWinController implements Initializable {
         String email = fieldEmail.getText();
         String codigoPostal = fieldCodigoPostal.getText();
         boolean admin = checkEsAdmin.isSelected();
-        String pais = cmbLigaFav.getValue();
+        String paisLiga = cmbLigaFav.getValue();
+        String pais = cmbPaisClima.getValue();
         String equipo = cmbEquipoFav.getValue();
         DTOLocalizacionClima dtoLocalizacionClima = new DTOLocalizacionClima(pais, codigoPostal);
-        DTOEquipo dtoEquipo = new DTOEquipo(pais, equipo);
+        DTOEquipo dtoEquipo = new DTOEquipo(paisLiga, equipo);
         return new DTOUsuarioIn(null, username, nombre, apellidos, email, admin, password, null, null, dtoEquipo, dtoLocalizacionClima);
     }
 
@@ -99,7 +92,9 @@ public class RegistroWinController implements Initializable {
     }
 
     private void cargarPaises() {
-        cmbLigaFav.setItems(FXCollections.observableArrayList("España", "Inglaterra", "Alemania", "Italia", "Francia"));
+        List<String> listaPaises = List.of("España", "Inglaterra", "Alemania", "Italia", "Francia");
+        cmbLigaFav.setItems(FXCollections.observableArrayList(listaPaises));
+        cmbPaisClima.setItems(FXCollections.observableArrayList(listaPaises));
     }
 
     private void cargarDatosComboBoxEquipo(String pais) {
@@ -117,7 +112,7 @@ public class RegistroWinController implements Initializable {
                 Map.entry(7, cmbLigaFav),
                 Map.entry(8, cmbEquipoFav),
                 Map.entry(9, checkEsAdmin),
-                Map.entry(10, cmbLocalizacion),
+                Map.entry(10, cmbPaisClima),
                 Map.entry(11, btnCompletarRegistro),
                 Map.entry(12, btnVolver)
         );
