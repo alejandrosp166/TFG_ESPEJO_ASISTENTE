@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface IServiceEquipo {
     public List<ResponseEquipo> obtenerEquiposPorPais(String pais);
-    public List<ResponseLiga> obtenerPartidosLiga();
+    public List<ResponseLiga> obtenerPartidosLiga(String liga);
 }

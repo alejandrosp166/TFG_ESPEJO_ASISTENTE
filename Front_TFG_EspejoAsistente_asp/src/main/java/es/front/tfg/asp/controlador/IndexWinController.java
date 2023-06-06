@@ -5,6 +5,7 @@ import es.front.tfg.asp.modelo.dtos.DTOUsuarioIn;
 import es.front.tfg.asp.modelo.dtos.DTOUsuarioOut;
 import es.front.tfg.asp.servicio.iservice.IServiceAuth;
 import es.front.tfg.asp.servicio.iservice.IServiceUsuario;
+import es.front.tfg.asp.utils.Datos;
 import es.front.tfg.asp.utils.HiloControlMando;
 import es.front.tfg.asp.utils.HiloCambiarInterfaz;
 import es.front.tfg.asp.utils.Utiles;
@@ -45,6 +46,8 @@ public class IndexWinController implements Initializable {
     private IServiceAuth serviceAuth;
     @Autowired
     private Utiles utiles;
+    @Autowired
+    private Datos datos;
 
     /**
      * El método initialize en JavaFX se utiliza para inicializar un controlador de vista después de que se hayan establecido todos los objetos de la vista.
@@ -63,8 +66,7 @@ public class IndexWinController implements Initializable {
 
     public void iniciarSesion(ActionEvent e) {
         DTOIniciarSesion iniciarSesion = new DTOIniciarSesion(fieldUsuario.getText(), fieldPassword.getText());
-        DTOUsuarioOut usuario = serviceAuth.iniciarSesion(iniciarSesion);
-        utiles.guardarElementoPropiedades("uuidUsuario", usuario.getUuid());
+        serviceAuth.iniciarSesion(iniciarSesion);
         utiles.cambiarVentanaAplicacion(e, getClass(), "/vistas/equipo.fxml");
     }
 

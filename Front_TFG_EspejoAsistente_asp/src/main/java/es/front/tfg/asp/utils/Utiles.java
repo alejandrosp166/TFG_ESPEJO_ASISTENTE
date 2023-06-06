@@ -36,10 +36,7 @@ public class Utiles {
     private HiloControlMando hiloControlMando;
     @Autowired
     private HiloCambiarInterfaz hiloCambiarInterfaz;
-    @Autowired
-    private IServiceUsuario serviceUsuario;
     private Stage stage;
-    private DTOUsuarioOut usuarioLogeado;
 
     public void iniciarHilos() {
         if (!hiloControlMando.isHiloIniciado() && !hiloCambiarInterfaz.isHiloIniciado()) {
@@ -63,11 +60,6 @@ public class Utiles {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-    }
-
-    public void cerrarSesion(ActionEvent e, Class<?> c, String resource) {
-        cambiarVentanaAplicacion(e, c, resource);
-        borrarPropiedades();
     }
 
     public void crearModal(String tituloModal, String contenidoTexto) {
@@ -175,45 +167,6 @@ public class Utiles {
         });
     }
 
-    public DTOUsuarioOut obtenerUsuarioLogeado() {
-        if (Objects.isNull(usuarioLogeado)) {
-            usuarioLogeado = serviceUsuario.obtenerUsuarioPorUuid(obtenerElementoPropieades("uuidUsuario"));
-        }
-        return usuarioLogeado;
-    }
-
-    public void guardarElementoPropiedades(String key, String contenido) {
-        Properties properties = new Properties();
-        properties.setProperty(key, contenido);
-        try (OutputStream escribir = new FileOutputStream("session-config.properties")) {
-            properties.store(escribir, null);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public String obtenerElementoPropieades(String key) {
-        String propiedad = null;
-        try (InputStream leer = new FileInputStream("session-config.properties")) {
-            Properties properties = new Properties();
-            properties.load(leer);
-            propiedad = properties.getProperty(key);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return propiedad;
-    }
-
-    public void borrarPropiedades() {
-        try (InputStream leer = new FileInputStream("session-config.properties")) {
-            Properties properties = new Properties();
-            properties.load(leer);
-            properties.clear();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     public String traducirPaisIngles(String paisEspannol) {
         String paisIngles = "";
         switch (paisEspannol.toLowerCase()) {
@@ -236,6 +189,18 @@ public class Utiles {
             case "alemania" -> codigoPais = "de";
         }
         return codigoPais;
+    }
+
+    public String obtenerIdPais(String pais) {
+        String idPais = "";
+        switch (pais.toLowerCase()) {
+            case "españa" -> idPais = "140";
+            case "inglaterra" -> idPais = "39";
+            case "francia" -> idPais = "61";
+            case "italia" -> idPais = "135";
+            case "alemania" -> idPais = "78";
+        }
+        return idPais;
     }
 
     public String pasarKelvinAGrados(String kelvin) {

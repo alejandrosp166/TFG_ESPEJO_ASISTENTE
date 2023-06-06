@@ -4,6 +4,7 @@ import es.front.tfg.asp.modelo.dtos.DTOUsuarioOut;
 import es.front.tfg.asp.modelo.response.ResponseEquipo;
 import es.front.tfg.asp.modelo.response.ResponseLiga;
 import es.front.tfg.asp.servicio.iservice.IServiceEquipo;
+import es.front.tfg.asp.utils.Datos;
 import es.front.tfg.asp.utils.Utiles;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -34,22 +35,30 @@ public class EquipoWinController implements Initializable {
     private IServiceEquipo serviceEquipo;
     @Autowired
     private Utiles utiles;
+    @Autowired
+    private Datos datos;
     private DTOUsuarioOut usuarioLogeado;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         cargarDatosUsuario();
-        listClasificacion.setItems(FXCollections.observableArrayList(serviceEquipo.obtenerPartidosLiga().get(0).getLeague().getStandings().get(0)));
+        cargarDatosFutbol();
+    }
+
+    private void cargarDatosFutbol() {
+        String idLiga = utiles.obtenerIdPais(usuarioLogeado.getPaisLiga());
+        List<ResponseLiga.Clasificacion> clasificacion = serviceEquipo.obtenerPartidosLiga(idLiga).get(0).getLeague().getStandings().get(0);
+        listClasificacion.setItems(FXCollections.observableArrayList(clasificacion));
         utiles.llenarListView(listClasificacion);
     }
 
     private void cargarDatosUsuario() {
-        usuarioLogeado = utiles.obtenerUsuarioLogeado();
+        usuarioLogeado = datos.obtenerUsuarioLogeado();
         lblUsername.setText(usuarioLogeado.getUsername());
     }
 
     public void cerrarSesion(ActionEvent e) {
-        utiles.cerrarSesion(e, getClass(), "/vistas/index.fxml");
+        datos.cerrarSesion(e, getClass(), "/vistas/index.fxml");
     }
 
     public void ventanaConfiguracion(ActionEvent e) {

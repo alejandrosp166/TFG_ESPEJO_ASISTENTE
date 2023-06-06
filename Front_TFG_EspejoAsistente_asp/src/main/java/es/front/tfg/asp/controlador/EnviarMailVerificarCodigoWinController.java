@@ -5,6 +5,7 @@ import es.front.tfg.asp.modelo.dtos.DTOUsuarioIn;
 import es.front.tfg.asp.modelo.dtos.DTOUsuarioOut;
 import es.front.tfg.asp.servicio.iservice.IServiceAuth;
 import es.front.tfg.asp.servicio.iservice.IServiceUsuario;
+import es.front.tfg.asp.utils.Datos;
 import es.front.tfg.asp.utils.HiloControlMando;
 import es.front.tfg.asp.utils.HiloCambiarInterfaz;
 import es.front.tfg.asp.utils.Utiles;
@@ -35,6 +36,8 @@ public class EnviarMailVerificarCodigoWinController implements Initializable {
     @Autowired
     private Utiles utiles;
     @Autowired
+    private Datos datos;
+    @Autowired
     private IServiceAuth serviceAuth;
     @Autowired
     private IServiceUsuario serviceUsuario;
@@ -55,7 +58,7 @@ public class EnviarMailVerificarCodigoWinController implements Initializable {
     public void verificarCodigo(ActionEvent e) {
         DTOUsuarioOut usuario = serviceUsuario.obtenerUsuarioPorCodigoVerificacion(fieldCodigo.getText());
         if (Objects.nonNull(usuario)) {
-            utiles.guardarElementoPropiedades("token",usuario.getTokenSeguridad());
+            datos.guardarElementoPropiedades("token",usuario.getTokenSeguridad());
             utiles.cambiarVentanaAplicacion(e, getClass(), "/vistas/cambiar-pass.fxml");
         } else {
             // AVISAR AL USUARIO DE QUE NO EXISTE ESE CÓDIGO

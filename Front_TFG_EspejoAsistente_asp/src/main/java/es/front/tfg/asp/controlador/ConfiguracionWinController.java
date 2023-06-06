@@ -6,6 +6,7 @@ import es.front.tfg.asp.modelo.dtos.DTOUsuarioIn;
 import es.front.tfg.asp.modelo.dtos.DTOUsuarioOut;
 import es.front.tfg.asp.servicio.iservice.IServiceEquipo;
 import es.front.tfg.asp.servicio.iservice.IServiceUsuario;
+import es.front.tfg.asp.utils.Datos;
 import es.front.tfg.asp.utils.HiloControlMando;
 import es.front.tfg.asp.utils.HiloCambiarInterfaz;
 import es.front.tfg.asp.utils.Utiles;
@@ -26,6 +27,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
+
 @Controller
 public class ConfiguracionWinController implements Initializable {
     @FXML
@@ -46,6 +48,8 @@ public class ConfiguracionWinController implements Initializable {
     private IServiceEquipo serviceEquipo;
     @Autowired
     private Utiles utiles;
+    @Autowired
+    private Datos datos;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -59,8 +63,8 @@ public class ConfiguracionWinController implements Initializable {
     }
 
     public void guardarConfig(ActionEvent e) {
-        serviceUsuario.actualizarUsuario(obtenerDatosVista(), utiles.obtenerElementoPropieades("uuidUsuario"));
-        utiles.cambiarVentanaAplicacion(e, getClass(), "/vistas/index.fxml");
+        serviceUsuario.actualizarUsuario(obtenerDatosVista(), datos.obtenerElementoPropieades("uuidUsuario"));
+        datos.cerrarSesion(e, getClass(), "/vistas/index.fxml");
     }
 
     private DTOUsuarioIn obtenerDatosVista() {
@@ -70,16 +74,16 @@ public class ConfiguracionWinController implements Initializable {
         String email = fieldEmail.getText();
         boolean admin = checkEsAdmin.isSelected();
         String codigoPostal = fieldCodigoPostal.getText();
-        String paisLiga = cmbLigaFav.getValue().toString();
+        String paisLiga = cmbLigaFav.getValue();
         String equipo = cmbEquipoFav.getValue();
-        String paisLocalizacion = cmbPaisClima.getValue().toString();
-        DTOEquipo dtoEquipo  = new DTOEquipo(paisLiga, equipo);
+        String paisLocalizacion = cmbPaisClima.getValue();
+        DTOEquipo dtoEquipo = new DTOEquipo(paisLiga, equipo);
         DTOLocalizacionClima dtoLocalizacionClima = new DTOLocalizacionClima(paisLocalizacion, codigoPostal);
         return new DTOUsuarioIn(null, username, nombre, apellidos, email, admin, null, null, null, dtoEquipo, dtoLocalizacionClima);
     }
 
     private void cargarDatosUsuarioLogeadoEnVista() {
-        DTOUsuarioOut usuario = serviceUsuario.obtenerUsuarioPorUuid(utiles.obtenerElementoPropieades("uuidUsuario"));
+        DTOUsuarioOut usuario = serviceUsuario.obtenerUsuarioPorUuid(datos.obtenerElementoPropieades("uuidUsuario"));
         if (Objects.nonNull(usuario)) {
             fieldUsuario.setText(usuario.getUsername());
             fieldNombre.setText(usuario.getNombre());
@@ -112,7 +116,7 @@ public class ConfiguracionWinController implements Initializable {
     public void volver(ActionEvent e) {
         utiles.cambiarVentanaAplicacion(e, getClass(), "/vistas/clima.fxml");
     }
-    
+
     public void eliminarCuenta(ActionEvent e) {
 
     }

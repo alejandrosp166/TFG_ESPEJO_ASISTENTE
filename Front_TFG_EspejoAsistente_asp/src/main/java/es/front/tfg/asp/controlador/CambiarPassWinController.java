@@ -3,6 +3,7 @@ package es.front.tfg.asp.controlador;
 import es.front.tfg.asp.modelo.dtos.DTOCambioPassword;
 import es.front.tfg.asp.servicio.iservice.IServiceAuth;
 import es.front.tfg.asp.servicio.iservice.IServiceUsuario;
+import es.front.tfg.asp.utils.Datos;
 import es.front.tfg.asp.utils.HiloControlMando;
 import es.front.tfg.asp.utils.HiloCambiarInterfaz;
 import es.front.tfg.asp.utils.Utiles;
@@ -35,6 +36,8 @@ public class CambiarPassWinController implements Initializable {
     private IServiceUsuario serviceUsuario;
     @Autowired
     private Utiles utiles;
+    @Autowired
+    private Datos datos;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -46,7 +49,7 @@ public class CambiarPassWinController implements Initializable {
     public void cambiarContrasenna(ActionEvent e) {
         String nuevaPass = fieldPassword1.getText();
         if (nuevaPass.equals(fieldPassword2.getText())) {
-            serviceAuth.cambiarContrasenna(new DTOCambioPassword(utiles.obtenerElementoPropieades("token"), nuevaPass));
+            serviceAuth.cambiarContrasenna(new DTOCambioPassword(datos.obtenerElementoPropieades("token"), nuevaPass));
             utiles.cambiarVentanaAplicacion(e, getClass(), "/vistas/index.fxml");
         } else {
             utiles.crearModal("Error", "No se pudo cambiar la contraseña");

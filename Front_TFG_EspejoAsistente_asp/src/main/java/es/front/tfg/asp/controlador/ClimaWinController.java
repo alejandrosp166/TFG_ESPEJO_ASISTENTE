@@ -4,6 +4,7 @@ import es.front.tfg.asp.modelo.dtos.DTOUsuarioOut;
 import es.front.tfg.asp.modelo.response.ResponseClima;
 import es.front.tfg.asp.servicio.iservice.IServiceClima;
 import es.front.tfg.asp.servicio.iservice.IServiceUsuario;
+import es.front.tfg.asp.utils.Datos;
 import es.front.tfg.asp.utils.HiloControlMando;
 import es.front.tfg.asp.utils.Utiles;
 import javafx.application.Platform;
@@ -43,6 +44,8 @@ public class ClimaWinController implements Initializable, Runnable {
     private IServiceClima serviceClima;
     @Autowired
     private Utiles utiles;
+    @Autowired
+    private Datos datos;
     private DTOUsuarioOut usuarioLogeado;
     private boolean cambioVentana;
     private Thread hiloCambioInterfaz;
@@ -75,12 +78,12 @@ public class ClimaWinController implements Initializable, Runnable {
     }
 
     private void cargarDatosUsuario() {
-        usuarioLogeado = utiles.obtenerUsuarioLogeado();
+        usuarioLogeado = datos.obtenerUsuarioLogeado();
         lblUsername.setText(usuarioLogeado.getUsername());
     }
 
     public void cerrarSesion(ActionEvent e) {
-        utiles.cerrarSesion(e, getClass(), "/vistas/index.fxml");
+        datos.cerrarSesion(e, getClass(), "/vistas/index.fxml");
     }
 
     public void ventanaConfiguracion(ActionEvent e) {
