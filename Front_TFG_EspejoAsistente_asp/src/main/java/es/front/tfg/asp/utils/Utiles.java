@@ -67,6 +67,7 @@ public class Utiles {
 
     public void cerrarSesion(ActionEvent e, Class<?> c, String resource) {
         cambiarVentanaAplicacion(e, c, resource);
+        borrarPropiedades();
     }
 
     public void crearModal(String tituloModal, String contenidoTexto) {
@@ -145,8 +146,6 @@ public class Utiles {
 
     public <T> void llenarListView(ListView<T> lista) {
         lista.setCellFactory(param -> new ListCell<T>() {
-            private ImageView imageView = new ImageView();
-            private int i = 0;
             @Override
             protected void updateItem(T item, boolean empty) {
                 super.updateItem(item, empty);
@@ -155,6 +154,7 @@ public class Utiles {
                         case "Clasificacion" -> {
                             ResponseLiga.Clasificacion responseLiga = (ResponseLiga.Clasificacion) item;
                             setText(responseLiga.getRank() + responseLiga.getTeam().getName());
+                            ImageView imageView = new ImageView();
                             Image image = new Image(responseLiga.getTeam().getLogo(), true);
                             imageView.setImage(image);
                             imageView.setFitHeight(50);
@@ -164,6 +164,7 @@ public class Utiles {
                         case "ResponseClima" -> {
                             ResponseClima clima = (ResponseClima) item;
                             setText(clima.getMain().getTemp() + "Cº " + clima.getMain().getHumidity() + " %");
+                            ImageView imageView = new ImageView();
                             Image image = new Image("http://openweathermap.org/img/wn/" + clima.getWeather().get(0).getIcon() + ".png", true);
                             imageView.setImage(image);
                             setGraphic(imageView);
@@ -204,7 +205,13 @@ public class Utiles {
     }
 
     public void borrarPropiedades() {
-
+        try (InputStream leer = new FileInputStream("session-config.properties")) {
+            Properties properties = new Properties();
+            properties.load(leer);
+            properties.clear();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public String traducirPaisIngles(String paisEspannol) {

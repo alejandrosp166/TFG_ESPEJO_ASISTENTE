@@ -7,6 +7,7 @@ import es.back.tfg.asp.modelo.dto.in.DTOUsuarioIn;
 import es.back.tfg.asp.modelo.dto.out.DTOUsuarioOut;
 
 public interface IServiceAuth {
+    public DTOUsuarioOut iniciarSesion(DTOIniciarSesion dtoIniciarSesion);
     public DTOUsuarioOut registrarUsuario(DTOUsuarioIn dtoUsuarioIn);
     public void enviarEmailCambioPassword(DTOEnvioCorreoIn dtoEnvioCorreoIn);
     public void cambiarPassword(DTOCambioPasswordIn dtoCambioPasswordIn);

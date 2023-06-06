@@ -1,7 +1,9 @@
 package es.front.tfg.asp.controlador;
 
+import es.front.tfg.asp.modelo.dtos.DTOIniciarSesion;
 import es.front.tfg.asp.modelo.dtos.DTOUsuarioIn;
 import es.front.tfg.asp.modelo.dtos.DTOUsuarioOut;
+import es.front.tfg.asp.servicio.iservice.IServiceAuth;
 import es.front.tfg.asp.servicio.iservice.IServiceUsuario;
 import es.front.tfg.asp.utils.HiloControlMando;
 import es.front.tfg.asp.utils.HiloCambiarInterfaz;
@@ -40,6 +42,8 @@ public class IndexWinController implements Initializable {
     @Autowired
     private IServiceUsuario serviceUsuario;
     @Autowired
+    private IServiceAuth serviceAuth;
+    @Autowired
     private Utiles utiles;
 
     /**
@@ -58,11 +62,10 @@ public class IndexWinController implements Initializable {
     }
 
     public void iniciarSesion(ActionEvent e) {
-        DTOUsuarioOut usuario = serviceUsuario.obtenerUsuarioPorUsername(fieldUsuario.getText());
-        if (true) {
-            utiles.guardarElementoPropiedades("uuidUsuario", usuario.getUuid());
-            utiles.cambiarVentanaAplicacion(e, getClass(), "/vistas/equipo.fxml");
-        }
+        DTOIniciarSesion iniciarSesion = new DTOIniciarSesion(fieldUsuario.getText(), fieldPassword.getText());
+        DTOUsuarioOut usuario = serviceAuth.iniciarSesion(iniciarSesion);
+        utiles.guardarElementoPropiedades("uuidUsuario", usuario.getUuid());
+        utiles.cambiarVentanaAplicacion(e, getClass(), "/vistas/equipo.fxml");
     }
 
     public void registrarse(ActionEvent e) {

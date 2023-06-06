@@ -2,6 +2,7 @@ package es.back.tfg.asp.controlador;
 
 import es.back.tfg.asp.modelo.dto.in.DTOCambioPasswordIn;
 import es.back.tfg.asp.modelo.dto.in.DTOEnvioCorreoIn;
+import es.back.tfg.asp.modelo.dto.in.DTOIniciarSesion;
 import es.back.tfg.asp.modelo.dto.in.DTOUsuarioIn;
 import es.back.tfg.asp.modelo.dto.out.DTOUsuarioOut;
 import es.back.tfg.asp.servicio.iservice.IServiceAuth;
@@ -18,6 +19,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class ControladorAuth {
     @Autowired
     private IServiceAuth serviceAuth;
+
+    @PostMapping("/inicio-sesion")
+    public ResponseEntity<DTOUsuarioOut> iniciarSesion(@RequestBody DTOIniciarSesion dtoIniciarSesion) {
+        DTOUsuarioOut dtoUsuarioOut = serviceAuth.iniciarSesion(dtoIniciarSesion);
+        return ResponseEntity.status(HttpStatus.CREATED).body(dtoUsuarioOut);
+    }
 
     @PostMapping("/registro")
     public ResponseEntity<DTOUsuarioOut> registrarUsuario(@RequestBody DTOUsuarioIn dtoUsuarioIn) {

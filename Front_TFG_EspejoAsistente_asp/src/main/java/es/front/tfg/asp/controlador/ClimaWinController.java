@@ -58,8 +58,9 @@ public class ClimaWinController implements Initializable, Runnable {
     }
 
     private void cargarDatosClimaticos() {
-        String codigoPais = utiles.obtenerCodigoPais(usuarioLogeado.getPais());
+        String codigoPais = utiles.obtenerCodigoPais(usuarioLogeado.getPaisClima());
         String codigoPostal = usuarioLogeado.getCodigoPostal();
+
         ResponseClima clima = serviceClima.obtenerDatosClimaticosActualesPorCodigoPostalPais(codigoPostal, codigoPais);
         lblTemperatura.setText(clima.getMain().getTemp() + " ºC");
         lblVelocidadViento.setText(utiles.pasarMetrosPorSegundosKilometrosPorHora(clima.getWind().getSpeed()) + " Km/H");
@@ -67,6 +68,7 @@ public class ClimaWinController implements Initializable, Runnable {
         lblTempMin.setText("MIN " + clima.getMain().getTemp_min() + " ºC ");
         lblHumedad.setText("HUMEDAD " + clima.getMain().getHumidity() + " %");
         imgEstadoClima.setImage(new Image("http://openweathermap.org/img/wn/" + clima.getWeather().get(0).getIcon() + "@4x.png", true));
+
         List<ResponseClima> listaClima = serviceClima.obtenerDatosClimaticosProximosDiasPorCodigoPostalPais(codigoPostal, codigoPais);
         listDatosProximosDias.setItems(FXCollections.observableArrayList(listaClima));
         utiles.llenarListView(listDatosProximosDias);

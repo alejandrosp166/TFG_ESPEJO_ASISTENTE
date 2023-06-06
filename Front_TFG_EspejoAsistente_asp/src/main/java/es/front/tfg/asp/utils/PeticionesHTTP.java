@@ -20,6 +20,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +35,7 @@ public class PeticionesHTTP {
         try {
             HttpPost peticion = new HttpPost(url);
             String cuerpoPeticion = GSON_MAPPER.toJson(objeto);
-            StringEntity dto = new StringEntity(cuerpoPeticion);
+            StringEntity dto = new StringEntity(cuerpoPeticion, StandardCharsets.UTF_8);
             peticion.setEntity(dto);
             peticion.setHeader("Content-type", "application/json");
             CloseableHttpResponse respuesta = client.execute(peticion);
@@ -95,21 +96,18 @@ public class PeticionesHTTP {
         return listaEntidades;
     }
 
-    public <T> void put(Object objeto, String url, Class<T> claseObjetoDevolver) {
-        T entidad = null;
+    public void put(Object objeto, String url) {
         try {
             HttpPut peticion = new HttpPut(url);
             String cuerpoPeticion = GSON_MAPPER.toJson(objeto);
-            StringEntity dto = new StringEntity(cuerpoPeticion);
+            StringEntity dto = new StringEntity(cuerpoPeticion, StandardCharsets.UTF_8);
             peticion.setEntity(dto);
             peticion.setHeader("Content-type", "application/json");
             CloseableHttpResponse respuesta = client.execute(peticion);
-            if (respuesta.getCode() == 200) {
-                entidad = GSON_MAPPER.fromJson(EntityUtils.toString(respuesta.getEntity()), claseObjetoDevolver);
-            } else {
+            if (respuesta.getCode() != 200) {
                 throw new RuntimeException("Error al hacer la petición PUT");
             }
-        } catch (IOException | ParseException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }

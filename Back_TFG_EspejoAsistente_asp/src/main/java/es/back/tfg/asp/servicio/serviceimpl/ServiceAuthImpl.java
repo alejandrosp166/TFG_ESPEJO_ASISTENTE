@@ -17,13 +17,8 @@ import es.back.tfg.asp.repositorio.RepositorioUsuario;
 import es.back.tfg.asp.servicio.iservice.IServiceAuth;
 import es.back.tfg.asp.servicio.iservice.IServiceCorreosElectronicos;
 import jakarta.mail.MessagingException;
-import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
 import java.util.*;
@@ -42,6 +37,17 @@ public class ServiceAuthImpl implements IServiceAuth {
     private IServiceCorreosElectronicos serviceCorreosElectronicos;
     @Autowired
     private ConverterUsuario converterUsuario;
+
+
+    @Override
+    public DTOUsuarioOut iniciarSesion(DTOIniciarSesion dtoIniciarSesion) {
+        Usuario usuario = repositorioUsuario.findUsuarioByUsername(dtoIniciarSesion.getUsername());
+        CredencialesUsuario credencialesUsuario = usuario.getCredencialesUsuario();
+        if (!credencialesUsuario.getPassword().equals(dtoIniciarSesion.getPassword())) {
+            throw new RuntimeException("No se puedo iniciar sesión");
+        }
+        return converterUsuario.entidadADTOOut(usuario);
+    }
 
     @Override
     public DTOUsuarioOut registrarUsuario(DTOUsuarioIn dtoUsuarioIn) {

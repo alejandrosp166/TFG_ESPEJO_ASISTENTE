@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import java.net.URL;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -34,7 +35,7 @@ public class ConfiguracionWinController implements Initializable {
     @FXML
     private CheckBox checkEsAdmin;
     @FXML
-    private ComboBox<String> cmbLocalizacion, cmbEquipoFav, cmbLigaFav;
+    private ComboBox<String> cmbPaisClima, cmbEquipoFav, cmbLigaFav;
     @Autowired
     private HiloControlMando hiloControlMando;
     @Autowired
@@ -69,10 +70,11 @@ public class ConfiguracionWinController implements Initializable {
         String email = fieldEmail.getText();
         boolean admin = checkEsAdmin.isSelected();
         String codigoPostal = fieldCodigoPostal.getText();
-        String pais = cmbLigaFav.getValue();
+        String paisLiga = cmbLigaFav.getValue().toString();
         String equipo = cmbEquipoFav.getValue();
-        DTOEquipo dtoEquipo  = new DTOEquipo(pais, equipo);
-        DTOLocalizacionClima dtoLocalizacionClima = new DTOLocalizacionClima(pais, codigoPostal);
+        String paisLocalizacion = cmbPaisClima.getValue().toString();
+        DTOEquipo dtoEquipo  = new DTOEquipo(paisLiga, equipo);
+        DTOLocalizacionClima dtoLocalizacionClima = new DTOLocalizacionClima(paisLocalizacion, codigoPostal);
         return new DTOUsuarioIn(null, username, nombre, apellidos, email, admin, null, null, null, dtoEquipo, dtoLocalizacionClima);
     }
 
@@ -85,7 +87,7 @@ public class ConfiguracionWinController implements Initializable {
             fieldEmail.setText(usuario.getEmail());
             checkEsAdmin.setSelected(usuario.isEsAdmin());
             fieldCodigoPostal.setText(usuario.getCodigoPostal());
-            cmbLigaFav.setValue(usuario.getPais());
+            cmbLigaFav.setValue(usuario.getPaisLiga());
             cmbEquipoFav.setValue(usuario.getEquipoFav());
         }
     }
@@ -98,7 +100,9 @@ public class ConfiguracionWinController implements Initializable {
     }
 
     private void cargarPaises() {
-        cmbLigaFav.setItems(FXCollections.observableArrayList("España", "Inglaterra", "Alemania", "Italia", "Francia"));
+        List<String> listaPaises = List.of("España", "Inglaterra", "Alemania", "Italia", "Francia");
+        cmbLigaFav.setItems(FXCollections.observableArrayList(listaPaises));
+        cmbPaisClima.setItems(FXCollections.observableArrayList(listaPaises));
     }
 
     private void cargarDatosComboBoxEquipo(String pais) {
@@ -123,7 +127,7 @@ public class ConfiguracionWinController implements Initializable {
                 Map.entry(6, cmbLigaFav),
                 Map.entry(7, cmbEquipoFav),
                 Map.entry(8, checkEsAdmin),
-                Map.entry(9, cmbLocalizacion),
+                Map.entry(9, cmbPaisClima),
                 Map.entry(10, btnGuardarConfiguracion),
                 Map.entry(11, btnVolver),
                 Map.entry(12, btnEliminarCuenta)

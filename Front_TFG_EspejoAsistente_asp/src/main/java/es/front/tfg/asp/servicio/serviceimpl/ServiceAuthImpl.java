@@ -1,8 +1,6 @@
 package es.front.tfg.asp.servicio.serviceimpl;
 
-import es.front.tfg.asp.modelo.dtos.DTOCambioPassword;
-import es.front.tfg.asp.modelo.dtos.DTOEnvioCorreo;
-import es.front.tfg.asp.modelo.dtos.DTOUsuarioIn;
+import es.front.tfg.asp.modelo.dtos.*;
 import es.front.tfg.asp.servicio.iservice.IServiceAuth;
 
 import es.front.tfg.asp.utils.PeticionesHTTP;
@@ -15,6 +13,12 @@ public class ServiceAuthImpl implements IServiceAuth {
     private final String URL = "http://proxmox.iesmartinezm.es:8102/v0/api/auth";
     @Autowired
     private PeticionesHTTP peticionesHTTP;
+
+    @Override
+    public DTOUsuarioOut iniciarSesion(DTOIniciarSesion dtoIniciarSesion) {
+        return peticionesHTTP.post(dtoIniciarSesion, URL + "/inicio-sesion", DTOUsuarioOut.class);
+    }
+
     @Override
     public void registrarUsuario(DTOUsuarioIn dtoUsuarioIn) {
         peticionesHTTP.post(dtoUsuarioIn, URL + "/registro", DTOUsuarioIn.class);
