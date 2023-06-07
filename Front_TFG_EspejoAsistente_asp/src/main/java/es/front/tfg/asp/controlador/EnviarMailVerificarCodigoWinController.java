@@ -19,6 +19,7 @@ import javafx.scene.control.TextField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import java.io.ObjectStreamClass;
 import java.net.URL;
 import java.util.Map;
 import java.util.Objects;
@@ -54,9 +55,11 @@ public class EnviarMailVerificarCodigoWinController implements Initializable {
 
     public void enviarMail(ActionEvent e) {
         ApiResponse apiResponse = serviceAuth.enviarMailRecuperacion(new DTOEnvioCorreo(fieldEmail.getText(), "nombre"));
-        if (Objects.nonNull(apiResponse) && apiResponse.getMensaje().equals("correo enviado")) {
+        if (apiResponse.getMensaje().equals("correoEnviado")) {
             fieldCodigo.setDisable(false);
             btnVerificarCodigo.setDisable(false);
+            fieldEmail.setDisable(true);
+            btnEmail.setDisable(true);
         }
     }
 

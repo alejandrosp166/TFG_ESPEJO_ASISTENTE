@@ -44,7 +44,7 @@ public class ServiceAuthImpl implements IServiceAuth {
         Usuario usuario = repositorioUsuario.findUsuarioByUsername(dtoIniciarSesion.getUsername());
         CredencialesUsuario credencialesUsuario = usuario.getCredencialesUsuario();
         if (!credencialesUsuario.getPassword().equals(dtoIniciarSesion.getPassword())) {
-            throw new RuntimeException("No se puedo iniciar sesión");
+            throw new RuntimeException("No se pudo iniciar sesión");
         }
         return converterUsuario.entidadADTOOut(usuario);
     }

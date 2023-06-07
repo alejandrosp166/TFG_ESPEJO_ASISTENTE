@@ -40,8 +40,8 @@ public class ControladorAuth {
     }
 
     @PostMapping("/cambiar-password")
-    public ResponseEntity<String> cambiarContrasennaUsuario(@RequestBody DTOCambioPasswordIn dtoCambioPasswordIn) {
+    public ResponseEntity<ApiResponse> cambiarContrasennaUsuario(@RequestBody DTOCambioPasswordIn dtoCambioPasswordIn) {
         serviceAuth.cambiarPassword(dtoCambioPasswordIn);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Contraseña cambiada con éxito");
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse(201, "passCambiada"));
     }
 }
