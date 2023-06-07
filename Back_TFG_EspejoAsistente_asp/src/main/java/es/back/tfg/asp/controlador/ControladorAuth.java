@@ -1,5 +1,6 @@
 package es.back.tfg.asp.controlador;
 
+import es.back.tfg.asp.excepciones.ApiResponse;
 import es.back.tfg.asp.modelo.dto.in.DTOCambioPasswordIn;
 import es.back.tfg.asp.modelo.dto.in.DTOEnvioCorreoIn;
 import es.back.tfg.asp.modelo.dto.in.DTOIniciarSesion;
@@ -33,9 +34,9 @@ public class ControladorAuth {
     }
 
     @PostMapping("/enviar-mail-recuperacion")
-    public ResponseEntity<String> enviarMailRecuperacion(@RequestBody DTOEnvioCorreoIn dtoEnvioCorreoIn) {
+    public ResponseEntity<ApiResponse> enviarMailRecuperacion(@RequestBody DTOEnvioCorreoIn dtoEnvioCorreoIn) {
         serviceAuth.enviarEmailCambioPassword(dtoEnvioCorreoIn);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Correo enviado con éxito");
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse(201, "correoEnviado"));
     }
 
     @PostMapping("/cambiar-password")

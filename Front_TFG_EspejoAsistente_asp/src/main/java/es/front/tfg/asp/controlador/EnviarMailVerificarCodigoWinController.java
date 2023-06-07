@@ -3,6 +3,7 @@ package es.front.tfg.asp.controlador;
 import es.front.tfg.asp.modelo.dtos.DTOEnvioCorreo;
 import es.front.tfg.asp.modelo.dtos.DTOUsuarioIn;
 import es.front.tfg.asp.modelo.dtos.DTOUsuarioOut;
+import es.front.tfg.asp.modelo.response.ApiResponse;
 import es.front.tfg.asp.servicio.iservice.IServiceAuth;
 import es.front.tfg.asp.servicio.iservice.IServiceUsuario;
 import es.front.tfg.asp.utils.Datos;
@@ -52,13 +53,17 @@ public class EnviarMailVerificarCodigoWinController implements Initializable {
     }
 
     public void enviarMail(ActionEvent e) {
-        serviceAuth.enviarMailRecuperacion(new DTOEnvioCorreo(fieldEmail.getText(), "nombre"));
+        ApiResponse apiResponse = serviceAuth.enviarMailRecuperacion(new DTOEnvioCorreo(fieldEmail.getText(), "nombre"));
+        if (Objects.nonNull(apiResponse) && apiResponse.getMensaje().equals("correo enviado")) {
+            fieldCodigo.setDisable(false);
+            btnVerificarCodigo.setDisable(false);
+        }
     }
 
     public void verificarCodigo(ActionEvent e) {
         DTOUsuarioOut usuario = serviceUsuario.obtenerUsuarioPorCodigoVerificacion(fieldCodigo.getText());
         if (Objects.nonNull(usuario)) {
-            datos.guardarElementoPropiedades("token",usuario.getTokenSeguridad());
+            datos.guardarElementoPropiedades("token", usuario.getTokenSeguridad());
             utiles.cambiarVentanaAplicacion(e, getClass(), "/vistas/cambiar-pass.fxml");
         } else {
             // AVISAR AL USUARIO DE QUE NO EXISTE ESE CÓDIGO

@@ -1,6 +1,7 @@
 package es.front.tfg.asp.servicio.serviceimpl;
 
 import es.front.tfg.asp.modelo.dtos.*;
+import es.front.tfg.asp.modelo.response.ApiResponse;
 import es.front.tfg.asp.servicio.iservice.IServiceAuth;
 
 import es.front.tfg.asp.utils.PeticionesHTTP;
@@ -21,12 +22,12 @@ public class ServiceAuthImpl implements IServiceAuth {
 
     @Override
     public void registrarUsuario(DTOUsuarioIn dtoUsuarioIn) {
-        peticionesHTTP.post(dtoUsuarioIn, URL + "/registro", DTOUsuarioIn.class);
+        peticionesHTTP.post(dtoUsuarioIn, URL + "/registro", DTOUsuarioOut.class);
     }
 
     @Override
-    public void enviarMailRecuperacion(DTOEnvioCorreo dtoEnvioCorreo) {
-        peticionesHTTP.post(dtoEnvioCorreo, URL + "/enviar-mail-recuperacion", null);
+    public ApiResponse enviarMailRecuperacion(DTOEnvioCorreo dtoEnvioCorreo) {
+        return peticionesHTTP.post(dtoEnvioCorreo, URL + "/enviar-mail-recuperacion", ApiResponse.class);
     }
 
     @Override

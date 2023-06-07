@@ -18,7 +18,6 @@ public class FrontTfgEspejoAsistenteAspApplication extends Application {
     public static void main(String[] args) {
         applicationContext = SpringApplication.run(FrontTfgEspejoAsistenteAspApplication.class, args);
         launch(args);
-        System.out.println();
     }
 
     @Override

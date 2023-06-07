@@ -30,7 +30,7 @@ public class PeticionesHTTP {
     private CloseableHttpClient client = obtenerClienteHttp();
     private final String API_KEY_FOOTBAL = "e61e7d6e91e99d91bb18a7eded870a9e";
 
-    public <T> T post(Object objeto, String url, Class<T> claseObjetoDevolver) {
+    public <T> T post(Object objeto, String url, Class<T> objetoVuelta) {
         T entidad = null;
         try {
             HttpPost peticion = new HttpPost(url);
@@ -40,7 +40,7 @@ public class PeticionesHTTP {
             peticion.setHeader("Content-type", "application/json");
             CloseableHttpResponse respuesta = client.execute(peticion);
             if (respuesta.getCode() == 201) {
-                entidad = GSON_MAPPER.fromJson(EntityUtils.toString(respuesta.getEntity()), claseObjetoDevolver);
+                entidad = GSON_MAPPER.fromJson(EntityUtils.toString(respuesta.getEntity()), objetoVuelta);
             } else {
                 throw new RuntimeException("Error al hacer la petición POST");
             }

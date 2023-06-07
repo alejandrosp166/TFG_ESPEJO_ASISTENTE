@@ -44,7 +44,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <Button fx:id="btnVerificarCodigo" graphicTextGap="0.0" mnemonicParsing="false" onAction="#verificarCodigo" prefHeight="67.0" prefWidth="1025.0" style="-fx-background-color: DEB841; -fx-background-radius: 20;" text="VERIFICAR CÓDIGO" GridPane.columnIndex="5" GridPane.rowIndex="12">
+                <Button fx:id="btnVerificarCodigo" disable="true" graphicTextGap="0.0" mnemonicParsing="false" onAction="#verificarCodigo" prefHeight="67.0" prefWidth="1025.0" style="-fx-background-color: DEB841; -fx-background-radius: 20;" text="VERIFICAR CÓDIGO" GridPane.columnIndex="5" GridPane.rowIndex="12">
                     <font>
                         <Font name="Courier New Bold" size="45.0" />
                     </font>
@@ -62,7 +62,7 @@
                   <Font name="Courier New Bold" size="45.0" />
                </font>
             </Button>
-            <TextField fx:id="fieldCodigo" prefHeight="70.0" prefWidth="1119.0" promptText="CÓDIGO VERIFICACIÓN" style="-fx-background-radius: 25;" GridPane.columnIndex="5" GridPane.rowIndex="10">
+            <TextField fx:id="fieldCodigo" disable="true" prefHeight="70.0" prefWidth="1119.0" promptText="CÓDIGO VERIFICACIÓN" style="-fx-background-radius: 25;" GridPane.columnIndex="5" GridPane.rowIndex="10">
                <font>
                   <Font name="Courier New" size="45.0" />
                </font>
