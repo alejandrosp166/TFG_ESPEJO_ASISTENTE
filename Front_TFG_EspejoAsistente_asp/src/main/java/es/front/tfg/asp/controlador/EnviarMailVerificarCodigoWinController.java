@@ -43,7 +43,12 @@ public class EnviarMailVerificarCodigoWinController implements Initializable {
     private IServiceAuth serviceAuth;
     @Autowired
     private IServiceUsuario serviceUsuario;
-
+    /**
+     * Se ejecuta cuando se carga la vista
+     *
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Map<Integer, Node> map = cargarComponentes();
@@ -53,6 +58,11 @@ public class EnviarMailVerificarCodigoWinController implements Initializable {
         utiles.iniciarHilos();
     }
 
+    /**
+     * Envía un mail con el código de verificación al mail del usuario
+     *
+     * @param e
+     */
     public void enviarMail(ActionEvent e) {
         ApiResponse apiResponse = serviceAuth.enviarMailRecuperacion(new DTOEnvioCorreo(fieldEmail.getText(), "Usuario"));
         if (apiResponse.getMensaje().equals("correoEnviado")) {
@@ -65,6 +75,11 @@ public class EnviarMailVerificarCodigoWinController implements Initializable {
         }
     }
 
+    /**
+     * Verifica que el código introducido sea correcto
+     *
+     * @param e
+     */
     public void verificarCodigo(ActionEvent e) {
         Object respuesta = serviceUsuario.obtenerUsuarioPorCodigoVerificacion(fieldCodigo.getText());
         if (respuesta instanceof DTOUsuarioOut usuario) {
@@ -75,10 +90,19 @@ public class EnviarMailVerificarCodigoWinController implements Initializable {
         }
     }
 
+    /**
+     * Hace que el usuario pueda volver a la ventana anterior
+     *
+     * @param e
+     */
     public void volver(ActionEvent e) {
         utiles.cambiarVentanaAplicacion(e, getClass(), "/vistas/index.fxml");
     }
-
+    /**
+     * Mueve al usuario a la ventan de clima
+     *
+     * @param e
+     */
     private Map<Integer, Node> cargarComponentes() {
         return Map.ofEntries(
                 Map.entry(1, fieldEmail),

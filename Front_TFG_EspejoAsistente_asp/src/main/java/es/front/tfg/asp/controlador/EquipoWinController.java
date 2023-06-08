@@ -40,8 +40,13 @@ public class EquipoWinController implements Initializable {
     @Autowired
     private Datos datos;
     private DTOUsuarioOut usuarioLogeado;
-    private int idEquipo;
 
+    /**
+     * Se ejecuta cuando se carga la vista
+     *
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         cargarDatosUsuario();
@@ -49,18 +54,19 @@ public class EquipoWinController implements Initializable {
         cargarPartidosEnVivo();
     }
 
+    /**
+     * Carga la clasificación de la liga del usuario
+     */
     private void cargarClasificacion() {
         String idLiga = utiles.obtenerIdPais(usuarioLogeado.getPaisLiga());
         List<ResponseLiga.Clasificacion> clasificacion = serviceEquipo.obtenerClasificacionLiga(idLiga).get(0).getLeague().getStandings().get(0);
         listClasificacion.setItems(FXCollections.observableArrayList(clasificacion));
         utiles.llenarListView(listClasificacion);
-        for (ResponseLiga.Clasificacion clas : clasificacion) {
-            if (clas.getTeam().getName().equals(usuarioLogeado.getEquipoFav())) {
-                idEquipo = clas.getTeam().getId();
-            }
-        }
     }
 
+    /**
+     * Carga dos partidos aleatorios que se estén jugando en ese momento de la liga del usuario
+     */
     private void cargarPartidosEnVivo() {
         String idLiga = utiles.obtenerIdPais(usuarioLogeado.getPaisLiga());
         List<ResponsePartido> listaPartidos = serviceEquipo.obtenerPartidosEnVivoLiga(idLiga);
@@ -97,19 +103,37 @@ public class EquipoWinController implements Initializable {
 
     }
 
+    /**
+     * Carga los datos del usuario en la vista
+     */
     private void cargarDatosUsuario() {
         usuarioLogeado = datos.obtenerUsuarioLogeado();
         lblUsername.setText(usuarioLogeado.getUsername());
     }
 
+    /**
+     * Cierra sesión en la aplicación
+     *
+     * @param e
+     */
     public void cerrarSesion(ActionEvent e) {
         datos.cerrarSesion(e, getClass(), "/vistas/index.fxml");
     }
 
+    /**
+     * Mueve al usuario a la ventana configuración de la aplicación
+     *
+     * @param e
+     */
     public void ventanaConfiguracion(ActionEvent e) {
         utiles.cambiarVentanaAplicacion(e, getClass(), "/vistas/configuracion.fxml");
     }
 
+    /**
+     * Carga los componentes de la interfaz en el mapper para que puedan ser controlados
+     *
+     * @return una lista mapper de componentes
+     */
     public void ventanaClima(ActionEvent e) {
         utiles.cambiarVentanaAplicacion(e, getClass(), "/vistas/clima.fxml");
     }

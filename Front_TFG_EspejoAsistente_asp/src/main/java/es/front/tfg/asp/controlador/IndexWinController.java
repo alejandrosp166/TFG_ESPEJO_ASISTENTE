@@ -29,8 +29,6 @@ import java.util.ResourceBundle;
  */
 @Controller
 public class IndexWinController implements Initializable {
-    //@FXML
-    //private ImageView imgLogoPrincipal;
     @FXML
     private Label lblErrorUsername, lblErrorPassword;
     @FXML
@@ -51,39 +49,63 @@ public class IndexWinController implements Initializable {
     private Datos datos;
 
     /**
-     * El método initialize en JavaFX se utiliza para inicializar un controlador de vista después de que se hayan establecido todos los objetos de la vista.
-     * Este método se ejecuta automáticamente después de cargar la vista en la aplicación y se puede usar para inicializar cualquier objeto o configuración
-     * necesaria en el controlador. Los parámetros URL y ResourceBundle se utilizan para obtener información sobre la ubicación de la vista y cualquier
-     * recurso adicional que pueda ser necesario en el controlador.
+     * Se ejecuta cuando se carga la vista
+     *
+     * @param url
+     * @param resourceBundle
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        // Cargamos los componentes para el control
         Map<Integer, Node> map = cargarComponentes();
+        // Seteamos los botones y el puntero
         hiloControlMando.setPosicionPuntero(1);
         hiloControlMando.setBtnEquisPulsada(false);
+        // Cambiamos la lista del componente
         hiloCambiarInterfaz.setListaComponentes(map);
+        // Iniciamos los hilos de control
         utiles.iniciarHilos();
     }
 
+    /**
+     * Inicia sesión en la aplicación
+     *
+     * @param e
+     */
     public void iniciarSesion(ActionEvent e) {
         DTOIniciarSesion iniciarSesion = new DTOIniciarSesion(fieldUsuario.getText(), fieldPassword.getText());
         Object respuesta = serviceAuth.iniciarSesion(iniciarSesion);
         if (respuesta instanceof DTOUsuarioOut usuario) {
             datos.guardarElementoPropiedades("uuidUsuario", usuario.getUuid());
-            utiles.cambiarVentanaAplicacion(e, getClass(), "/vistas/equipo.fxml");
+            utiles.cambiarVentanaAplicacion(e, getClass(), "/vistas/clima.fxml");
         } else if (respuesta instanceof ApiResponse apiResponse) {
             utiles.crearModal("No se pudo iniciar sesión", apiResponse.getMensaje());
         }
     }
 
+    /**
+     * Mueve al usuario al formulario de registro
+     *
+     * @param e
+     */
     public void registrarse(ActionEvent e) {
         utiles.cambiarVentanaAplicacion(e, getClass(), "/vistas/registro.fxml");
     }
 
+    /**
+     * Mueve al usuario al formulario para recuperar la contraseña
+     *
+     * @param e
+     */
     public void olvidarContrasenna(ActionEvent e) {
         utiles.cambiarVentanaAplicacion(e, getClass(), "/vistas/enviar-mail.fxml");
     }
 
+    /**
+     * Carga los componentes de la interfaz en el mapper para que puedan ser controlados
+     *
+     * @return una lista mapper de componentes
+     */
     private Map<Integer, Node> cargarComponentes() {
         return Map.ofEntries(
                 Map.entry(1, fieldUsuario),

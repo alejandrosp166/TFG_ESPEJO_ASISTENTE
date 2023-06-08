@@ -30,6 +30,9 @@ public class HiloCambiarInterfaz implements Runnable {
     private boolean hiloIniciado = false;
     private int indexComboBox = 0;
 
+    /**
+     * Permite movernos entre los elementos de la lista de componentes
+     */
     @Override
     @SneakyThrows
     public void run() {
@@ -47,6 +50,12 @@ public class HiloCambiarInterfaz implements Runnable {
         }
     }
 
+    /**
+     * Cambia la posición del elementos en el que nos encontramos
+     *
+     * @param componente el componente
+     * @param borde      el borde que simboliza la posición en la cual nos encontramos
+     */
     private void cambiarBordeAndFocus(Node componente, Border borde) {
         if (componente instanceof Button btn) {
             btn.setBorder(borde);
@@ -64,6 +73,11 @@ public class HiloCambiarInterfaz implements Runnable {
         componente.requestFocus();
     }
 
+    /**
+     * Elimina los bordes para movernos a otro elemento
+     *
+     * @param borde el borde que simboliza que ya no estamos en ese elemento
+     */
     private void eliminarBordes(Border borde) {
         for (Node componente : listaComponentes.values()) {
             if (componente instanceof Button btn) {
@@ -78,6 +92,11 @@ public class HiloCambiarInterfaz implements Runnable {
         }
     }
 
+    /**
+     * Comprueba si hemos pulsado X sobre el textfield
+     *
+     * @param text el textfield
+     */
     private void comprobarPulsadoTextField(TextField text) {
         if (hiloControlMando.isBtnEquisPulsada()) {
             hiloControlMando.setBtnEquisPulsada(false);
@@ -85,6 +104,11 @@ public class HiloCambiarInterfaz implements Runnable {
         }
     }
 
+    /**
+     * Comprueba si hemos pulsado el botón
+     *
+     * @param btn el botón
+     */
     private void comprobarPulsadoBoton(Button btn) {
         if (hiloControlMando.isBtnEquisPulsada()) {
             hiloControlMando.setBtnEquisPulsada(false);
@@ -92,6 +116,11 @@ public class HiloCambiarInterfaz implements Runnable {
         }
     }
 
+    /**
+     * Comprueba si se ha pulsado el checkbox
+     *
+     * @param checkBox el checkbox
+     */
     private void comprobarPulsadoCheckBox(CheckBox checkBox) {
         if (hiloControlMando.isBtnEquisPulsada()) {
             hiloControlMando.setBtnEquisPulsada(false);
@@ -99,6 +128,11 @@ public class HiloCambiarInterfaz implements Runnable {
         }
     }
 
+    /**
+     * Mueve el elemento que hay dentro del combobox seleccionado a otro
+     *
+     * @param cmb el combox
+     */
     private void cambiarContenidoComboBox(ComboBox<?> cmb) {
         if (hiloControlMando.isBtnTrianguloPulsado()) {
             hiloControlMando.setBtnTrianguloPulsado(false);
@@ -111,6 +145,11 @@ public class HiloCambiarInterfaz implements Runnable {
         }
     }
 
+    /**
+     * Cambia la lista de componentes que se está usando
+     *
+     * @param listaComponentes la lista de componentes
+     */
     public void setListaComponentes(Map<Integer, Node> listaComponentes) {
         hiloControlMando.setLimitePuntero(listaComponentes.size());
         this.listaComponentes = listaComponentes;

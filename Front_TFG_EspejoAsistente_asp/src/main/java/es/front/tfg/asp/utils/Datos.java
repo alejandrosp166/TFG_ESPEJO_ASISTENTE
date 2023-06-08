@@ -19,12 +19,23 @@ public class Datos {
     private Utiles utiles;
     private DTOUsuarioOut usuarioLogeado;
 
+    /**
+     * Cierra sesión en el sistema
+     *
+     * @param e evento del elemento
+     * @param c clase desde la cual se llama
+     * @param resource la vista a la que se va a mover
+     */
     public void cerrarSesion(ActionEvent e, Class<?> c, String resource) {
         utiles.cambiarVentanaAplicacion(e, c, resource);
-        // borrarPropiedades();
         usuarioLogeado = null;
     }
 
+    /**
+     * Devuelve el usuario logeado, en caso de estar ya logado no se hace de nuevo la petición
+     *
+     * @return el usuario logado
+     */
     public DTOUsuarioOut obtenerUsuarioLogeado() {
         if (Objects.isNull(usuarioLogeado)) {
             Object respuesta = serviceUsuario.obtenerUsuarioPorUuid(obtenerElementoPropieades("uuidUsuario"));
@@ -36,6 +47,12 @@ public class Datos {
         return usuarioLogeado;
     }
 
+    /**
+     * Guarda elementos en el archivo propiedades
+     *
+     * @param key la key del elemento
+     * @param contenido el contenido
+     */
     public void guardarElementoPropiedades(String key, String contenido) {
         Properties properties = new Properties();
         properties.setProperty(key, contenido);
@@ -46,6 +63,12 @@ public class Datos {
         }
     }
 
+    /**
+     * Obtiene datos del archivo propiedades
+     *
+     * @param key la key del elemento
+     * @return el contido guardado
+     */
     public String obtenerElementoPropieades(String key) {
         String propiedad = null;
         try (InputStream leer = new FileInputStream("session-config.properties")) {
@@ -58,6 +81,9 @@ public class Datos {
         return propiedad;
     }
 
+    /**
+     * Borra las propiedades
+     */
     public void borrarPropiedades() {
         try (InputStream leer = new FileInputStream("session-config.properties")) {
             Properties properties = new Properties();

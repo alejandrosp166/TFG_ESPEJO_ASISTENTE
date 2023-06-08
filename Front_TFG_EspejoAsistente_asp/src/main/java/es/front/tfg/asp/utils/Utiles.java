@@ -38,6 +38,9 @@ public class Utiles {
     private HiloCambiarInterfaz hiloCambiarInterfaz;
     private Stage stage;
 
+    /**
+     * Inicia los hilos de control de interfaz
+     */
     public void iniciarHilos() {
         if (!hiloControlMando.isHiloIniciado() && !hiloCambiarInterfaz.isHiloIniciado()) {
             Thread hiloMandoController = new Thread(hiloControlMando);
@@ -47,6 +50,13 @@ public class Utiles {
         }
     }
 
+    /**
+     * Cambia la ventana de la aplicación
+     *
+     * @param e        el evento del elemento que se accionó
+     * @param c        la clase del elemento que se accinó
+     * @param resource la vista a la que se quiere mover
+     */
     public void cambiarVentanaAplicacion(ActionEvent e, Class<?> c, String resource) {
         try {
             FXMLLoader loader = new FXMLLoader(c.getResource(resource));
@@ -62,6 +72,12 @@ public class Utiles {
         }
     }
 
+    /**
+     * Crea un modal
+     *
+     * @param tituloModal    título del modal
+     * @param contenidoTexto contenido del modal
+     */
     public void crearModal(String tituloModal, String contenidoTexto) {
         Dialog<Void> dialog = new Dialog<>();
         dialog.setTitle(tituloModal);
@@ -70,6 +86,11 @@ public class Utiles {
         dialog.showAndWait();
     }
 
+    /**
+     * Crea el teclado virtual
+     *
+     * @param txt el textfield en el que se quiere escribir
+     */
     public void crearTecladoVirtual(TextField txt) {
         Dialog<Void> dialog = new Dialog<>();
         dialog.setTitle("Teclado Virtual");
@@ -81,6 +102,12 @@ public class Utiles {
         dialog.showAndWait();
     }
 
+    /**
+     * Formatea la ventana del teclado virtual
+     *
+     * @param txt el textfield del teclado virtual
+     * @return el teclado virtualz
+     */
     private GridPane obtenerTecladoVirtual(TextField txt) {
         GridPane gridPane = new GridPane();
         gridPane.setAlignment(Pos.CENTER);
@@ -127,6 +154,13 @@ public class Utiles {
         return gridPane;
     }
 
+    /**
+     * @param listaObjetos la lista de objetos a cargar
+     * @param comboBox     el combobox en el que se quiere cargar los datos
+     * @param map
+     * @param <T>
+     * @param <R>
+     */
     public <T, R> void llenarCombobox(List<T> listaObjetos, ComboBox<R> comboBox, Function<T, R> map) {
         ObservableList<R> observable = FXCollections.observableArrayList();
         for (T objeto : listaObjetos) {
@@ -136,6 +170,12 @@ public class Utiles {
         comboBox.setItems(observable);
     }
 
+    /**
+     * Llena las listas de elementos y los formatea según la clase
+     *
+     * @param lista
+     * @param <T>
+     */
     public <T> void llenarListView(ListView<T> lista) {
         lista.setCellFactory(param -> new ListCell<T>() {
             @Override
@@ -167,6 +207,12 @@ public class Utiles {
         });
     }
 
+    /**
+     * Obtiene el país del elementos en ingés
+     *
+     * @param paisEspannol el país en español
+     * @return el país en ingés
+     */
     public String traducirPaisIngles(String paisEspannol) {
         String paisIngles = "";
         switch (paisEspannol.toLowerCase()) {
@@ -179,6 +225,12 @@ public class Utiles {
         return paisIngles;
     }
 
+    /**
+     * Obtiene el código del país
+     *
+     * @param pais el país
+     * @return el código del país
+     */
     public String obtenerCodigoPais(String pais) {
         String codigoPais = "";
         switch (pais.toLowerCase()) {
@@ -191,6 +243,12 @@ public class Utiles {
         return codigoPais;
     }
 
+    /**
+     * Obtiene el ID del país en la api footbal
+     *
+     * @param pais el país
+     * @return el ID del país en la api footbal
+     */
     public String obtenerIdPais(String pais) {
         String idPais = "";
         switch (pais.toLowerCase()) {
@@ -203,10 +261,22 @@ public class Utiles {
         return idPais;
     }
 
+    /**
+     * Pasa del kelvin a grado centígrados
+     *
+     * @param kelvin la unidad en kelvin
+     * @return la unidad en grados
+     */
     public String pasarKelvinAGrados(String kelvin) {
         return Double.toString(Math.round(Double.parseDouble(kelvin) - 273.15));
     }
 
+    /**
+     * Pasa de metros por segundo a KM/H
+     *
+     * @param metrosPorSegundo los metros por segundo
+     * @return los KM/H
+     */
     public String pasarMetrosPorSegundosKilometrosPorHora(String metrosPorSegundo) {
         return Double.toString(Math.round(Double.parseDouble(metrosPorSegundo) * 3.6));
     }

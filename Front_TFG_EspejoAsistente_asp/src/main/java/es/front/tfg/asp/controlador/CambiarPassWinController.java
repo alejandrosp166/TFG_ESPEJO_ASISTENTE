@@ -40,6 +40,12 @@ public class CambiarPassWinController implements Initializable {
     @Autowired
     private Datos datos;
 
+    /**
+     * Se ejecuta cuando se carga la vista
+     *
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Map<Integer, Node> map = cargarComponentes();
@@ -47,6 +53,11 @@ public class CambiarPassWinController implements Initializable {
         utiles.iniciarHilos();
     }
 
+    /**
+     * Cambia la contraseña del usuario
+     *
+     * @param e
+     */
     public void cambiarContrasenna(ActionEvent e) {
         String nuevaPass = fieldPassword1.getText();
         if (nuevaPass.equals(fieldPassword2.getText())) {
@@ -61,6 +72,11 @@ public class CambiarPassWinController implements Initializable {
         }
     }
 
+    /**
+     * Carga los componentes de la interfaz en el mapper para que puedan ser controlados
+     *
+     * @return una lista mapper de componentes
+     */
     private Map<Integer, Node> cargarComponentes() {
         return Map.ofEntries(
                 Map.entry(1, fieldPassword1),

@@ -25,6 +25,11 @@ public class HiloControlMando implements Runnable {
     private boolean btnTrianguloPulsado;
     private boolean hiloIniciado = false;
 
+    /**
+     * Comprueba si hay input conectado
+     *
+     * @return true si lo hay false si no lo hay
+     */
     private boolean hayInput() {
         // Analizamos los dispositivos conectados y los guardamos en una lista
         net.java.games.input.Controller[] controllers = ControllerEnvironment.getDefaultEnvironment().getControllers();
@@ -41,7 +46,9 @@ public class HiloControlMando implements Runnable {
         return inputEncontrado;
     }
 
-    // Start Botón 9 // r1 Botón 5 // l1 botón 4 // panel Botón 13 // share Botón 8 // ps Botón 12 // triángulo Botón 3
+    /**
+     * Hilo que mueve el puntero y cambia los datos de pulsación de los botones
+     */
     @Override
     public void run() {
         hiloIniciado = true;

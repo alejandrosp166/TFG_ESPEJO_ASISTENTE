@@ -30,6 +30,15 @@ public class PeticionesHTTP {
     private CloseableHttpClient client = obtenerClienteHttp();
     private final String API_KEY_FOOTBAL = "e61e7d6e91e99d91bb18a7eded870a9e";
 
+    /**
+     * Hace peticiones post
+     *
+     * @param objeto       el objeto que se envía
+     * @param url          la url a la que se peticiona
+     * @param objetoVuelta la clase del objeto que se espera
+     * @param <T>          genérico que puede ser cualquier clase
+     * @return la entida de la clase que se espera
+     */
     public <T> T post(Object objeto, String url, Class<T> objetoVuelta) {
         T entidad = null;
         try {
@@ -50,6 +59,14 @@ public class PeticionesHTTP {
         return entidad;
     }
 
+    /**
+     * Hace peticiones get
+     *
+     * @param url          la url a la que se peticiona
+     * @param objetoVuelta la clase del objeto que se espera
+     * @param <T>          genérico que puede ser cualquier clase
+     * @return la entidad que devuelve la petición
+     */
     public <T> T get(String url, Class<T> objetoVuelta) {
         T entidad = null;
         try {
@@ -67,6 +84,15 @@ public class PeticionesHTTP {
         return entidad;
     }
 
+    /**
+     * Hace peticiones get para obtener listas de las apis clima y equipo
+     *
+     * @param url          la url a la que se peticiona
+     * @param objetoVuelta la clase del objeto que se espera
+     * @param container    el contenedor de la petición
+     * @param <T>          genérico que puede ser cualquier clase
+     * @return la entidad que se devuelve en la petición
+     */
     public <T> List<T> getListas(String url, Class<T> objetoVuelta, String container) {
         List<T> listaEntidades = new ArrayList<>();
         try {
@@ -96,6 +122,14 @@ public class PeticionesHTTP {
         return listaEntidades;
     }
 
+    /**
+     * Hace una petición put
+     *
+     * @param url          la url a la que se peticiona
+     * @param objetoVuelta la clase del objeto que se espera
+     * @param <T>          genérico que puede ser cualquier clase
+     * @return la entidad que se devuelve en la petición
+     */
     public <T> T put(Object objeto, String url, Class<T> objetoVuelta) {
         T entidad = null;
         try {
@@ -116,6 +150,11 @@ public class PeticionesHTTP {
         return entidad;
     }
 
+    /**
+     * Hace una petición delete
+     *
+     * @param url la url a la que se peticiona
+     */
     public void delete(String url) {
         try {
             HttpDelete peticion = new HttpDelete(url);
@@ -128,6 +167,11 @@ public class PeticionesHTTP {
         }
     }
 
+    /**
+     * Obtiene el cliente HTTP
+     *
+     * @return el cliente http
+     */
     private CloseableHttpClient obtenerClienteHttp() {
         if (client == null) {
             client = HttpClients.createDefault();

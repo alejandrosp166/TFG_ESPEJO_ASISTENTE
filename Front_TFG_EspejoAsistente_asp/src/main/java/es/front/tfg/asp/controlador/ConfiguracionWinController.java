@@ -52,6 +52,12 @@ public class ConfiguracionWinController implements Initializable {
     @Autowired
     private Datos datos;
 
+    /**
+     * Se ejecuta cuando se carga la vista
+     *
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Map<Integer, Node> map = cargarComponentes();
@@ -63,6 +69,11 @@ public class ConfiguracionWinController implements Initializable {
         cargarDatosUsuarioLogeadoEnVista();
     }
 
+    /**
+     * Actualiza el usuario con la nueva configuración
+     *
+     * @param e
+     */
     public void guardarConfig(ActionEvent e) {
         Object respuesta = serviceUsuario.actualizarUsuario(obtenerDatosVista(), datos.obtenerElementoPropieades("uuidUsuario"));
         if (respuesta instanceof DTOUsuarioOut) {
@@ -72,6 +83,11 @@ public class ConfiguracionWinController implements Initializable {
         }
     }
 
+    /**
+     * Obtiene los datos que hay en la vista cargados
+     *
+     * @return el usuario que hay en la vista cargado
+     */
     private DTOUsuarioIn obtenerDatosVista() {
         String username = fieldUsuario.getText();
         String nombre = fieldNombre.getText();
@@ -82,11 +98,14 @@ public class ConfiguracionWinController implements Initializable {
         String paisLiga = cmbLigaFav.getValue();
         String equipo = cmbEquipoFav.getValue();
         String paisLocalizacion = cmbPaisClima.getValue();
-        DTOEquipo dtoEquipo = new DTOEquipo(1, paisLiga, equipo);
+        DTOEquipo dtoEquipo = new DTOEquipo(paisLiga, equipo);
         DTOLocalizacionClima dtoLocalizacionClima = new DTOLocalizacionClima(paisLocalizacion, codigoPostal);
         return new DTOUsuarioIn(null, username, nombre, apellidos, email, admin, null, null, null, dtoEquipo, dtoLocalizacionClima);
     }
 
+    /**
+     * Carga al usuario logueado en la vista
+     */
     private void cargarDatosUsuarioLogeadoEnVista() {
         Object respuesta = serviceUsuario.obtenerUsuarioPorUuid(datos.obtenerElementoPropieades("uuidUsuario"));
         if (respuesta instanceof DTOUsuarioOut usuario) {
@@ -103,6 +122,11 @@ public class ConfiguracionWinController implements Initializable {
         }
     }
 
+    /**
+     * Ejecuta un evento que carga los equipos del pais seleccionado en el combobox
+     *
+     * @param e
+     */
     public void activarCmbBoxEquipo(ActionEvent e) {
         String pais = cmbLigaFav.getSelectionModel().getSelectedItem();
         if (Objects.nonNull(pais)) {
@@ -110,24 +134,47 @@ public class ConfiguracionWinController implements Initializable {
         }
     }
 
+    /**
+     * Carga los paises y ligas disponibles
+     */
     private void cargarPaises() {
         List<String> listaPaises = List.of("España", "Inglaterra", "Alemania", "Italia", "Francia");
         cmbLigaFav.setItems(FXCollections.observableArrayList(listaPaises));
         cmbPaisClima.setItems(FXCollections.observableArrayList(listaPaises));
     }
 
+    /**
+     * Carga los equipos de una liga en el combobox
+     *
+     * @param pais el pais de la liga que se quiere cargar
+     */
     private void cargarDatosComboBoxEquipo(String pais) {
         utiles.llenarCombobox(serviceEquipo.obtenerEquiposPorPais(pais), cmbEquipoFav, equipo -> equipo.getTeam().getName());
     }
 
+    /**
+     * Hace que el usuario pueda volver a la ventana anterior
+     *
+     * @param e
+     */
     public void volver(ActionEvent e) {
         utiles.cambiarVentanaAplicacion(e, getClass(), "/vistas/clima.fxml");
     }
 
+    /**
+     * Elimina la cuenta del usuario
+     *
+     * @param e
+     */
     public void eliminarCuenta(ActionEvent e) {
 
     }
 
+    /**
+     * Carga los componentes de la interfaz en el mapper para que puedan ser controlados
+     *
+     * @return una lista mapper de componentes
+     */
     private Map<Integer, Node> cargarComponentes() {
         return Map.ofEntries(
                 Map.entry(1, fieldUsuario),

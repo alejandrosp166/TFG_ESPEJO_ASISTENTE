@@ -50,6 +50,12 @@ public class ClimaWinController implements Initializable, Runnable {
     private boolean cambioVentana;
     private Thread hiloCambioInterfaz;
 
+    /**
+     * Se ejecuta cuando se carga la vista
+     *
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         hiloControlMando.setPosicionPuntero(1);
@@ -60,6 +66,9 @@ public class ClimaWinController implements Initializable, Runnable {
         this.run();
     }
 
+    /**
+     * Carga todos los datos climáticos
+     */
     private void cargarDatosClimaticos() {
         String codigoPais = utiles.obtenerCodigoPais(usuarioLogeado.getPaisClima());
         String codigoPostal = usuarioLogeado.getCodigoPostal();
@@ -77,23 +86,44 @@ public class ClimaWinController implements Initializable, Runnable {
         utiles.llenarListView(listDatosProximosDias);
     }
 
+    /**
+     * Carga los datos del usuario en la vista
+     */
     private void cargarDatosUsuario() {
         usuarioLogeado = datos.obtenerUsuarioLogeado();
         lblUsername.setText(usuarioLogeado.getUsername());
     }
 
+    /**
+     * Cierra sesión en la cuenta del usuario
+     *
+     * @param e
+     */
     public void cerrarSesion(ActionEvent e) {
         datos.cerrarSesion(e, getClass(), "/vistas/index.fxml");
     }
 
+    /**
+     * Mueve al usuario a la ventana de configuración
+     *
+     * @param e
+     */
     public void ventanaConfiguracion(ActionEvent e) {
         utiles.cambiarVentanaAplicacion(e, getClass(), "/vistas/configuracion.fxml");
     }
 
+    /**
+     * Mueve al usuario a la ventana equipo
+     *
+     * @param e
+     */
     public void ventanaEquipo(ActionEvent e) {
         utiles.cambiarVentanaAplicacion(e, getClass(), "/vistas/equipo.fxml");
     }
 
+    /**
+     * Muestra la hora del sistema en la aplicación
+     */
     @Override
     public void run() {
         Task<Void> task = new Task<>() {
