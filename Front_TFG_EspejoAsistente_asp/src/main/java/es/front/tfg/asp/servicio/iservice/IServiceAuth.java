@@ -4,8 +4,8 @@ import es.front.tfg.asp.modelo.dtos.*;
 import es.front.tfg.asp.modelo.response.ApiResponse;
 
 public interface IServiceAuth {
-    public DTOUsuarioOut iniciarSesion(DTOIniciarSesion dtoIniciarSesion);
-    public void registrarUsuario(DTOUsuarioIn dtoUsuarioIn);
+    public Object iniciarSesion(DTOIniciarSesion dtoIniciarSesion);
+    public Object registrarUsuario(DTOUsuarioIn dtoUsuarioIn);
     public ApiResponse enviarMailRecuperacion(DTOEnvioCorreo dtoEnvioCorreo);
-    public void cambiarContrasenna(DTOCambioPassword dtoCambioPassword);
+    public ApiResponse cambiarContrasenna(DTOCambioPassword dtoCambioPassword);
 }

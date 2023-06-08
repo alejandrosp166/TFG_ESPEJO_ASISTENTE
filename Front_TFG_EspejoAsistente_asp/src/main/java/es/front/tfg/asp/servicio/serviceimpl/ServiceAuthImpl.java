@@ -16,13 +16,13 @@ public class ServiceAuthImpl implements IServiceAuth {
     private PeticionesHTTP peticionesHTTP;
 
     @Override
-    public DTOUsuarioOut iniciarSesion(DTOIniciarSesion dtoIniciarSesion) {
+    public Object iniciarSesion(DTOIniciarSesion dtoIniciarSesion) {
         return peticionesHTTP.post(dtoIniciarSesion, URL + "/inicio-sesion", DTOUsuarioOut.class);
     }
 
     @Override
-    public void registrarUsuario(DTOUsuarioIn dtoUsuarioIn) {
-        peticionesHTTP.post(dtoUsuarioIn, URL + "/registro", DTOUsuarioOut.class);
+    public Object registrarUsuario(DTOUsuarioIn dtoUsuarioIn) {
+       return peticionesHTTP.post(dtoUsuarioIn, URL + "/registro", DTOUsuarioOut.class);
     }
 
     @Override
@@ -31,7 +31,7 @@ public class ServiceAuthImpl implements IServiceAuth {
     }
 
     @Override
-    public void cambiarContrasenna(DTOCambioPassword dtoCambioPassword) {
-        peticionesHTTP.post(dtoCambioPassword, URL + "/cambiar-password", null);
+    public ApiResponse cambiarContrasenna(DTOCambioPassword dtoCambioPassword) {
+        return peticionesHTTP.post(dtoCambioPassword, URL + "/cambiar-password", ApiResponse.class);
     }
 }

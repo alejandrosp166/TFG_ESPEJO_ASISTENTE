@@ -42,7 +42,7 @@ public class PeticionesHTTP {
             if (respuesta.getCode() == 201) {
                 entidad = GSON_MAPPER.fromJson(EntityUtils.toString(respuesta.getEntity()), objetoVuelta);
             } else {
-                throw new RuntimeException("Error al hacer la petición POST");
+                entidad = GSON_MAPPER.fromJson(EntityUtils.toString(respuesta.getEntity()), (Type) ApiResponse.class);
             }
         } catch (IOException | ParseException e) {
             throw new RuntimeException(e);
@@ -50,14 +50,14 @@ public class PeticionesHTTP {
         return entidad;
     }
 
-    public <T> T get(String url, Class<T> claseObjetoDevolver) {
+    public <T> T get(String url, Class<T> objetoVuelta) {
         T entidad = null;
         try {
             HttpGet peticion = new HttpGet(url);
             CloseableHttpResponse respuesta = client.execute(peticion);
 
             if (respuesta.getCode() == 200) {
-                entidad = GSON_MAPPER.fromJson(EntityUtils.toString(respuesta.getEntity()), claseObjetoDevolver);
+                entidad = GSON_MAPPER.fromJson(EntityUtils.toString(respuesta.getEntity()), objetoVuelta);
             } else {
                 entidad = GSON_MAPPER.fromJson(EntityUtils.toString(respuesta.getEntity()), (Type) ApiResponse.class);
             }
@@ -67,7 +67,7 @@ public class PeticionesHTTP {
         return entidad;
     }
 
-    public <T> List<T> getListas(String url, Class<T> claseObjetoDevolver, String container) {
+    public <T> List<T> getListas(String url, Class<T> objetoVuelta, String container) {
         List<T> listaEntidades = new ArrayList<>();
         try {
             HttpGet peticion = new HttpGet(url);
@@ -83,7 +83,7 @@ public class PeticionesHTTP {
                     JsonArray respuestaEnArray = elementoJson.getAsJsonArray();
                     if (respuestaEnArray.size() > 0) {
                         for (int i = 0; i < respuestaEnArray.size(); i++) {
-                            listaEntidades.add(GSON_MAPPER.fromJson(respuestaEnArray.get(i), claseObjetoDevolver));
+                            listaEntidades.add(GSON_MAPPER.fromJson(respuestaEnArray.get(i), objetoVuelta));
                         }
                     }
                 }
@@ -96,7 +96,8 @@ public class PeticionesHTTP {
         return listaEntidades;
     }
 
-    public void put(Object objeto, String url) {
+    public <T> T put(Object objeto, String url, Class<T> objetoVuelta) {
+        T entidad = null;
         try {
             HttpPut peticion = new HttpPut(url);
             String cuerpoPeticion = GSON_MAPPER.toJson(objeto);
@@ -104,12 +105,15 @@ public class PeticionesHTTP {
             peticion.setEntity(dto);
             peticion.setHeader("Content-type", "application/json");
             CloseableHttpResponse respuesta = client.execute(peticion);
-            if (respuesta.getCode() != 200) {
-                throw new RuntimeException("Error al hacer la petición PUT");
+            if (respuesta.getCode() == 200) {
+                entidad = GSON_MAPPER.fromJson(EntityUtils.toString(respuesta.getEntity()), objetoVuelta);
+            } else {
+                entidad = GSON_MAPPER.fromJson(EntityUtils.toString(respuesta.getEntity()), (Type) ApiResponse.class);
             }
-        } catch (IOException e) {
+        } catch (IOException | ParseException e) {
             throw new RuntimeException(e);
         }
+        return entidad;
     }
 
     public void delete(String url) {

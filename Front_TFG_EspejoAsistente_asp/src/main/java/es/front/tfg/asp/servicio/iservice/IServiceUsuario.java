@@ -5,8 +5,8 @@ import es.front.tfg.asp.modelo.dtos.DTOUsuarioOut;
 
 public interface IServiceUsuario {
 
-    public DTOUsuarioOut obtenerUsuarioPorUuid(String uuid);
-    public void actualizarUsuario(DTOUsuarioIn usuario, String uuid);
-    public DTOUsuarioOut obtenerUsuarioPorCodigoVerificacion(String codigo);
-    public DTOUsuarioOut obtenerUsuarioPorUsername(String username);
+    public Object obtenerUsuarioPorUuid(String uuid);
+    public Object actualizarUsuario(DTOUsuarioIn usuario, String uuid);
+    public Object obtenerUsuarioPorCodigoVerificacion(String codigo);
+    public Object obtenerUsuarioPorUsername(String username);
 }

@@ -3,6 +3,8 @@ package es.front.tfg.asp.controlador;
 import es.front.tfg.asp.modelo.dtos.DTOEquipo;
 import es.front.tfg.asp.modelo.dtos.DTOLocalizacionClima;
 import es.front.tfg.asp.modelo.dtos.DTOUsuarioIn;
+import es.front.tfg.asp.modelo.dtos.DTOUsuarioOut;
+import es.front.tfg.asp.modelo.response.ApiResponse;
 import es.front.tfg.asp.servicio.iservice.IServiceAuth;
 import es.front.tfg.asp.servicio.iservice.IServiceEquipo;
 import es.front.tfg.asp.utils.HiloControlMando;
@@ -64,8 +66,12 @@ public class RegistroWinController implements Initializable {
 
     public void completarRegistro(ActionEvent e) {
         DTOUsuarioIn dtoUsuarioIn = cargarUsuarioDatosVista();
-        serviceAuth.registrarUsuario(dtoUsuarioIn);
-        utiles.cambiarVentanaAplicacion(e, getClass(), "/vistas/index.fxml");
+        Object respuesta = serviceAuth.registrarUsuario(dtoUsuarioIn);
+        if (respuesta instanceof DTOUsuarioOut) {
+            utiles.cambiarVentanaAplicacion(e, getClass(), "/vistas/index.fxml");
+        } else if (respuesta instanceof ApiResponse apiResponse) {
+            utiles.crearModal("No se pudo completar el registro", apiResponse.getMensaje());
+        }
     }
 
     private DTOUsuarioIn cargarUsuarioDatosVista() {

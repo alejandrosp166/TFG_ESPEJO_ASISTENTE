@@ -68,9 +68,8 @@ public class ServiceAuthImpl implements IServiceAuth {
     @Override
     public void enviarEmailCambioPassword(DTOEnvioCorreoIn dtoEnvioCorreoIn) {
         String emailUsuario = dtoEnvioCorreoIn.getEmailPara();
-        String usernameUsuario = dtoEnvioCorreoIn.getUsername();
         // Buscamos al usuario por el email
-        Usuario usuario = repositorioUsuario.findUsuarioByUsername(usernameUsuario);
+        Usuario usuario = repositorioUsuario.findUsuarioByEmail(emailUsuario);
         // Comprobamos que exista y que el email no sea nulo
         if (Objects.nonNull(usuario) && Objects.nonNull(emailUsuario) && !emailUsuario.isEmpty()) {
             try {
@@ -81,8 +80,7 @@ public class ServiceAuthImpl implements IServiceAuth {
                 usuario.setCodigoVerificacionCambioContrasenna(codigoVerificacion);
                 usuario.setTokenSeguridad(UUID.randomUUID().toString().replace("-", ""));
                 // Sustituimos las variables en la plantilla
-                model.put("userName", usernameUsuario);
-                model.put("url", emailUsuario);
+                model.put("userName", usuario.getUsername());
                 model.put("codVerificacion", codigoVerificacion);
                 context.setVariables(model);
                 // Enviamos el email y actualizamos el usuario
@@ -91,6 +89,8 @@ public class ServiceAuthImpl implements IServiceAuth {
             } catch (MessagingException e) {
                 throw new RuntimeException(e);
             }
+        } else {
+            throw new RuntimeException("Error al enviar el email");
         }
     }
 
@@ -105,6 +105,8 @@ public class ServiceAuthImpl implements IServiceAuth {
             usuario.setCodigoVerificacionCambioContrasenna(null);
             repositorioUsuario.save(usuario);
             repositorioCredenciales.save(credencialesUsuario);
+        } else {
+            throw new RuntimeException("Error al cambiar la contraseña");
         }
     }
 }

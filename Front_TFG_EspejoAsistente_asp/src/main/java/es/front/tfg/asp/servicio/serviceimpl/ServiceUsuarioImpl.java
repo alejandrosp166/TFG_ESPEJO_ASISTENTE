@@ -14,22 +14,22 @@ public class ServiceUsuarioImpl implements IServiceUsuario {
     private PeticionesHTTP peticionesHTTP;
 
     @Override
-    public DTOUsuarioOut obtenerUsuarioPorCodigoVerificacion(String codigo) {
+    public Object obtenerUsuarioPorCodigoVerificacion(String codigo) {
         return peticionesHTTP.get(URL + "/obtener-por-codigo-verificacion/" + codigo, DTOUsuarioOut.class);
     }
 
     @Override
-    public DTOUsuarioOut obtenerUsuarioPorUsername(String username) {
+    public Object obtenerUsuarioPorUsername(String username) {
         return peticionesHTTP.get(URL + "/obtener-por-username/" + username, DTOUsuarioOut.class);
     }
 
     @Override
-    public DTOUsuarioOut obtenerUsuarioPorUuid(String uuid) {
+    public Object obtenerUsuarioPorUuid(String uuid) {
         return peticionesHTTP.get(URL + "/" + uuid, DTOUsuarioOut.class);
     }
 
     @Override
-    public void actualizarUsuario(DTOUsuarioIn usuario, String uuid) {
-        peticionesHTTP.put(usuario, URL + "/" + uuid);
+    public Object actualizarUsuario(DTOUsuarioIn usuario, String uuid) {
+        return peticionesHTTP.put(usuario, URL + "/" + uuid, DTOUsuarioOut.class);
     }
 }

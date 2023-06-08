@@ -27,8 +27,11 @@ public class Datos {
 
     public DTOUsuarioOut obtenerUsuarioLogeado() {
         if (Objects.isNull(usuarioLogeado)) {
-            usuarioLogeado = serviceUsuario.obtenerUsuarioPorUuid(obtenerElementoPropieades("uuidUsuario"));
-            guardarElementoPropiedades("uuidUsuario", usuarioLogeado.getUuid());
+            Object respuesta = serviceUsuario.obtenerUsuarioPorUuid(obtenerElementoPropieades("uuidUsuario"));
+            if (respuesta instanceof DTOUsuarioOut usuario) {
+                usuarioLogeado = usuario;
+                guardarElementoPropiedades("uuidUsuario", usuarioLogeado.getUuid());
+            }
         }
         return usuarioLogeado;
     }

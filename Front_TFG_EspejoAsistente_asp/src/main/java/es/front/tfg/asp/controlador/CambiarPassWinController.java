@@ -1,6 +1,7 @@
 package es.front.tfg.asp.controlador;
 
 import es.front.tfg.asp.modelo.dtos.DTOCambioPassword;
+import es.front.tfg.asp.modelo.response.ApiResponse;
 import es.front.tfg.asp.servicio.iservice.IServiceAuth;
 import es.front.tfg.asp.servicio.iservice.IServiceUsuario;
 import es.front.tfg.asp.utils.Datos;
@@ -49,10 +50,14 @@ public class CambiarPassWinController implements Initializable {
     public void cambiarContrasenna(ActionEvent e) {
         String nuevaPass = fieldPassword1.getText();
         if (nuevaPass.equals(fieldPassword2.getText())) {
-            serviceAuth.cambiarContrasenna(new DTOCambioPassword(datos.obtenerElementoPropieades("token"), nuevaPass));
-            utiles.cambiarVentanaAplicacion(e, getClass(), "/vistas/index.fxml");
+            ApiResponse apiResponse = serviceAuth.cambiarContrasenna(new DTOCambioPassword(datos.obtenerElementoPropieades("token"), nuevaPass));
+            if (apiResponse.getMensaje().equals("passCambiada")) {
+                utiles.cambiarVentanaAplicacion(e, getClass(), "/vistas/index.fxml");
+            } else {
+                utiles.crearModal("Error al cambiar la contraseña", apiResponse.getMensaje());
+            }
         } else {
-            utiles.crearModal("Error", "No se pudo cambiar la contraseña");
+            utiles.crearModal("Error", "Las contraseñas deben ser iguales");
         }
     }
 

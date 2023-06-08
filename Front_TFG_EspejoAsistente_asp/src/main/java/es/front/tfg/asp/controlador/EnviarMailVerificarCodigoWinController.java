@@ -54,22 +54,24 @@ public class EnviarMailVerificarCodigoWinController implements Initializable {
     }
 
     public void enviarMail(ActionEvent e) {
-        ApiResponse apiResponse = serviceAuth.enviarMailRecuperacion(new DTOEnvioCorreo(fieldEmail.getText(), "nombre"));
+        ApiResponse apiResponse = serviceAuth.enviarMailRecuperacion(new DTOEnvioCorreo(fieldEmail.getText(), "Usuario"));
         if (apiResponse.getMensaje().equals("correoEnviado")) {
             fieldCodigo.setDisable(false);
             btnVerificarCodigo.setDisable(false);
             fieldEmail.setDisable(true);
             btnEmail.setDisable(true);
+        } else {
+            utiles.crearModal("No pudimos enviar el correo", apiResponse.getMensaje());
         }
     }
 
     public void verificarCodigo(ActionEvent e) {
-        DTOUsuarioOut usuario = serviceUsuario.obtenerUsuarioPorCodigoVerificacion(fieldCodigo.getText());
-        if (Objects.nonNull(usuario)) {
+        Object respuesta = serviceUsuario.obtenerUsuarioPorCodigoVerificacion(fieldCodigo.getText());
+        if (respuesta instanceof DTOUsuarioOut usuario) {
             datos.guardarElementoPropiedades("token", usuario.getTokenSeguridad());
             utiles.cambiarVentanaAplicacion(e, getClass(), "/vistas/cambiar-pass.fxml");
-        } else {
-            // AVISAR AL USUARIO DE QUE NO EXISTE ESE CÓDIGO
+        } else if (respuesta instanceof ApiResponse apiResponse) {
+            utiles.crearModal("Error al verificar el código", apiResponse.getMensaje());
         }
     }
 

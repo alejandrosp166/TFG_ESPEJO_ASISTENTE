@@ -3,6 +3,7 @@ package es.front.tfg.asp.controlador;
 import es.front.tfg.asp.modelo.dtos.DTOIniciarSesion;
 import es.front.tfg.asp.modelo.dtos.DTOUsuarioIn;
 import es.front.tfg.asp.modelo.dtos.DTOUsuarioOut;
+import es.front.tfg.asp.modelo.response.ApiResponse;
 import es.front.tfg.asp.servicio.iservice.IServiceAuth;
 import es.front.tfg.asp.servicio.iservice.IServiceUsuario;
 import es.front.tfg.asp.utils.Datos;
@@ -66,8 +67,13 @@ public class IndexWinController implements Initializable {
 
     public void iniciarSesion(ActionEvent e) {
         DTOIniciarSesion iniciarSesion = new DTOIniciarSesion(fieldUsuario.getText(), fieldPassword.getText());
-        serviceAuth.iniciarSesion(iniciarSesion);
-        utiles.cambiarVentanaAplicacion(e, getClass(), "/vistas/equipo.fxml");
+        Object respuesta = serviceAuth.iniciarSesion(iniciarSesion);
+        if (respuesta instanceof DTOUsuarioOut usuario) {
+            datos.guardarElementoPropiedades("uuidUsuario", usuario.getUuid());
+            utiles.cambiarVentanaAplicacion(e, getClass(), "/vistas/equipo.fxml");
+        } else if (respuesta instanceof ApiResponse apiResponse) {
+            utiles.crearModal("No se pudo iniciar sesión", apiResponse.getMensaje());
+        }
     }
 
     public void registrarse(ActionEvent e) {

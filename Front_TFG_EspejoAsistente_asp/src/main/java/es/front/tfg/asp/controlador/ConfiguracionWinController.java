@@ -4,6 +4,7 @@ import es.front.tfg.asp.modelo.dtos.DTOEquipo;
 import es.front.tfg.asp.modelo.dtos.DTOLocalizacionClima;
 import es.front.tfg.asp.modelo.dtos.DTOUsuarioIn;
 import es.front.tfg.asp.modelo.dtos.DTOUsuarioOut;
+import es.front.tfg.asp.modelo.response.ApiResponse;
 import es.front.tfg.asp.servicio.iservice.IServiceEquipo;
 import es.front.tfg.asp.servicio.iservice.IServiceUsuario;
 import es.front.tfg.asp.utils.Datos;
@@ -63,8 +64,12 @@ public class ConfiguracionWinController implements Initializable {
     }
 
     public void guardarConfig(ActionEvent e) {
-        serviceUsuario.actualizarUsuario(obtenerDatosVista(), datos.obtenerElementoPropieades("uuidUsuario"));
-        datos.cerrarSesion(e, getClass(), "/vistas/index.fxml");
+        Object respuesta = serviceUsuario.actualizarUsuario(obtenerDatosVista(), datos.obtenerElementoPropieades("uuidUsuario"));
+        if (respuesta instanceof DTOUsuarioOut) {
+            datos.cerrarSesion(e, getClass(), "/vistas/index.fxml");
+        } else if (respuesta instanceof ApiResponse apiResponse) {
+            utiles.crearModal("Error al configurar al usuario", apiResponse.getMensaje());
+        }
     }
 
     private DTOUsuarioIn obtenerDatosVista() {
@@ -83,8 +88,8 @@ public class ConfiguracionWinController implements Initializable {
     }
 
     private void cargarDatosUsuarioLogeadoEnVista() {
-        DTOUsuarioOut usuario = serviceUsuario.obtenerUsuarioPorUuid(datos.obtenerElementoPropieades("uuidUsuario"));
-        if (Objects.nonNull(usuario)) {
+        Object respuesta = serviceUsuario.obtenerUsuarioPorUuid(datos.obtenerElementoPropieades("uuidUsuario"));
+        if (respuesta instanceof DTOUsuarioOut usuario) {
             fieldUsuario.setText(usuario.getUsername());
             fieldNombre.setText(usuario.getNombre());
             fieldApellidos.setText(usuario.getApellidos());
@@ -93,6 +98,8 @@ public class ConfiguracionWinController implements Initializable {
             fieldCodigoPostal.setText(usuario.getCodigoPostal());
             cmbLigaFav.setValue(usuario.getPaisLiga());
             cmbEquipoFav.setValue(usuario.getEquipoFav());
+        } else if (respuesta instanceof ApiResponse apiResponse) {
+            utiles.crearModal("Error al cargar datos del usuario", apiResponse.getMensaje());
         }
     }
 
