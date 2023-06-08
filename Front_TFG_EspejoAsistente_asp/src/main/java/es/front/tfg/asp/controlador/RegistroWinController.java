@@ -86,7 +86,7 @@ public class RegistroWinController implements Initializable {
         String pais = cmbPaisClima.getValue();
         String equipo = cmbEquipoFav.getValue();
         DTOLocalizacionClima dtoLocalizacionClima = new DTOLocalizacionClima(pais, codigoPostal);
-        DTOEquipo dtoEquipo = new DTOEquipo(paisLiga, equipo);
+        DTOEquipo dtoEquipo = new DTOEquipo(1, paisLiga, equipo);
         return new DTOUsuarioIn(null, username, nombre, apellidos, email, admin, password, null, null, dtoEquipo, dtoLocalizacionClima);
     }
 

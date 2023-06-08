@@ -82,7 +82,7 @@ public class ConfiguracionWinController implements Initializable {
         String paisLiga = cmbLigaFav.getValue();
         String equipo = cmbEquipoFav.getValue();
         String paisLocalizacion = cmbPaisClima.getValue();
-        DTOEquipo dtoEquipo = new DTOEquipo(paisLiga, equipo);
+        DTOEquipo dtoEquipo = new DTOEquipo(1, paisLiga, equipo);
         DTOLocalizacionClima dtoLocalizacionClima = new DTOLocalizacionClima(paisLocalizacion, codigoPostal);
         return new DTOUsuarioIn(null, username, nombre, apellidos, email, admin, null, null, null, dtoEquipo, dtoLocalizacionClima);
     }

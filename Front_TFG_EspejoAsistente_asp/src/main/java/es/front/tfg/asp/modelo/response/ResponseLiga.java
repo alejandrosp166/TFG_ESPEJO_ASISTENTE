@@ -29,6 +29,7 @@ public class ResponseLiga {
     @Data
     @AllArgsConstructor
     public static class Equipo {
+        private int id;
         private String name;
         private String logo;
     }

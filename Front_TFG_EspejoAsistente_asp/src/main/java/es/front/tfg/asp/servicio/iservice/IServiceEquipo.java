@@ -7,6 +7,8 @@ import es.front.tfg.asp.modelo.response.ResponsePartido;
 import java.util.List;
 
 public interface IServiceEquipo {
+    public List<ResponseEquipo> obtenerEquipoPorId(String id);
     public List<ResponseEquipo> obtenerEquiposPorPais(String pais);
-    public List<ResponseLiga> obtenerPartidosLiga(String liga);
+    public List<ResponseLiga> obtenerClasificacionLiga(String liga);
+    public List<ResponsePartido> obtenerPartidosEnVivoLiga(String liga);
 }

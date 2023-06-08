@@ -111,27 +111,29 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <ImageView fx:id="imgVisitanteAnterior" fitHeight="108.0" fitWidth="128.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="1" GridPane.rowSpan="3" />
-                  <ImageView fx:id="imgLocalAnterior" fitHeight="114.0" fitWidth="126.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1" GridPane.rowSpan="3">
-                     <image>
-                        <Image url="https://upload.wikimedia.org/wikipedia/commons/9/98/Escudo_real_madrid_1941.png" />
-                     </image>
-                  </ImageView>
-                  <Label fx:id="lblResultadoHomeAnterior" alignment="CENTER" prefHeight="53.0" prefWidth="89.0" text="0" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <ImageView fx:id="imgVisitanteAnterior" fitHeight="108.0" fitWidth="128.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="2" GridPane.rowSpan="3" />
+                  <ImageView fx:id="imgLocalAnterior" fitHeight="114.0" fitWidth="126.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2" GridPane.rowSpan="3" />
+                  <Label fx:id="lblResultadoHomeAnterior" alignment="CENTER" prefHeight="53.0" prefWidth="89.0" text="0" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="3">
                      <font>
                         <Font name="System Bold" size="36.0" />
                      </font>
                   </Label>
-                  <Label fx:id="lblResultadoOutAnterior" alignment="CENTER" prefHeight="53.0" prefWidth="85.0" text="0" textFill="WHITE" GridPane.columnIndex="3" GridPane.rowIndex="1" GridPane.rowSpan="3">
+                  <Label fx:id="lblResultadoOutAnterior" alignment="CENTER" prefHeight="53.0" prefWidth="85.0" text="0" textFill="WHITE" GridPane.columnIndex="3" GridPane.rowIndex="2" GridPane.rowSpan="3">
                      <font>
                         <Font name="System Bold" size="36.0" />
                      </font>
                   </Label>
-                  <Label alignment="CENTER" prefHeight="70.0" prefWidth="86.0" text="-" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="1" GridPane.rowSpan="3">
+                  <Label alignment="CENTER" prefHeight="70.0" prefWidth="86.0" text="-" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="2" GridPane.rowSpan="3">
                      <font>
                         <Font size="48.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lblMinutoAnterior" alignment="CENTER" prefHeight="70.0" prefWidth="86.0" text="-" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="24.0" />
                      </font>
                   </Label>
                </children>
@@ -150,27 +152,39 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <ImageView fx:id="imgVisitanteAhora" fitHeight="108.0" fitWidth="128.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="1" GridPane.rowSpan="3" />
-                  <ImageView fx:id="imgLocalAhora" fitHeight="114.0" fitWidth="126.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1" GridPane.rowSpan="3" />
-                  <Label fx:id="lblResultadoHomeAhora" alignment="CENTER" prefHeight="53.0" prefWidth="89.0" text="0" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <ImageView fx:id="imgVisitanteAhora" fitHeight="108.0" fitWidth="128.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="3" GridPane.rowSpan="3" />
+                  <ImageView fx:id="imgLocalAhora" fitHeight="114.0" fitWidth="126.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="3" GridPane.rowSpan="3" />
+                  <Label fx:id="lblResultadoHomeAhora" alignment="CENTER" prefHeight="53.0" prefWidth="89.0" text="0" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="4">
                      <font>
                         <Font name="System Bold" size="36.0" />
                      </font>
                   </Label>
-                  <Label fx:id="lblResultadoOutAhora" alignment="CENTER" prefHeight="53.0" prefWidth="85.0" text="0" textFill="WHITE" GridPane.columnIndex="3" GridPane.rowIndex="1" GridPane.rowSpan="3">
+                  <Label fx:id="lblResultadoOutAhora" alignment="CENTER" prefHeight="53.0" prefWidth="85.0" text="0" textFill="WHITE" GridPane.columnIndex="3" GridPane.rowIndex="3" GridPane.rowSpan="3">
                      <font>
                         <Font name="System Bold" size="36.0" />
                      </font>
                   </Label>
-                  <Label alignment="CENTER" prefHeight="70.0" prefWidth="86.0" text="-" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="1" GridPane.rowSpan="3">
+                  <Label alignment="CENTER" prefHeight="70.0" prefWidth="86.0" text="-" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="3" GridPane.rowSpan="3">
                      <font>
                         <Font size="48.0" />
                      </font>
                   </Label>
+                  <Label fx:id="lblMinutoAhora" alignment="CENTER" prefHeight="70.0" prefWidth="86.0" text="-" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
                </children>
             </GridPane>
+            <Label fx:id="lblDatosEquipoFavorito" prefHeight="53.0" prefWidth="505.0" text="DATOS EQUIPO FAVORITO" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="12">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+            </Label>
             </children>
         </GridPane>
     </children>
