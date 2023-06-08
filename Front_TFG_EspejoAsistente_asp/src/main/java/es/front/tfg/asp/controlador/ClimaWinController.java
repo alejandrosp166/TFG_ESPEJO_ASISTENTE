@@ -5,6 +5,7 @@ import es.front.tfg.asp.modelo.response.ResponseClima;
 import es.front.tfg.asp.servicio.iservice.IServiceClima;
 import es.front.tfg.asp.servicio.iservice.IServiceUsuario;
 import es.front.tfg.asp.utils.Datos;
+import es.front.tfg.asp.utils.HiloCambiarInterfaz;
 import es.front.tfg.asp.utils.HiloControlMando;
 import es.front.tfg.asp.utils.Utiles;
 import javafx.application.Platform;
@@ -13,6 +14,7 @@ import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -26,6 +28,7 @@ import java.time.LocalDateTime;
 import java.time.format.TextStyle;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 @Controller
@@ -33,13 +36,15 @@ public class ClimaWinController implements Initializable, Runnable {
     @FXML
     private Label lblHora, lblDiaMesAnio, lblUsername, lblTemperatura, lblVelocidadViento, lblTempMax, lblTempMin, lblHumedad;
     @FXML
-    private Button btnConfiguracion, btnCerrarSesion;
+    private Button btnConfiguracion, btnCerrarSesion, btnVolver;
     @FXML
     private ImageView imgEstadoClima;
     @FXML
     private ListView<ResponseClima> listDatosProximosDias;
     @Autowired
     private HiloControlMando hiloControlMando;
+    @Autowired
+    private HiloCambiarInterfaz hiloCambiarInterfaz;
     @Autowired
     private IServiceClima serviceClima;
     @Autowired
@@ -58,9 +63,9 @@ public class ClimaWinController implements Initializable, Runnable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        hiloControlMando.setPosicionPuntero(1);
-        hiloControlMando.setBtnEquisPulsada(false);
-        cambioVentana = false;
+        cargarComponentes();
+        Map<Integer, Node> map = cargarComponentes();
+        hiloCambiarInterfaz.setListaComponentes(map);
         cargarDatosUsuario();
         cargarDatosClimaticos();
         this.run();
@@ -121,6 +126,17 @@ public class ClimaWinController implements Initializable, Runnable {
         utiles.cambiarVentanaAplicacion(e, getClass(), "/vistas/equipo.fxml");
     }
 
+    private Map<Integer, Node> cargarComponentes() {
+        hiloControlMando.setPosicionPuntero(1);
+        hiloControlMando.setBtnEquisPulsada(false);
+        cambioVentana = false;
+        return Map.ofEntries(
+                Map.entry(1, btnVolver),
+                Map.entry(2, btnConfiguracion),
+                Map.entry(3, btnCerrarSesion)
+        );
+    }
+
     /**
      * Muestra la hora del sistema en la aplicación
      */
@@ -132,30 +148,12 @@ public class ClimaWinController implements Initializable, Runnable {
                 while (!cambioVentana) {
                     Platform.runLater(() -> {
                         LocalDateTime tiempo = LocalDateTime.now();
-                        lblHora.setText(obtenerHoraActual(tiempo));
-                        lblDiaMesAnio.setText(obtenerFechaActual(tiempo));
+                        lblHora.setText(utiles.obtenerHoraActual(tiempo));
+                        lblDiaMesAnio.setText(utiles.obtenerFechaActual(tiempo));
                     });
                     Thread.sleep(1000);
                 }
                 return null;
-            }
-
-            private String obtenerFechaActual(LocalDateTime tiempo) {
-                String diaSemana = tiempo.getDayOfWeek().getDisplayName(TextStyle.FULL, new Locale("es", "ES"));
-                int diaMes = tiempo.getDayOfMonth();
-                String mes = tiempo.getMonth().getDisplayName(TextStyle.FULL, new Locale("es", "ES"));
-                int anio = tiempo.getYear();
-                return diaSemana + " " + diaMes + " " + mes + " " + anio;
-            }
-
-            private String obtenerHoraActual(LocalDateTime tiempo) {
-                String amPm = "AM";
-                int hora = tiempo.getHour();
-                int minutos = tiempo.getMinute();
-                if (tiempo.getHour() > 12) {
-                    amPm = "PM";
-                }
-                return hora + " : " + minutos + " " + amPm;
             }
         };
         hiloCambioInterfaz = new Thread(task);

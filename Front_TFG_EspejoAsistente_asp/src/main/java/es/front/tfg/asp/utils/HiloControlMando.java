@@ -63,7 +63,7 @@ public class HiloControlMando implements Runnable {
                     }
                 } else if (component.getName().equals("Botón 4") && event.getValue() == 1.0f) {
                     if (--posicionPuntero < 1) {
-                        posicionPuntero = 1;
+                        posicionPuntero = limitePuntero;
                     }
                 } else if (component.getName().equals("Botón 1") && event.getValue() == 1.0f) {
                     btnEquisPulsada = true;

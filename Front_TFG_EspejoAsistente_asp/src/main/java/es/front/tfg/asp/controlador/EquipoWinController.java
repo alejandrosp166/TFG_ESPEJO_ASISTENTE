@@ -6,11 +6,16 @@ import es.front.tfg.asp.modelo.response.ResponseLiga;
 import es.front.tfg.asp.modelo.response.ResponsePartido;
 import es.front.tfg.asp.servicio.iservice.IServiceEquipo;
 import es.front.tfg.asp.utils.Datos;
+import es.front.tfg.asp.utils.HiloCambiarInterfaz;
+import es.front.tfg.asp.utils.HiloControlMando;
 import es.front.tfg.asp.utils.Utiles;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -20,19 +25,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.format.TextStyle;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 @Controller
-public class EquipoWinController implements Initializable {
+public class EquipoWinController implements Initializable, Runnable {
     @FXML
     private ListView<ResponseLiga.Clasificacion> listClasificacion;
     @FXML
     private ImageView imgLocalAhora, imgVisitanteAhora, imgLocalAnterior, imgVisitanteAnterior;
     @FXML
-    private Label lblResultadoHomeAhora, lblResultadoOutAhora, lblResultadoHomeAnterior, lblResultadoOutAnterior, lblUsername, lblMinutoAhora, lblMinutoAnterior;
+    private Label lblHora, lblDiaMesAnio, lblResultadoHomeAhora, lblResultadoOutAhora, lblResultadoHomeAnterior, lblResultadoOutAnterior, lblUsername, lblMinutoAhora, lblMinutoAnterior;
     @FXML
-    private Button btnConf, btnCerrarSesion;
+    private Button btnConfiguracion, btnCerrarSesion, btnVolver;
+    @Autowired
+    private HiloControlMando hiloControlMando;
+    @Autowired
+    private HiloCambiarInterfaz hiloCambiarInterfaz;
     @Autowired
     private IServiceEquipo serviceEquipo;
     @Autowired
@@ -40,6 +53,8 @@ public class EquipoWinController implements Initializable {
     @Autowired
     private Datos datos;
     private DTOUsuarioOut usuarioLogeado;
+    private boolean cambioVentana;
+    private Thread hiloCambioInterfaz;
 
     /**
      * Se ejecuta cuando se carga la vista
@@ -49,6 +64,9 @@ public class EquipoWinController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        cargarComponentes();
+        Map<Integer, Node> map = cargarComponentes();
+        hiloCambiarInterfaz.setListaComponentes(map);
         cargarDatosUsuario();
         cargarClasificacion();
         cargarPartidosEnVivo();
@@ -59,9 +77,11 @@ public class EquipoWinController implements Initializable {
      */
     private void cargarClasificacion() {
         String idLiga = utiles.obtenerIdPais(usuarioLogeado.getPaisLiga());
-        List<ResponseLiga.Clasificacion> clasificacion = serviceEquipo.obtenerClasificacionLiga(idLiga).get(0).getLeague().getStandings().get(0);
-        listClasificacion.setItems(FXCollections.observableArrayList(clasificacion));
-        utiles.llenarListView(listClasificacion);
+        List<ResponseLiga> clasificacion = serviceEquipo.obtenerClasificacionLiga(idLiga);
+        if (clasificacion.size() > 0) {
+            listClasificacion.setItems(FXCollections.observableArrayList(clasificacion.get(0).getLeague().getStandings().get(0)));
+            utiles.llenarListView(listClasificacion);
+        }
     }
 
     /**
@@ -136,5 +156,39 @@ public class EquipoWinController implements Initializable {
      */
     public void ventanaClima(ActionEvent e) {
         utiles.cambiarVentanaAplicacion(e, getClass(), "/vistas/clima.fxml");
+    }
+
+    private Map<Integer, Node> cargarComponentes() {
+        hiloControlMando.setPosicionPuntero(1);
+        hiloControlMando.setBtnEquisPulsada(false);
+        cambioVentana = false;
+        return Map.ofEntries(
+                Map.entry(1, btnVolver),
+                Map.entry(2, btnConfiguracion),
+                Map.entry(3, btnCerrarSesion)
+        );
+    }
+
+    /**
+     * Muestra la hora del sistema en la aplicación
+     */
+    @Override
+    public void run() {
+        Task<Void> task = new Task<>() {
+            @Override
+            protected Void call() throws Exception {
+                while (!cambioVentana) {
+                    Platform.runLater(() -> {
+                        LocalDateTime tiempo = LocalDateTime.now();
+                        lblHora.setText(utiles.obtenerHoraActual(tiempo));
+                        lblDiaMesAnio.setText(utiles.obtenerFechaActual(tiempo));
+                    });
+                    Thread.sleep(1000);
+                }
+                return null;
+            }
+        };
+        hiloCambioInterfaz = new Thread(task);
+        hiloCambioInterfaz.start();
     }
 }

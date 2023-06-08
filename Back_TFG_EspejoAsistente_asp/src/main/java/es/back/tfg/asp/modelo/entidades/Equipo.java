@@ -18,9 +18,6 @@ import java.util.UUID;
 public class Equipo extends UuId{
     private String nombre;
     private String liga;
-    private int partidosGanados;
-    private int partidosPerdidos;
-    private int partidosEmpatados;
     @OneToMany(mappedBy = "equipo")
     private List<Usuario> usuarios;
 }

@@ -1,10 +1,7 @@
 package es.front.tfg.asp.utils;
 
-import es.front.tfg.asp.modelo.dtos.DTOUsuarioOut;
 import es.front.tfg.asp.modelo.response.ResponseClima;
-import es.front.tfg.asp.modelo.response.ResponseEquipo;
 import es.front.tfg.asp.modelo.response.ResponseLiga;
-import es.front.tfg.asp.servicio.iservice.IServiceUsuario;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -24,6 +21,8 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
 
 import java.io.*;
+import java.time.LocalDateTime;
+import java.time.format.TextStyle;
 import java.util.*;
 import java.util.function.Function;
 
@@ -81,9 +80,34 @@ public class Utiles {
     public void crearModal(String tituloModal, String contenidoTexto) {
         Dialog<Void> dialog = new Dialog<>();
         dialog.setTitle(tituloModal);
-        dialog.setContentText(contenidoTexto);
         dialog.initOwner(stage);
+        dialog.getDialogPane().setContent(obtenerContenidoModal(contenidoTexto));
         dialog.showAndWait();
+    }
+
+    private GridPane obtenerContenidoModal(String contenidoTexto) {
+        GridPane gridPane = new GridPane();
+        gridPane.setPrefWidth(700);
+        gridPane.setAlignment(Pos.CENTER);
+        gridPane.setHgap(15);
+        gridPane.setVgap(15);
+        Map<Integer, Node> listaComponentes = new HashMap<>();
+        Map<Integer, Node> listaComponentesAnterior = hiloCambiarInterfaz.getListaComponentes();
+        hiloControlMando.setPosicionPuntero(1);
+        Button btn = new Button("CERRAR");
+        btn.setOnAction(evento -> {
+            Node source = (Node) evento.getSource();
+            Stage stage = (Stage) source.getScene().getWindow();
+            hiloCambiarInterfaz.setListaComponentes(listaComponentesAnterior);
+            hiloControlMando.setPosicionPuntero(1);
+            stage.close();
+        });
+        Label label = new Label(contenidoTexto);
+        gridPane.add(label, 0, 1);
+        gridPane.add(btn, 1, 1);
+        listaComponentes.put(1, btn);
+        hiloCambiarInterfaz.setListaComponentes(listaComponentes);
+        return gridPane;
     }
 
     /**
@@ -124,6 +148,7 @@ public class Utiles {
         int indiceBotones = 0;
         Map<Integer, Node> listaComponentes = new HashMap<>();
         Map<Integer, Node> listaComponentesAnterior = hiloCambiarInterfaz.getListaComponentes();
+        hiloControlMando.setPosicionPuntero(1);
         for (int row = 0; row < teclasTeclado.length; row++) {
             for (int col = 0; col < teclasTeclado[row].length; col++) {
                 String tecla = teclasTeclado[row][col];
@@ -132,16 +157,16 @@ public class Utiles {
                 switch (tecla) {
                     case "<----" -> {
                         if (!txt.getText().equals("")) {
-                            boton.setOnAction(event -> txt.setText(txt.getText().substring(0, txt.getText().length() - 1)));
+                            boton.setOnAction(evento -> txt.setText(txt.getText().substring(0, txt.getText().length() - 1)));
                         }
                     }
-                    case "BORRAR" -> boton.setOnAction(event -> txt.setText(""));
-                    case "CERRAR" -> boton.setOnAction(event -> {
-                        Node source = (Node) event.getSource();
+                    case "BORRAR" -> boton.setOnAction(evento -> txt.setText(""));
+                    case "CERRAR" -> boton.setOnAction(evento -> {
+                        Node source = (Node) evento.getSource();
                         Stage stage = (Stage) source.getScene().getWindow();
-                        stage.close();
                         hiloCambiarInterfaz.setListaComponentes(listaComponentesAnterior);
                         hiloControlMando.setPosicionPuntero(1);
+                        stage.close();
                     });
                     default -> boton.setOnAction(event -> txt.setText(txt.getText() + tecla));
                 }
@@ -173,7 +198,7 @@ public class Utiles {
     /**
      * Llena las listas de elementos y los formatea según la clase
      *
-     * @param lista
+     * @param lista lista de elementos que se quiere formatear
      * @param <T>
      */
     public <T> void llenarListView(ListView<T> lista) {
@@ -259,6 +284,42 @@ public class Utiles {
             case "alemania" -> idPais = "78";
         }
         return idPais;
+    }
+
+    /**
+     * Formatea la fecha pasada por parámetro
+     *
+     * @param tiempo la fecha actual
+     * @return la fecha actual formateada
+     */
+    public String obtenerFechaActual(LocalDateTime tiempo) {
+        String diaSemana = tiempo.getDayOfWeek().getDisplayName(TextStyle.FULL, new Locale("es", "ES"));
+        int diaMes = tiempo.getDayOfMonth();
+        String mes = tiempo.getMonth().getDisplayName(TextStyle.FULL, new Locale("es", "ES"));
+        int anio = tiempo.getYear();
+        return diaSemana + " " + diaMes + " " + mes + " " + anio;
+    }
+
+    /**
+     * Formatea la hora pasada por parámetro
+     *
+     * @param tiempo la fecha actual
+     * @return la hora actual formateada
+     */
+    public String obtenerHoraActual(LocalDateTime tiempo) {
+        String amPm = "AM";
+        String ceroDelanteMinutos = "";
+        int hora = tiempo.getHour();
+        int minutos = tiempo.getMinute();
+
+        if (minutos < 10) {
+            ceroDelanteMinutos = "0";
+        }
+
+        if (tiempo.getHour() > 12) {
+            amPm = "PM";
+        }
+        return hora + " : " + ceroDelanteMinutos + minutos + " " + amPm;
     }
 
     /**
