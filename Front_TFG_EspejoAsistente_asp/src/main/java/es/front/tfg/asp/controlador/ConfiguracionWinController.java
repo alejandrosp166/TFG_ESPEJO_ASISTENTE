@@ -166,7 +166,7 @@ public class ConfiguracionWinController implements Initializable {
      * @param e
      */
     public void eliminarCuenta(ActionEvent e) {
-
+        serviceUsuario.eliminarUsuario(datos.obtenerUsuarioLogeado().getUuid());
     }
 
     /**

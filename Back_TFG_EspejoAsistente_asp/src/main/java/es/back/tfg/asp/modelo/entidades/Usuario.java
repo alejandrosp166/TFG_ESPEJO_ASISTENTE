@@ -21,12 +21,14 @@ public class Usuario extends UuId {
     private String codigoVerificacionCambioContrasenna;
     @Column(name = "es_admin")
     private boolean admin;
-    @OneToOne(mappedBy = "usuario")
+    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private CredencialesUsuario credencialesUsuario;
-    @ManyToOne
+
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "uuid_equipo")
     private Equipo equipo;
-    @ManyToOne
+
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "uuid_localizacion")
     private LocalizacionClima localizacionClima;
     @Override
