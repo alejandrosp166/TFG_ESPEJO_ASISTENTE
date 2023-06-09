@@ -1,5 +1,8 @@
 package es.back.tfg.asp.servicio.serviceimpl;
 
+import es.back.tfg.asp.excepciones.ExcepcionCambiarContrasenna;
+import es.back.tfg.asp.excepciones.ExcepcionCorreoElectronico;
+import es.back.tfg.asp.excepciones.ExcepcionInicioSesion;
 import es.back.tfg.asp.modelo.converters.ConverterUsuario;
 import es.back.tfg.asp.modelo.dto.in.DTOCambioPasswordIn;
 import es.back.tfg.asp.modelo.dto.in.DTOEnvioCorreoIn;
@@ -44,7 +47,7 @@ public class ServiceAuthImpl implements IServiceAuth {
         Usuario usuario = repositorioUsuario.findUsuarioByUsername(dtoIniciarSesion.getUsername());
         CredencialesUsuario credencialesUsuario = usuario.getCredencialesUsuario();
         if (!credencialesUsuario.getPassword().equals(dtoIniciarSesion.getPassword())) {
-            throw new RuntimeException("No se pudo iniciar sesión");
+            throw new ExcepcionInicioSesion("Credenciales Incorrectas");
         }
         return converterUsuario.entidadADTOOut(usuario);
     }
@@ -53,7 +56,7 @@ public class ServiceAuthImpl implements IServiceAuth {
     public DTOUsuarioOut registrarUsuario(DTOUsuarioIn dtoUsuarioIn) {
         Usuario usuario = converterUsuario.dtoInAEntidad(dtoUsuarioIn);
         CredencialesUsuario credencialesUsuario = new CredencialesUsuario(dtoUsuarioIn.getPassword(), usuario);
-        Equipo equipo = new Equipo(dtoUsuarioIn.getEquipo().getNombreEquipo(), dtoUsuarioIn.getEquipo().getLiga(), 0, 0, 0, Collections.emptyList());
+        Equipo equipo = new Equipo(dtoUsuarioIn.getEquipo().getNombreEquipo(), dtoUsuarioIn.getEquipo().getLiga(), Collections.emptyList());
         LocalizacionClima localizacionClima = new LocalizacionClima(dtoUsuarioIn.getLocalizacionClima().getPais(), dtoUsuarioIn.getLocalizacionClima().getCodigoPostal(), Collections.emptyList());
         repositorioUsuario.save(usuario);
         usuario.setCredencialesUsuario(credencialesUsuario);
@@ -87,10 +90,10 @@ public class ServiceAuthImpl implements IServiceAuth {
                 serviceCorreosElectronicos.enviarCorreoElectronico(context, "recuperar-pass-email", dtoEnvioCorreoIn);
                 repositorioUsuario.save(usuario);
             } catch (MessagingException e) {
-                throw new RuntimeException(e);
+                throw new ExcepcionCorreoElectronico("Error de red al enviar el correo");
             }
         } else {
-            throw new RuntimeException("Error al enviar el email");
+            throw new ExcepcionCorreoElectronico("El correo electrónico no existe");
         }
     }
 
@@ -106,7 +109,7 @@ public class ServiceAuthImpl implements IServiceAuth {
             repositorioUsuario.save(usuario);
             repositorioCredenciales.save(credencialesUsuario);
         } else {
-            throw new RuntimeException("Error al cambiar la contraseña");
+            throw new ExcepcionCambiarContrasenna("El token a expirado");
         }
     }
 }

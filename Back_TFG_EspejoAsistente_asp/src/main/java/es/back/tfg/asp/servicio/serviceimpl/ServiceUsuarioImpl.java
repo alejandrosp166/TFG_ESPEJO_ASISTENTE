@@ -1,5 +1,6 @@
 package es.back.tfg.asp.servicio.serviceimpl;
 
+import es.back.tfg.asp.excepciones.ExcepcionBuscarEntidad;
 import es.back.tfg.asp.modelo.converters.ConverterUsuario;
 import es.back.tfg.asp.modelo.dto.in.DTOUsuarioIn;
 import es.back.tfg.asp.modelo.dto.in.DTOUsuarioInActualizar;
@@ -38,7 +39,7 @@ public class ServiceUsuarioImpl implements IServiceUsuario {
 
     @Override
     public DTOUsuarioOut obtenerUsuarioPorId(String uuid) {
-        Usuario usuario = repositorioUsuario.findById(UUID.fromString(uuid)).orElseThrow(() -> new RuntimeException("ERROR"));
+        Usuario usuario = repositorioUsuario.findById(UUID.fromString(uuid)).orElseThrow(() -> new ExcepcionBuscarEntidad("No se encontró al usuario"));
         return converterUsuario.entidadADTOOut(usuario);
     }
 
@@ -63,16 +64,16 @@ public class ServiceUsuarioImpl implements IServiceUsuario {
 
     @Override
     public DTOUsuarioOut actualizarUsuario(DTOUsuarioInActualizar dtoUsuario, String uuid) {
-        Usuario usuario = repositorioUsuario.findById(UUID.fromString(uuid)).orElseThrow(() -> new RuntimeException("ERROR"));
+        Usuario usuario = repositorioUsuario.findById(UUID.fromString(uuid)).orElseThrow(() -> new ExcepcionBuscarEntidad("No se encontró al usuario"));
         usuario.setUsername(dtoUsuario.getUsername());
         usuario.setNombre(dtoUsuario.getNombre());
         usuario.setApellidos(dtoUsuario.getApellidos());
         usuario.setAdmin(dtoUsuario.isAdmin());
         usuario.setEmail(dtoUsuario.getEmail());
-        Equipo equipo = repositorioEquipo.findById(usuario.getEquipo().getUuid()).orElseThrow(() -> new RuntimeException("ERROR"));
+        Equipo equipo = repositorioEquipo.findById(usuario.getEquipo().getUuid()).orElseThrow(() -> new ExcepcionBuscarEntidad("No se encontró el equipo"));
         equipo.setLiga(dtoUsuario.getEquipo().getLiga());
         equipo.setNombre(dtoUsuario.getEquipo().getNombreEquipo());
-        LocalizacionClima localizacionClima = repositorioLocalizacionClima.findById(usuario.getLocalizacionClima().getUuid()).orElseThrow(() -> new RuntimeException("ERROR"));
+        LocalizacionClima localizacionClima = repositorioLocalizacionClima.findById(usuario.getLocalizacionClima().getUuid()).orElseThrow(() -> new ExcepcionBuscarEntidad("No se encontró la localización"));
         localizacionClima.setPais(dtoUsuario.getLocalizacionClima().getPais());
         localizacionClima.setCodigoPostal(dtoUsuario.getLocalizacionClima().getCodigoPostal());
         repositorioEquipo.save(equipo);

@@ -11,4 +11,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ApiResponse> errorGeneral(RuntimeException e) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse(500, "ocurrió un error interno!"));
     }
+
+    @ExceptionHandler(ExcepcionCorreoElectronico.class)
+    public ResponseEntity<ApiResponse> errorCorreo(ExcepcionCorreoElectronico e) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse(500, e.getMensaje()));
+    }
 }
