@@ -59,8 +59,6 @@ public class RegistroWinController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Map<Integer, Node> map = cargarComponentes();
-        hiloControlMando.setPosicionPuntero(1);
-        hiloControlMando.setBtnEquisPulsada(false);
         hiloCambiarInterfaz.setListaComponentes(map);
         utiles.iniciarHilos();
         cargarPaises();
@@ -147,6 +145,8 @@ public class RegistroWinController implements Initializable {
      * @return una lista mapper de componentes
      */
     private Map<Integer, Node> cargarComponentes() {
+        hiloControlMando.setPosicionPuntero(1);
+        hiloControlMando.setBtnEquisPulsada(false);
         return Map.ofEntries(
                 Map.entry(1, fieldUsuario),
                 Map.entry(2, fieldPassword),

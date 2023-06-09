@@ -21,6 +21,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -70,6 +73,7 @@ public class EquipoWinController implements Initializable, Runnable {
         cargarDatosUsuario();
         cargarClasificacion();
         cargarPartidosEnVivo();
+        this.run();
     }
 
     /**
@@ -119,16 +123,12 @@ public class EquipoWinController implements Initializable, Runnable {
         }
     }
 
-    private void cargarDatosMiEquipo() {
-
-    }
-
     /**
      * Carga los datos del usuario en la vista
      */
     private void cargarDatosUsuario() {
         usuarioLogeado = datos.obtenerUsuarioLogeado();
-        lblUsername.setText(usuarioLogeado.getUsername());
+        lblUsername.setText("USUARIO: " + usuarioLogeado.getUsername());
     }
 
     /**

@@ -136,7 +136,7 @@ public class HiloCambiarInterfaz implements Runnable {
     private void cambiarContenidoComboBox(ComboBox<?> cmb) {
         if (hiloControlMando.isBtnTrianguloPulsado()) {
             hiloControlMando.setBtnTrianguloPulsado(false);
-            if (indexComboBox <= cmb.getItems().size()) {
+            if (indexComboBox < cmb.getItems().size()) {
                 indexComboBox++;
             } else {
                 indexComboBox = 0;

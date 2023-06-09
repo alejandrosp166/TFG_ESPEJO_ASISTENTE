@@ -58,10 +58,6 @@ public class IndexWinController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Cargamos los componentes para el control
         Map<Integer, Node> map = cargarComponentes();
-        // Seteamos los botones y el puntero
-        hiloControlMando.setPosicionPuntero(1);
-        hiloControlMando.setBtnEquisPulsada(false);
-        // Cambiamos la lista del componente
         hiloCambiarInterfaz.setListaComponentes(map);
         // Iniciamos los hilos de control
         utiles.iniciarHilos();
@@ -107,6 +103,8 @@ public class IndexWinController implements Initializable {
      * @return una lista mapper de componentes
      */
     private Map<Integer, Node> cargarComponentes() {
+        hiloControlMando.setPosicionPuntero(1);
+        hiloControlMando.setBtnEquisPulsada(false);
         return Map.ofEntries(
                 Map.entry(1, fieldUsuario),
                 Map.entry(2, fieldPassword),

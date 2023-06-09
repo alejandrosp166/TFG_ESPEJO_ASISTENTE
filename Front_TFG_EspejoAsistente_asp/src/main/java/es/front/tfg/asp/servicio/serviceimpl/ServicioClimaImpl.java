@@ -40,5 +40,10 @@ public class ServicioClimaImpl implements IServiceClima {
         return peticionesHTTP.getListas(url, ResponseClima.class, "list");
     }
 
+    @Override
+    public String obtenerMapaVientos() {
+        return "https://tile.openweathermap.org/map/wind_new/0/0/0.png?appid=8d0067ebec1efdddbe5a7db4bd07a7f8";
+    }
+
 
 }

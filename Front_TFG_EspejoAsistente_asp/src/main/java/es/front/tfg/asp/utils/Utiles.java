@@ -14,6 +14,9 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,7 +67,7 @@ public class Utiles {
             Scene scene = new Scene(loader.load(), 800, 800, false, SceneAntialiasing.BALANCED);
             stage.setScene(scene);
             stage.setFullScreenExitHint("");
-            stage.setFullScreen(false);
+            stage.setFullScreen(true);
             stage.show();
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -210,17 +213,22 @@ public class Utiles {
                     switch (item.getClass().getSimpleName()) {
                         case "Clasificacion" -> {
                             ResponseLiga.Clasificacion responseLiga = (ResponseLiga.Clasificacion) item;
-                            setText(responseLiga.getRank() + responseLiga.getTeam().getName());
+                            HBox hbox = new HBox();
+                            Text textRango = new Text(responseLiga.getRank() + " ");
+                            Text text = new Text(" " + responseLiga.getTeam().getName() + "  PTS:  " + responseLiga.getPoints() + "  PG:  " + responseLiga.getAll().getWin() + "  PE:  " + responseLiga.getAll().getDraw() + "  PP:  " + responseLiga.getAll().getLose());
                             ImageView imageView = new ImageView();
                             Image image = new Image(responseLiga.getTeam().getLogo(), true);
                             imageView.setImage(image);
-                            imageView.setFitHeight(50);
-                            imageView.setFitWidth(50);
-                            setGraphic(imageView);
+                            imageView.setFitHeight(32);
+                            imageView.setFitWidth(32);
+                            hbox.getChildren().addAll(textRango, imageView, text);
+                            hbox.setAlignment(Pos.CENTER_LEFT);
+                            hbox.setSpacing(5);
+                            setGraphic(hbox);
                         }
                         case "ResponseClima" -> {
                             ResponseClima clima = (ResponseClima) item;
-                            setText(clima.getMain().getTemp() + "Cº " + clima.getMain().getHumidity() + " %");
+                            setText(clima.getMain().getTemp() + "Cº HUMEDAD " + clima.getMain().getHumidity() + " %" + " FECHA: " +clima.getDt_txt());
                             ImageView imageView = new ImageView();
                             Image image = new Image("http://openweathermap.org/img/wn/" + clima.getWeather().get(0).getIcon() + ".png", true);
                             imageView.setImage(image);
@@ -309,9 +317,13 @@ public class Utiles {
     public String obtenerHoraActual(LocalDateTime tiempo) {
         String amPm = "AM";
         String ceroDelanteMinutos = "";
+        String ceroDelanteHora = "";
         int hora = tiempo.getHour();
         int minutos = tiempo.getMinute();
 
+        if (hora < 10) {
+            ceroDelanteHora = "0";
+        }
         if (minutos < 10) {
             ceroDelanteMinutos = "0";
         }
@@ -319,7 +331,7 @@ public class Utiles {
         if (tiempo.getHour() > 12) {
             amPm = "PM";
         }
-        return hora + " : " + ceroDelanteMinutos + minutos + " " + amPm;
+        return ceroDelanteHora + hora + " : " + ceroDelanteMinutos + minutos + " " + amPm;
     }
 
     /**

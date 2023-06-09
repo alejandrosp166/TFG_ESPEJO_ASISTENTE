@@ -52,8 +52,6 @@ public class EnviarMailVerificarCodigoWinController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Map<Integer, Node> map = cargarComponentes();
-        hiloControlMando.setPosicionPuntero(1);
-        hiloControlMando.setBtnEquisPulsada(false);
         hiloCambiarInterfaz.setListaComponentes(map);
         utiles.iniciarHilos();
     }
@@ -104,6 +102,8 @@ public class EnviarMailVerificarCodigoWinController implements Initializable {
      * @param e
      */
     private Map<Integer, Node> cargarComponentes() {
+        hiloControlMando.setPosicionPuntero(1);
+        hiloControlMando.setBtnEquisPulsada(false);
         return Map.ofEntries(
                 Map.entry(1, fieldEmail),
                 Map.entry(2, btnEmail),

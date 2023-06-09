@@ -15,7 +15,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.front.tfg.asp.controlador.ClimaWinController">
    <children>
-      <GridPane gridLinesVisible="true" prefHeight="1080.0" prefWidth="1920.0">
+      <GridPane prefHeight="1080.0" prefWidth="1920.0">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="470.0" minWidth="0.0" prefWidth="71.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="1611.0" minWidth="10.0" prefWidth="520.0" />
@@ -28,9 +28,12 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints maxHeight="-Infinity" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -51,59 +54,25 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label fx:id="lblHora" text="HORA" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <Label fx:id="lblHora" text="HORA" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <font>
                   <Font name="System Bold" size="72.0" />
                </font>
             </Label>
-            <Label fx:id="lblDiaMesAnio" text="DÍA - MES - AÑO" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="5">
+            <Label fx:id="lblDiaMesAnio" text="DÍA - MES - AÑO" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="7">
                <font>
                   <Font name="System Bold" size="36.0" />
                </font>
             </Label>
-            <Separator maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="4.0" prefWidth="640.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <Separator maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="21.0" prefWidth="640.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-            <Separator maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="21.0" prefWidth="640.0" GridPane.columnIndex="3" GridPane.rowIndex="10" />
-            <Button fx:id="btnVolver" graphicTextGap="0.0" mnemonicParsing="false" onAction="#ventanaEquipo" prefHeight="85.0" prefWidth="516.0" style="-fx-background-color: DEB841; -fx-background-radius: 20;" text="VENTANA MI EQUIPO" GridPane.columnIndex="1" GridPane.rowIndex="22">
+            <Separator maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="4.0" prefWidth="640.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+            <Separator maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="21.0" prefWidth="640.0" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+            <Separator maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="21.0" prefWidth="640.0" GridPane.columnIndex="3" GridPane.rowIndex="13" />
+            <Button fx:id="btnVolver" graphicTextGap="0.0" mnemonicParsing="false" onAction="#ventanaEquipo" prefHeight="85.0" prefWidth="516.0" style="-fx-background-color: DEB841; -fx-background-radius: 20;" text="VENTANA MI EQUIPO" GridPane.columnIndex="1" GridPane.rowIndex="25">
                <font>
                   <Font name="Courier New Bold" size="36.0" />
                </font>
             </Button>
-            <ToolBar prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: black;" GridPane.columnIndex="3" GridPane.rowIndex="1">
-               <items>
-                  <Label fx:id="lblUsername" prefHeight="53.0" prefWidth="176.0" text="Username" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="36.0" />
-                     </font>
-                  </Label>
-                  <Button fx:id="btnConfiguracion" mnemonicParsing="false" onAction="#ventanaConfiguracion" prefHeight="70.0" prefWidth="102.0">
-                     <font>
-                        <Font name="System Bold" size="30.0" />
-                     </font>
-                     <graphic>
-                        <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="https://img.icons8.com/?size=512&amp;id=364&amp;format=png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
-                  <ImageView fitHeight="76.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" />
-                  <Button fx:id="btnCerrarSesion" mnemonicParsing="false" onAction="#cerrarSesion" prefHeight="70.0" prefWidth="102.0">
-                     <font>
-                        <Font name="System Bold" size="30.0" />
-                     </font>
-                     <graphic>
-                        <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="https://img.icons8.com/?size=512&amp;id=8119&amp;format=png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
-               </items>
-            </ToolBar>
-            <GridPane GridPane.columnIndex="3" GridPane.rowIndex="5" GridPane.rowSpan="5">
+            <GridPane GridPane.columnIndex="3" GridPane.rowIndex="7" GridPane.rowSpan="5">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -149,7 +118,51 @@
                   <ImageView fx:id="imgEstadoClima" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1" GridPane.rowSpan="2" />
                </children>
             </GridPane>
-            <ListView fx:id="listDatosProximosDias" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="12" GridPane.rowSpan="12" />
+            <ListView fx:id="listDatosProximosDias" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="11" GridPane.rowSpan="12" />
+            <ImageView fitHeight="524.0" fitWidth="506.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="20">
+               <image>
+                  <Image url="https://tile.openweathermap.org/map/wind_new/0/0/0.png?appid=8d0067ebec1efdddbe5a7db4bd07a7f8" />
+               </image>
+            </ImageView>
+            <ToolBar prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: black;" GridPane.columnIndex="3" GridPane.rowIndex="3">
+               <items>
+                  <Button fx:id="btnConfiguracion" mnemonicParsing="false" onAction="#ventanaConfiguracion" prefHeight="70.0" prefWidth="102.0">
+                     <font>
+                        <Font name="System Bold" size="30.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="https://img.icons8.com/?size=512&amp;id=364&amp;format=png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <ImageView fitHeight="25.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true" />
+                  <Button fx:id="btnCerrarSesion" mnemonicParsing="false" onAction="#cerrarSesion" prefHeight="70.0" prefWidth="102.0">
+                     <font>
+                        <Font name="System Bold" size="30.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="https://img.icons8.com/?size=512&amp;id=8119&amp;format=png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </items>
+            </ToolBar>
+            <Label fx:id="lblUsername" prefHeight="53.0" prefWidth="427.0" text="Username" textFill="WHITE" GridPane.columnIndex="3" GridPane.rowIndex="1">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblDiaMesAnio1" text="REGISTRO DE DATOS CLIMÁTICOS CADA 3 HORAS" textFill="WHITE" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="9">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
          </children>
       </GridPane>
    </children>

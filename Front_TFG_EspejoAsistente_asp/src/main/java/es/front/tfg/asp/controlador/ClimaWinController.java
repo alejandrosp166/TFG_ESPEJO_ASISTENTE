@@ -79,7 +79,7 @@ public class ClimaWinController implements Initializable, Runnable {
         String codigoPostal = usuarioLogeado.getCodigoPostal();
 
         ResponseClima clima = serviceClima.obtenerDatosClimaticosActualesPorCodigoPostalPais(codigoPostal, codigoPais);
-        lblTemperatura.setText(clima.getMain().getTemp() + " ºC");
+        lblTemperatura.setText(Math.round(Double.parseDouble(clima.getMain().getTemp())) + " ºC");
         lblVelocidadViento.setText(utiles.pasarMetrosPorSegundosKilometrosPorHora(clima.getWind().getSpeed()) + " Km/H");
         lblTempMax.setText("MAX " + clima.getMain().getTemp_max() + " ºC ");
         lblTempMin.setText("MIN " + clima.getMain().getTemp_min() + " ºC ");
