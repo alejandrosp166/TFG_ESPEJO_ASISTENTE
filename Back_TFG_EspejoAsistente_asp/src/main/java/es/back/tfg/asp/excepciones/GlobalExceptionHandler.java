@@ -14,6 +14,21 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(ExcepcionCorreoElectronico.class)
     public ResponseEntity<ApiResponse> errorCorreo(ExcepcionCorreoElectronico e) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse(500, e.getMensaje()));
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse(400, e.getMensaje()));
+    }
+
+    @ExceptionHandler(ExcepcionCambiarContrasenna.class)
+    public ResponseEntity<ApiResponse> cambiarContrasenna(ExcepcionCambiarContrasenna e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse(400, e.getMensaje()));
+    }
+
+    @ExceptionHandler(ExcepcionInicioSesion.class)
+    public ResponseEntity<ApiResponse> errorInicioSesion(ExcepcionInicioSesion e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse(400, e.getMensaje()));
+    }
+
+    @ExceptionHandler(ExcepcionBuscarEntidad.class)
+    public ResponseEntity<ApiResponse> errorBuscarEntidad(ExcepcionBuscarEntidad e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse(400, e.getMensaje()));
     }
 }
