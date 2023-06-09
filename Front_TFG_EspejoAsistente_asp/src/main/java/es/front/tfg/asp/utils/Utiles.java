@@ -67,7 +67,7 @@ public class Utiles {
             Scene scene = new Scene(loader.load(), 800, 800, false, SceneAntialiasing.BALANCED);
             stage.setScene(scene);
             stage.setFullScreenExitHint("");
-            stage.setFullScreen(false);
+            stage.setFullScreen(true);
             stage.show();
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -141,10 +141,10 @@ public class Utiles {
         gridPane.setVgap(15);
 
         String[][] teclasTeclado = {
-                {"1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "<----"},
+                {"1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "BORRAR"},
                 {"Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "BORRAR"},
-                {"A", "S", "D", "F", "G", "H", "J", "K", "L", "Ñ"},
-                {"Z", "X", "C", "V", "B", "N", "M", "CERRAR"}
+                {"A", "S", "D", "F", "G", "H", "J", "K", "L", "Ñ", "BORRAR"},
+                {"Z", "X", "C", "V", "B", "N", "M", "@", "CERRAR"}
         };
         int indiceBotones = 0;
         Map<Integer, Node> listaComponentes = new HashMap<>();
@@ -156,11 +156,6 @@ public class Utiles {
                 Button boton = new Button(tecla);
                 boton.setStyle("-fx-font-size: 16px; -fx-pref-width: 100px; -fx-pref-height: 50px;");
                 switch (tecla) {
-                    case "<----" -> {
-                        if (!txt.getText().equals("")) {
-                            boton.setOnAction(evento -> txt.setText(txt.getText().substring(0, txt.getText().length() - 1)));
-                        }
-                    }
                     case "BORRAR" -> boton.setOnAction(evento -> txt.setText(""));
                     case "CERRAR" -> boton.setOnAction(evento -> {
                         Node source = (Node) evento.getSource();
@@ -169,7 +164,7 @@ public class Utiles {
                         hiloControlMando.setPosicionPuntero(1);
                         stage.close();
                     });
-                    default -> boton.setOnAction(event -> txt.setText(txt.getText() + tecla));
+                    default -> boton.setOnAction(event -> txt.setText(txt.getText() + tecla.toLowerCase()));
                 }
 
                 gridPane.add(boton, col, row);
@@ -183,7 +178,7 @@ public class Utiles {
     /**
      * @param listaObjetos la lista de objetos a cargar
      * @param comboBox     el combobox en el que se quiere cargar los datos
-     * @param map lista de elementos
+     * @param map          lista de elementos
      * @param <T>
      * @param <R>
      */
@@ -226,7 +221,7 @@ public class Utiles {
                         }
                         case "ResponseClima" -> {
                             ResponseClima clima = (ResponseClima) item;
-                            setText(clima.getMain().getTemp() + "Cº HUMEDAD " + clima.getMain().getHumidity() + " %" + " FECHA: " +clima.getDt_txt());
+                            setText(clima.getMain().getTemp() + "Cº HUMEDAD " + clima.getMain().getHumidity() + " %" + " FECHA: " + clima.getDt_txt());
                             ImageView imageView = new ImageView();
                             Image image = new Image("http://openweathermap.org/img/wn/" + clima.getWeather().get(0).getIcon() + ".png", true);
                             imageView.setImage(image);
