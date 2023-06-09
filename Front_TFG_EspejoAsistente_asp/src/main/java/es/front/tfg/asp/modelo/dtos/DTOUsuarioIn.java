@@ -11,10 +11,8 @@ public class DTOUsuarioIn {
     private String nombre;
     private String apellidos;
     private String email;
-    private boolean esAdmin;
+    private boolean admin;
     private String password;
-    private String tokenSeguridad;
-    private String codigoVerificacionCambioContrasenna;
     private DTOEquipo equipo;
     private DTOLocalizacionClima localizacionClima;
 }

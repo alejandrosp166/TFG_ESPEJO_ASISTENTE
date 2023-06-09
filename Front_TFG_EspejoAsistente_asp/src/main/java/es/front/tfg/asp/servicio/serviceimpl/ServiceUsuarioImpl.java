@@ -24,6 +24,11 @@ public class ServiceUsuarioImpl implements IServiceUsuario {
         return peticionesHTTP.get(URL + "/obtener-por-codigo-verificacion/" + codigo, DTOUsuarioOut.class);
     }
 
+    @Override
+    public void eliminarUsuario(String uuid) {
+        peticionesHTTP.delete(URL + "/" + uuid);
+    }
+
     /**
      * Obtiene el usuario por su username
      *

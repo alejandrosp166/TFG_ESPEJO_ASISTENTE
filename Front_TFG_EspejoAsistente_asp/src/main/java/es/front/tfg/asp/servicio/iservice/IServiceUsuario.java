@@ -8,5 +8,6 @@ public interface IServiceUsuario {
     public Object obtenerUsuarioPorUuid(String uuid);
     public Object actualizarUsuario(DTOUsuarioIn usuario, String uuid);
     public Object obtenerUsuarioPorCodigoVerificacion(String codigo);
+    public void eliminarUsuario(String uuid);
     public Object obtenerUsuarioPorUsername(String username);
 }

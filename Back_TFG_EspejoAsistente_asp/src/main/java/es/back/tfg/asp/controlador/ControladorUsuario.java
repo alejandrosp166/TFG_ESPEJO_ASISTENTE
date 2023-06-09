@@ -53,8 +53,8 @@ public class ControladorUsuario {
         return ResponseEntity.status(HttpStatus.OK).body(dtoUsuarioOut);
     }
 
-    @DeleteMapping()
-    public ResponseEntity<String> eliminarUsuario(String uuid) {
+    @DeleteMapping("/{uuid}")
+    public ResponseEntity<String> eliminarUsuario(@PathVariable String uuid) {
         IServiceUsuario.eliminarUsuario(uuid);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body("El usuario se eliminó con éxito!");
     }

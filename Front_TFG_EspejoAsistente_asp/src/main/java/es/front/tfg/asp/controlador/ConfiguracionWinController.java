@@ -98,7 +98,7 @@ public class ConfiguracionWinController implements Initializable {
         String paisLocalizacion = cmbPaisClima.getValue();
         DTOEquipo dtoEquipo = new DTOEquipo(paisLiga, equipo);
         DTOLocalizacionClima dtoLocalizacionClima = new DTOLocalizacionClima(paisLocalizacion, codigoPostal);
-        return new DTOUsuarioIn(null, username, nombre, apellidos, email, admin, null, null, null, dtoEquipo, dtoLocalizacionClima);
+        return new DTOUsuarioIn(null, username, nombre, apellidos, email, admin, null, dtoEquipo, dtoLocalizacionClima);
     }
 
     /**
@@ -114,6 +114,7 @@ public class ConfiguracionWinController implements Initializable {
             checkEsAdmin.setSelected(usuario.isEsAdmin());
             fieldCodigoPostal.setText(usuario.getCodigoPostal());
             cmbLigaFav.setValue(usuario.getPaisLiga());
+            cmbPaisClima.setValue(usuario.getPaisClima());
             cmbEquipoFav.setValue(usuario.getEquipoFav());
         } else if (respuesta instanceof ApiResponse apiResponse) {
             utiles.crearModal("Error al cargar datos del usuario", apiResponse.getMensaje());
