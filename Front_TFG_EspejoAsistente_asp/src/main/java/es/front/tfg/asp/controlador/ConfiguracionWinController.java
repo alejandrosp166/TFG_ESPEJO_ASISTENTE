@@ -167,6 +167,7 @@ public class ConfiguracionWinController implements Initializable {
      */
     public void eliminarCuenta(ActionEvent e) {
         serviceUsuario.eliminarUsuario(datos.obtenerUsuarioLogeado().getUuid());
+        utiles.cambiarVentanaAplicacion(e, getClass(), "/vistas/index.fxml");
     }
 
     /**

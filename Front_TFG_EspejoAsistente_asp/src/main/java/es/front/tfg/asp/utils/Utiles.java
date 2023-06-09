@@ -123,8 +123,6 @@ public class Utiles {
         dialog.setTitle("Teclado Virtual");
         GridPane teclado = obtenerTecladoVirtual(txt);
         dialog.getDialogPane().setContent(teclado);
-        // dialog.setY(txt.getLayoutY() + txt.getPrefHeight() * 2);
-        // dialog.setX(txt.getLayoutX() - 25);
         dialog.initOwner(stage);
         dialog.showAndWait();
     }
@@ -185,7 +183,7 @@ public class Utiles {
     /**
      * @param listaObjetos la lista de objetos a cargar
      * @param comboBox     el combobox en el que se quiere cargar los datos
-     * @param map
+     * @param map lista de elementos
      * @param <T>
      * @param <R>
      */

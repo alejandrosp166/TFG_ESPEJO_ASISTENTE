@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import java.io.*;
 import java.util.Objects;
 import java.util.Properties;
+
 @Component
 @Setter
 public class Datos {
@@ -22,12 +23,13 @@ public class Datos {
     /**
      * Cierra sesión en el sistema
      *
-     * @param e evento del elemento
-     * @param c clase desde la cual se llama
+     * @param e        evento del elemento
+     * @param c        clase desde la cual se llama
      * @param resource la vista a la que se va a mover
      */
     public void cerrarSesion(ActionEvent e, Class<?> c, String resource) {
         utiles.cambiarVentanaAplicacion(e, c, resource);
+        borrarPropiedades();
         usuarioLogeado = null;
     }
 
@@ -50,7 +52,7 @@ public class Datos {
     /**
      * Guarda elementos en el archivo propiedades
      *
-     * @param key la key del elemento
+     * @param key       la key del elemento
      * @param contenido el contenido
      */
     public void guardarElementoPropiedades(String key, String contenido) {
@@ -85,12 +87,12 @@ public class Datos {
      * Borra las propiedades
      */
     public void borrarPropiedades() {
-        try (InputStream leer = new FileInputStream("session-config.properties")) {
-            Properties properties = new Properties();
-            properties.load(leer);
-            properties.clear();
-        } catch (IOException e) {
-            e.printStackTrace();
+        File propiedades = new File("session-config.properties");
+        if (propiedades.exists()) {
+            boolean eliminado = propiedades.delete();
+            if (!eliminado) {
+                utiles.crearModal("Error", "Hubo un error en el cliente al cerrar la sesión");
+            }
         }
     }
 }
